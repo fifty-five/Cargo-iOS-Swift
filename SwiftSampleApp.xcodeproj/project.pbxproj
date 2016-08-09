@@ -15,6 +15,8 @@
 		0F12EA281D5A165F00D776E6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F12EA261D5A165F00D776E6 /* LaunchScreen.storyboard */; };
 		0F12EA331D5A165F00D776E6 /* SwiftSampleAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F12EA321D5A165F00D776E6 /* SwiftSampleAppTests.swift */; };
 		0F12EA3E1D5A165F00D776E6 /* SwiftSampleAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F12EA3D1D5A165F00D776E6 /* SwiftSampleAppUITests.swift */; };
+		0F12EA511D5A1B7800D776E6 /* Cargo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F12EA501D5A1B7800D776E6 /* Cargo.swift */; };
+		0F12EA531D5A252400D776E6 /* CARTagHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F12EA521D5A252300D776E6 /* CARTagHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 		0F12EA391D5A165F00D776E6 /* SwiftSampleAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftSampleAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F12EA3D1D5A165F00D776E6 /* SwiftSampleAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftSampleAppUITests.swift; sourceTree = "<group>"; };
 		0F12EA3F1D5A165F00D776E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0F12EA501D5A1B7800D776E6 /* Cargo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Cargo.swift; path = Cargo/Cargo.swift; sourceTree = "<group>"; };
+		0F12EA521D5A252300D776E6 /* CARTagHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CARTagHandler.swift; path = Cargo/Handlers/CARTagHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +83,8 @@
 		0F12EA0E1D5A165F00D776E6 = {
 			isa = PBXGroup;
 			children = (
+				0F12EA4C1D5A1A8900D776E6 /* Cargo */,
+				0F12EA4D1D5A1AA100D776E6 /* CargoTests */,
 				0F12EA191D5A165F00D776E6 /* SwiftSampleApp */,
 				0F12EA311D5A165F00D776E6 /* SwiftSampleAppTests */,
 				0F12EA3C1D5A165F00D776E6 /* SwiftSampleAppUITests */,
@@ -126,6 +132,30 @@
 				0F12EA3F1D5A165F00D776E6 /* Info.plist */,
 			);
 			path = SwiftSampleAppUITests;
+			sourceTree = "<group>";
+		};
+		0F12EA4C1D5A1A8900D776E6 /* Cargo */ = {
+			isa = PBXGroup;
+			children = (
+				0F12EA541D5A252A00D776E6 /* Handlers */,
+				0F12EA501D5A1B7800D776E6 /* Cargo.swift */,
+			);
+			name = Cargo;
+			sourceTree = "<group>";
+		};
+		0F12EA4D1D5A1AA100D776E6 /* CargoTests */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = CargoTests;
+			sourceTree = "<group>";
+		};
+		0F12EA541D5A252A00D776E6 /* Handlers */ = {
+			isa = PBXGroup;
+			children = (
+				0F12EA521D5A252300D776E6 /* CARTagHandler.swift */,
+			);
+			name = Handlers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -261,6 +291,8 @@
 			files = (
 				0F12EA1D1D5A165F00D776E6 /* ViewController.swift in Sources */,
 				0F12EA231D5A165F00D776E6 /* SwiftSampleApp.xcdatamodeld in Sources */,
+				0F12EA511D5A1B7800D776E6 /* Cargo.swift in Sources */,
+				0F12EA531D5A252400D776E6 /* CARTagHandler.swift in Sources */,
 				0F12EA1B1D5A165F00D776E6 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -488,6 +520,7 @@
 				0F12EA441D5A165F00D776E6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0F12EA451D5A165F00D776E6 /* Build configuration list for PBXNativeTarget "SwiftSampleAppTests" */ = {
 			isa = XCConfigurationList;
@@ -496,6 +529,7 @@
 				0F12EA471D5A165F00D776E6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0F12EA481D5A165F00D776E6 /* Build configuration list for PBXNativeTarget "SwiftSampleAppUITests" */ = {
 			isa = XCConfigurationList;
@@ -504,6 +538,7 @@
 				0F12EA4A1D5A165F00D776E6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
