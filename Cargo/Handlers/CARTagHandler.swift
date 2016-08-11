@@ -20,8 +20,8 @@ class CARTagHandler : NSObject, TAGFunctionCallTagHandler {
         self.name = name;
     }
     
-    func execute(functionName : String, parameters parameters:Dictionary<String, AnyObject>){
-        print("Function \(functionName) has been received with parameters \(parameters) ");
+    func execute(tagName:String, parameters:[NSObject : AnyObject]!){
+        print("Function \(tagName) has been received with parameters \(parameters) ");
     }
     
     func validate(){
