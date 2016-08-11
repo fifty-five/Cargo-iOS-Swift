@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:SwiftSampleApp.xcodeproj">
+      location = "self:/Users/Med/Desktop/Cargo_swift/Cargo.xcodeproj">
    </FileRef>
 </Workspace>

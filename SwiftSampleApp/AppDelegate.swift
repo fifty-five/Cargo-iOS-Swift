@@ -10,13 +10,22 @@ import UIKit
 import CoreData
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, TAGContainerOpenerNotifier {
 
     var window: UIWindow?
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+        let GTM = TAGManager.instance()
+        GTM.logger.setLogLevel(kTAGLoggerLogLevelVerbose)
+        
+        TAGContainerOpener.openContainerWithId("GTM-5GCVL2",
+            tagManager: GTM, openType: kTAGOpenTypePreferFresh,
+            timeout: nil,
+            notifier: self)
+        
         return true
     }
 
@@ -105,6 +114,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 abort()
             }
         }
+    }
+    
+    func containerAvailable(container: TAGContainer!) {
+        container.refresh()
     }
 
 }

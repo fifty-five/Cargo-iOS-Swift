@@ -14,7 +14,9 @@ class Cargo: NSObject {
     // Déclaration des variables
     static let sharedHelper = Cargo();
     var launchOptions: Dictionary<String, AnyObject>?;
-    var registeredTagHandlers:Dictionary<String, CARTagHandler>? ;
+    var registeredTagHandlers = [CARTagHandler]();
+    var tagManager:TAGManager;
+    var container:TAGContainer;
     
     // var CARMacroHandlers (à voir si on doit définir la classe)
  
@@ -24,6 +26,22 @@ class Cargo: NSObject {
         print("Cargo initialization done");
     }
 
+    func registerHandler(){
+        for handler in registeredTagHandlers {
+            handler.validate();
+            
+            if (handler.valid){
+                self.container.registerFunctionCallTagHandler(handler, forTag: handler.tag);
+            }
+            
+            print("Handler \(handler.key) has been registered");
+        }
+    }
     
+    
+    func initTagHandlerWithManager(tagManager:TAGManager, tagHandler:TAGContainer) {
+        self.tagManager = tagManager;
+        self.container = tagHandler;
+    }
     
 }
