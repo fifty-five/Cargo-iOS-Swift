@@ -118,6 +118,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, TAGContainerOpenerNotifie
     
     func containerAvailable(container: TAGContainer!) {
         container.refresh()
+        let cargoInstance:Cargo = Cargo();
+        cargoInstance.initTagHandlerWithManager(TAGManager.instance(), tagHandler:container);
     }
 
 }
