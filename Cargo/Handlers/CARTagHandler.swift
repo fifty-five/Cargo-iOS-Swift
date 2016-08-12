@@ -8,18 +8,24 @@
 
 import Foundation
 
-class CARTagHandler {
-    var key: AnyObject? ;
-    var name: String? ;
-    var initialized: Bool? ;
-    var valid: Bool? ;
+class CARTagHandler : NSObject, TAGFunctionCallTagHandler {
     
-    func execute(functionName : String, parameters:Dictionary<String, AnyObject>){
-        print("Function \(functionName) has been received with parameters \(parameters) ");
+    var key: String;
+    var name: String;
+    var initialized: Bool = false ;
+    var valid: Bool = false;
+    
+    init(key:String, name:String){
+        self.key = key;
+        self.name = name;
+    }
+    
+    func execute(tagName:String, parameters:[NSObject : AnyObject]!){
+        print("Function \(tagName) has been received with parameters \(parameters) ");
     }
     
     func validate(){
         valid = true;
     }
+    
 }
-
