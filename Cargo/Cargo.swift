@@ -15,7 +15,6 @@ class Cargo: NSObject {
     static let sharedHelper = Cargo();
     var launchOptions: Dictionary<String, AnyObject>?;
     var registeredTagHandlers = Dictionary<String, CARTagHandler>();
-    var registeredMacroHandlers = Dictionary<String, CARMacroHandler>();
     var tagManager:TAGManager!;
     var container:TAGContainer!;
     

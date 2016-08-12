@@ -40,7 +40,7 @@ enum TAGLoggerLogLevelType {
  * ignores info/debug/verbose messages. You can install your own logger
  * by setting the TAGManager::logger property.
  */
-protocol TAGLogger : NSObject{
+protocol TAGLogger {
     
     /**
      * Logs an verbose message.

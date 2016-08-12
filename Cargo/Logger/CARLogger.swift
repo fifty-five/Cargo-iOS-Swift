@@ -30,9 +30,9 @@ class CARLogger: NSObject {
      *  Initialize the logger without a context
      *  is used when a call on carLog is made before init.
      */
-    private init() {
+    private override init() {
         self.context = "Cargo";
-        self.level = kTAGLoggerLogLevelVerbose;
+        self.level = TAGLoggerLogLevelType.kTAGLoggerLogLevelVerbose;
         super.init();
     }
 
@@ -43,7 +43,7 @@ class CARLogger: NSObject {
      */
     init(aContext:String) {
         self.context = aContext;
-        self.level = kTAGLoggerLogLevelVerbose;
+        self.level = TAGLoggerLogLevelType.kTAGLoggerLogLevelVerbose;
         super.init();
         refToSelf = self;
     }
@@ -57,14 +57,14 @@ class CARLogger: NSObject {
      *  @param intentLevel   The level in which the message should be recorded.
      *  @param message       The message
      */
-    class func carLog(intentLevel:TAGLoggerLogLevelType, message:String){
+    func carLog(intentLevel:TAGLoggerLogLevelType, message:String){
         let carLogSelf = refToSelf;
         if (carLogSelf == nil) {
             refToSelf = CARLogger();
         }
         
         if (refToSelf.levelEnabled(intentLevel)){
-            print(refToSelf.context, refToSelf.nameOfLevel(intentLevel), logMessage);
+            print(refToSelf.context, refToSelf.nameOfLevel(intentLevel), message);
         }
     }
     
@@ -76,7 +76,7 @@ class CARLogger: NSObject {
      *  @param methodName The method name
      */
     func logMissingParam(paramName:String, methodName:String) {
-        carLog(kTAGLoggerLogLevelWarning, "[\(self.context)] Parameter '\(paramName)' is required in method '\(methodName)'");
+        carLog(TAGLoggerLogLevelType.kTAGLoggerLogLevelWarning, message: "[\(self.context)] Parameter '\(paramName)' is required in method '\(methodName)'");
     }
     
     /**
@@ -87,7 +87,7 @@ class CARLogger: NSObject {
      *  @param type      The type
      */
     func logUncastableParam(paramName:String, type:String) {
-        carLog(kTAGLoggerLogLevelWarning, "param \(paramName) cannot be casted to \(type) ");
+        carLog(TAGLoggerLogLevelType.kTAGLoggerLogLevelWarning, message: "param \(paramName) cannot be casted to \(type) ");
     }
     
     /**
@@ -95,7 +95,7 @@ class CARLogger: NSObject {
      *  a missing initialization of the framework
      */
     func logUninitializedFramework() {
-        carLog(kTAGLoggerLogLevelWarning, "[\(self.context)] You must init framework before using it");
+        carLog(TAGLoggerLogLevelType.kTAGLoggerLogLevelWarning, message: "[\(self.context)] You must init framework before using it");
     }
     
     /**
@@ -105,7 +105,7 @@ class CARLogger: NSObject {
      *  @param value     The set value
      */
     func logParamSetWithSuccess(paramName: String, value: AnyObject) {
-        carLog(kTAGLoggerLogLevelInfo, "[\(self.context)] Parameter '\(paramName)' has been set to '\(value)' with success");
+        carLog(TAGLoggerLogLevelType.kTAGLoggerLogLevelInfo, message: "[\(self.context)] Parameter '\(paramName)' has been set to '\(value)' with success");
     }
     
     /**
@@ -115,7 +115,7 @@ class CARLogger: NSObject {
      *  @param paramName The unknown param
      */
     func logUnknownParam(paramName:String) {
-        carLog(kTAGLoggerLogLevelWarning, "[\(self.context)] Parameter '\(paramName)' is unknown");
+        carLog(TAGLoggerLogLevelType.kTAGLoggerLogLevelWarning, message: "[\(self.context)] Parameter '\(paramName)' is unknown");
     }
     
     /**
@@ -125,9 +125,9 @@ class CARLogger: NSObject {
      *  @param value          The value
      *  @param possibleValues The value set
      */
-    func logNotFoundValue(value: String, key: String, possibleValues: Array) {
-        carLog(kTAGLoggerLogLevelWarning,
-               "[\(self.context)] Value '\(value)' for key '\(key)' is not found among possible values \(possibleValues)");
+    func logNotFoundValue(value: String, key: String, possibleValues: Array<AnyObject>) {
+        carLog(TAGLoggerLogLevelType.kTAGLoggerLogLevelWarning,
+               message: "[\(self.context)] Value '\(value)' for key '\(key)' is not found among possible values \(possibleValues)");
     }
 
 
@@ -135,28 +135,28 @@ class CARLogger: NSObject {
 /* *********************************** Utilities methods *********************************** */
     
     func levelEnabled(intentLevel:TAGLoggerLogLevelType) -> Bool {
-        return ((level != kTAGLoggerLogLevelNone) && (intentLevel >= level));
+        return ((level != TAGLoggerLogLevelType.kTAGLoggerLogLevelNone) && (intentLevel >= level));
     }
     
     func nameOfLevel(loggingLevel:TAGLoggerLogLevelType) -> String {
         var result: String!;
         switch (loggingLevel) {
-            case kTAGLoggerLogLevelVerbose:
+            case TAGLoggerLogLevelType.kTAGLoggerLogLevelVerbose:
                 result = "VERB";
                 break;
-            case kTAGLoggerLogLevelDebug:
+            case TAGLoggerLogLevelType.kTAGLoggerLogLevelDebug:
                 result = "DEBU";
                 break;
-            case kTAGLoggerLogLevelInfo:
+            case TAGLoggerLogLevelType.kTAGLoggerLogLevelInfo:
                 result = "INFO";
                 break;
-            case kTAGLoggerLogLevelWarning:
+            case TAGLoggerLogLevelType.kTAGLoggerLogLevelWarning:
                 result = "WARN";
                 break;
-            case kTAGLoggerLogLevelError:
+            case TAGLoggerLogLevelType.kTAGLoggerLogLevelError:
                 result = "ERRO";
                 break;
-            case kTAGLoggerLogLevelNone:
+            case TAGLoggerLogLevelType.kTAGLoggerLogLevelNone:
                 result = "NONE";
                 break;
             default:

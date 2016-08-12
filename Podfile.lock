@@ -1,30 +1,13 @@
 PODS:
-  - FirebaseAnalytics (3.3.0):
-    - FirebaseInstanceID (~> 1.0)
-    - GoogleInterchangeUtilities (~> 1.2)
-    - GoogleSymbolUtilities (~> 1.1)
-    - GoogleUtilities (~> 1.2)
-  - FirebaseInstanceID (1.0.8)
   - GoogleAnalytics (3.16.0)
-  - GoogleInterchangeUtilities (1.2.1):
-    - GoogleSymbolUtilities (~> 1.0)
-  - GoogleSymbolUtilities (1.1.1)
-  - GoogleTagManager (5.0.6):
-    - FirebaseAnalytics (~> 3.2)
-    - GoogleAnalytics (~> 3.0)
-  - GoogleUtilities (1.3.1):
-    - GoogleSymbolUtilities (~> 1.0)
+  - GoogleTagManager (3.15.1):
+    - GoogleAnalytics (= 3.16.0)
 
 DEPENDENCIES:
-  - GoogleTagManager
+  - GoogleTagManager (~> 3)
 
 SPEC CHECKSUMS:
-  FirebaseAnalytics: 228be2991cb28efb96cdafc4d62f64680e615c69
-  FirebaseInstanceID: ba1e640935235e5fac39dfa816fe7660e72e1a8a
   GoogleAnalytics: 3de986b2fa29012c69fa415566006a9c9cf25320
-  GoogleInterchangeUtilities: def8415a862effc67d549d5b5b0b9c7a2f97d4de
-  GoogleSymbolUtilities: 33117db1b5f290c6fbf259585e4885b4c84b98d7
-  GoogleTagManager: 51345a74068caf8b0e897ca9c8ff19470a82ec74
-  GoogleUtilities: 56c5ac05b7aa5dc417a1bb85221a9516e04d7032
+  GoogleTagManager: 8e53b02f09a7e5980f5b8d574672b97879f9fcd1
 
 COCOAPODS: 0.39.0
