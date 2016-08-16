@@ -149,9 +149,9 @@
 		0F12EA4C1D5A1A8900D776E6 /* Cargo */ = {
 			isa = PBXGroup;
 			children = (
+				0F12EA501D5A1B7800D776E6 /* Cargo.swift */,
 				807053691D5DC8BA00A9FF26 /* Logger */,
 				0F12EA541D5A252A00D776E6 /* Handlers */,
-				0F12EA501D5A1B7800D776E6 /* Cargo.swift */,
 			);
 			name = Cargo;
 			sourceTree = "<group>";
