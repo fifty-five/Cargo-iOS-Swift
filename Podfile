@@ -12,5 +12,5 @@ target 'CargoUITests' do
 end
 
 target 'Cargo' do
-  pod 'GoogleTagManager'
+  pod 'GoogleTagManager', '~> 3'
 end
