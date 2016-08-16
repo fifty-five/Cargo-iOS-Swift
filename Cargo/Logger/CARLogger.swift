@@ -32,7 +32,7 @@ class CARLogger: NSObject {
      */
     private override init() {
         self.context = "Cargo";
-        self.level = TAGLoggerLogLevelType.kTAGLoggerLogLevelVerbose;
+        self.level = kTAGLoggerLogLevelVerbose;
         super.init();
     }
 
@@ -43,7 +43,7 @@ class CARLogger: NSObject {
      */
     init(aContext:String) {
         self.context = aContext;
-        self.level = TAGLoggerLogLevelType.kTAGLoggerLogLevelVerbose;
+        self.level = kTAGLoggerLogLevelVerbose;
         super.init();
         refToSelf = self;
     }
@@ -76,7 +76,7 @@ class CARLogger: NSObject {
      *  @param methodName The method name
      */
     func logMissingParam(paramName:String, methodName:String) {
-        carLog(TAGLoggerLogLevelType.kTAGLoggerLogLevelWarning, message: "[\(self.context)] Parameter '\(paramName)' is required in method '\(methodName)'");
+        carLog(kTAGLoggerLogLevelWarning, message: "[\(self.context)] Parameter '\(paramName)' is required in method '\(methodName)'");
     }
     
     /**
@@ -87,7 +87,7 @@ class CARLogger: NSObject {
      *  @param type      The type
      */
     func logUncastableParam(paramName:String, type:String) {
-        carLog(TAGLoggerLogLevelType.kTAGLoggerLogLevelWarning, message: "param \(paramName) cannot be casted to \(type) ");
+        carLog(kTAGLoggerLogLevelWarning, message: "param \(paramName) cannot be casted to \(type) ");
     }
     
     /**
@@ -95,7 +95,7 @@ class CARLogger: NSObject {
      *  a missing initialization of the framework
      */
     func logUninitializedFramework() {
-        carLog(TAGLoggerLogLevelType.kTAGLoggerLogLevelWarning, message: "[\(self.context)] You must init framework before using it");
+        carLog(kTAGLoggerLogLevelWarning, message: "[\(self.context)] You must init framework before using it");
     }
     
     /**
@@ -105,7 +105,7 @@ class CARLogger: NSObject {
      *  @param value     The set value
      */
     func logParamSetWithSuccess(paramName: String, value: AnyObject) {
-        carLog(TAGLoggerLogLevelType.kTAGLoggerLogLevelInfo, message: "[\(self.context)] Parameter '\(paramName)' has been set to '\(value)' with success");
+        carLog(kTAGLoggerLogLevelInfo, message: "[\(self.context)] Parameter '\(paramName)' has been set to '\(value)' with success");
     }
     
     /**
@@ -115,7 +115,7 @@ class CARLogger: NSObject {
      *  @param paramName The unknown param
      */
     func logUnknownParam(paramName:String) {
-        carLog(TAGLoggerLogLevelType.kTAGLoggerLogLevelWarning, message: "[\(self.context)] Parameter '\(paramName)' is unknown");
+        carLog(kTAGLoggerLogLevelWarning, message: "[\(self.context)] Parameter '\(paramName)' is unknown");
     }
     
     /**
@@ -126,7 +126,7 @@ class CARLogger: NSObject {
      *  @param possibleValues The value set
      */
     func logNotFoundValue(value: String, key: String, possibleValues: Array<AnyObject>) {
-        carLog(TAGLoggerLogLevelType.kTAGLoggerLogLevelWarning,
+        carLog(kTAGLoggerLogLevelWarning,
                message: "[\(self.context)] Value '\(value)' for key '\(key)' is not found among possible values \(possibleValues)");
     }
 
@@ -135,28 +135,54 @@ class CARLogger: NSObject {
 /* *********************************** Utilities methods *********************************** */
     
     func levelEnabled(intentLevel:TAGLoggerLogLevelType) -> Bool {
-        return ((level != TAGLoggerLogLevelType.kTAGLoggerLogLevelNone) && (intentLevel >= level));
+        return ((level != kTAGLoggerLogLevelNone) && (valueOf(intentLevel) >= valueOf(level)));
     }
+    
+    func valueOf(logLevel:TAGLoggerLogLevelType) -> Int {
+        var result: Int!;
+        switch (logLevel) {
+        case kTAGLoggerLogLevelVerbose:
+            result = 5;
+            break;
+        case kTAGLoggerLogLevelDebug:
+            result = 4;
+            break;
+        case kTAGLoggerLogLevelInfo:
+            result = 3;
+            break;
+        case kTAGLoggerLogLevelWarning:
+            result = 2;
+            break;
+        case kTAGLoggerLogLevelError:
+            result = 1;
+            break;
+        default:
+            result = 0;
+            break;
+        }
+        return result;
+    }
+
     
     func nameOfLevel(loggingLevel:TAGLoggerLogLevelType) -> String {
         var result: String!;
         switch (loggingLevel) {
-            case TAGLoggerLogLevelType.kTAGLoggerLogLevelVerbose:
+            case kTAGLoggerLogLevelVerbose:
                 result = "VERB";
                 break;
-            case TAGLoggerLogLevelType.kTAGLoggerLogLevelDebug:
+            case kTAGLoggerLogLevelDebug:
                 result = "DEBU";
                 break;
-            case TAGLoggerLogLevelType.kTAGLoggerLogLevelInfo:
+            case kTAGLoggerLogLevelInfo:
                 result = "INFO";
                 break;
-            case TAGLoggerLogLevelType.kTAGLoggerLogLevelWarning:
+            case kTAGLoggerLogLevelWarning:
                 result = "WARN";
                 break;
-            case TAGLoggerLogLevelType.kTAGLoggerLogLevelError:
+            case kTAGLoggerLogLevelError:
                 result = "ERRO";
                 break;
-            case TAGLoggerLogLevelType.kTAGLoggerLogLevelNone:
+            case kTAGLoggerLogLevelNone:
                 result = "NONE";
                 break;
             default:
