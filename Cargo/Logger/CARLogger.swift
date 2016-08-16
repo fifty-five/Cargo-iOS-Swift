@@ -142,22 +142,22 @@ class CARLogger: NSObject {
         var result: Int!;
         switch (logLevel) {
         case kTAGLoggerLogLevelVerbose:
-            result = 5;
+            result = 0;
             break;
         case kTAGLoggerLogLevelDebug:
-            result = 4;
-            break;
-        case kTAGLoggerLogLevelInfo:
-            result = 3;
-            break;
-        case kTAGLoggerLogLevelWarning:
-            result = 2;
-            break;
-        case kTAGLoggerLogLevelError:
             result = 1;
             break;
+        case kTAGLoggerLogLevelInfo:
+            result = 2;
+            break;
+        case kTAGLoggerLogLevelWarning:
+            result = 3;
+            break;
+        case kTAGLoggerLogLevelError:
+            result = 4;
+            break;
         default:
-            result = 0;
+            result = 5;
             break;
         }
         return result;
