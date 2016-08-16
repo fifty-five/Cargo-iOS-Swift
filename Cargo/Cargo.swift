@@ -17,36 +17,46 @@ class Cargo: NSObject {
     var registeredTagHandlers = Dictionary<String, CARTagHandler>();
     var tagManager:TAGManager!;
     var container:TAGContainer!;
-    
-    // var CARMacroHandlers (à voir si on doit définir la classe)
+    var logger: CARLogger!;
  
-    
+    // Initialization of Cargo and creation of the logger
     private override init() {
+        logger = CARLogger(aContext: "Cargo");
         super.init();
-        print("Cargo initialization done");
     }
 
+    // Setup the tagManager and the GTM container as properties of Cargo
+    // Setup the log level of Cargo Logger from the level of the tagManager logger
     func initTagHandlerWithManager(tagManager:TAGManager, tagHandler:TAGContainer) {
+        //GTM
         self.tagManager = tagManager;
         self.container = tagHandler;
+
+        //Logger
+        self.logger.level = self.tagManager.logger.logLevel();
+        logger.carLog(kTAGLoggerLogLevelInfo, message: "Cargo initialization is done");
     }
-    
-    
-    
-    
+
+
+
+    // Called by each handler at the start of the app to register itself
+    // in the registeredTagHandlers variable.
     func registerTagHandler(tagHandler: CARTagHandler, key:String) {
         registeredTagHandlers[key] = tagHandler;
     }
-    
+
+
+    // For each handler stored in the registeredTagHandlers variable,
+    // validate the handler in order to register its GTM callback methods
     func registerHandler(){
         for (_, handler) in registeredTagHandlers {
             handler.validate();
-            
+
             if (handler.valid){
                 self.container.registerFunctionCallTagHandler(handler, forTag: handler.key);
             }
-            
-            print("Handler with key \(handler.key) has been registered");
+
+            logger.carLog(kTAGLoggerLogLevelInfo, message: "Handler with key \(handler.key) has been registered");
         }
     }
 
