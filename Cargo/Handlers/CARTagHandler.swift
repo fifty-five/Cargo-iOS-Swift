@@ -41,7 +41,7 @@ class CARTagHandler : NSObject, TAGFunctionCallTagHandler {
      *  @param parameters   Dictionary of parameters
      */
     func execute(tagName:String, parameters:[NSObject : AnyObject]){
-        print("Function \(tagName) has been received with parameters \(parameters) ");
+        cargo.logger.carLog(kTAGLoggerLogLevelDebug, handler: self, message: "Function \(tagName) has been received with parameters \(parameters)");
     }
 
     /**
