@@ -4,7 +4,8 @@ PODS:
     - GoogleAnalytics (= 3.16.0)
 
 DEPENDENCIES:
-  - GoogleTagManager (~> 3)
+  - GoogleAnalytics (= 3.16.0)
+  - GoogleTagManager (~> 3.15.1)
 
 SPEC CHECKSUMS:
   GoogleAnalytics: 3de986b2fa29012c69fa415566006a9c9cf25320
