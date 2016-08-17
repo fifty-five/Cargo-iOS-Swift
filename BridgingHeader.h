@@ -14,5 +14,7 @@
 #import <GoogleTagManager/TAGContainerOpener.h>
 #import <GoogleTagManager/TAGDataLayer.h>
 #import <GoogleTagManager/TAGLogger.h>
+#import <GoogleAnalytics/GAI.h>
+#import <GoogleAnalytics/GAITracker.h>
 
 #endif /* BridgingHeader_h */
