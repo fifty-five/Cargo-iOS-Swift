@@ -13,7 +13,7 @@ class Cargo: NSObject {
     
     // Déclaration des variables
     static let sharedHelper = Cargo();
-    var launchOptions: Dictionary<String, AnyObject>?;
+    var launchOptions: [NSObject: AnyObject]?;
     var registeredTagHandlers = Dictionary<String, CARTagHandler>();
     var tagManager:TAGManager!;
     var container:TAGContainer!;
@@ -48,15 +48,15 @@ class Cargo: NSObject {
 
     // For each handler stored in the registeredTagHandlers variable,
     // validate the handler in order to register its GTM callback methods
-    func registerHandler(){
-        for (_, handler) in registeredTagHandlers {
+    func registerHandlers(){
+        for (key, handler) in registeredTagHandlers {
             handler.validate();
 
             if (handler.valid){
-                self.container.registerFunctionCallTagHandler(handler, forTag: handler.key);
+                self.container.registerFunctionCallTagHandler(handler, forTag: key);
             }
 
-            logger.carLog(kTAGLoggerLogLevelInfo, message: "Handler with key \(handler.key) has been registered");
+            logger.carLog(kTAGLoggerLogLevelInfo, message: "Function with key \(key) has been registered for \(handler.name)");
         }
     }
 
