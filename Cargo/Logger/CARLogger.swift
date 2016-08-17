@@ -64,7 +64,7 @@ class CARLogger: NSObject {
         }
 
         if (refToSelf.levelEnabled(intentLevel)){
-            print(refToSelf.context, refToSelf.nameOfLevel(intentLevel), message);
+            print("\(refToSelf.context) [\(refToSelf.nameOfLevel(intentLevel))]:", message);
         }
     }
 
@@ -82,7 +82,7 @@ class CARLogger: NSObject {
         }
 
         if (refToSelf.levelEnabled(intentLevel)){
-            print(refToSelf.context, refToSelf.nameOfLevel(intentLevel), handler.name, message);
+            print("\(refToSelf.context) - \(handler.name) [\(refToSelf.nameOfLevel(intentLevel))]:", message);
         }
     }
 
