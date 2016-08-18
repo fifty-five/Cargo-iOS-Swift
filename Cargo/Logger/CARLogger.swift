@@ -93,8 +93,8 @@ class CARLogger: NSObject {
      *  @param paramName  The missing param name
      *  @param methodName The method name
      */
-    func logMissingParam(paramName:String, methodName:String) {
-        carLog(kTAGLoggerLogLevelWarning, message: "[\(self.context)] Parameter '\(paramName)' is required in method '\(methodName)'");
+    func logMissingParam(paramName:String, methodName:String, handler:CARTagHandler) {
+        carLog(kTAGLoggerLogLevelWarning, message: "[\(self.context)] Parameter '\(paramName)' is required in method '\(methodName)' of '\(handler.name)' handler");
     }
 
     /**
