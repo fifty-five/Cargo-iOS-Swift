@@ -18,6 +18,7 @@ class CARGoogleAnalyticsTagHandler: CARTagHandler {
 
     let GA_init = "GA_init";
     let GA_set = "GA_set";
+    let GA_setUserId = "GA_setUserId";
     let GA_tagScreen = "GA_tagScreen";
     let GA_tagEvent = "GA_tagEvent";
 
@@ -34,6 +35,7 @@ class CARGoogleAnalyticsTagHandler: CARTagHandler {
 
         cargo.registerTagHandler(self, key: GA_init);
         cargo.registerTagHandler(self, key: GA_set);
+        cargo.registerTagHandler(self, key: GA_setUserId);
         cargo.registerTagHandler(self, key: GA_tagScreen);
         cargo.registerTagHandler(self, key: GA_tagEvent);
     }
@@ -50,7 +52,25 @@ class CARGoogleAnalyticsTagHandler: CARTagHandler {
         // Optional: configure GAI options.
         let gai = GAI.sharedInstance();
         gai.trackUncaughtExceptions = true;  // report uncaught exceptions
-        gai.logger.logLevel = GAILogLevel.Error;  // remove before app release
+        switch (cargo.logger.level) {
+        case kTAGLoggerLogLevelNone:
+            gai.logger.logLevel = GAILogLevel.None;
+            break ;
+        case kTAGLoggerLogLevelInfo:
+            gai.logger.logLevel = GAILogLevel.Info;
+            break ;
+        case kTAGLoggerLogLevelWarning:
+            gai.logger.logLevel = GAILogLevel.Warning;
+            break ;
+        case kTAGLoggerLogLevelDebug:
+            gai.logger.logLevel = GAILogLevel.Warning;
+            break ;
+        case kTAGLoggerLogLevelVerbose:
+            gai.logger.logLevel = GAILogLevel.Verbose;
+            break ;
+        default:
+            gai.logger.logLevel = GAILogLevel.Error;
+        }
     }
 
 /* ******************************** Core handler methods *********************************** */
@@ -72,6 +92,9 @@ class CARGoogleAnalyticsTagHandler: CARTagHandler {
         case GA_set:
             self.set(parameters);
             break ;
+        case GA_setUserId:
+            self.setUserId(parameters);
+            break ;
         case GA_tagEvent:
             self.tagEvent(parameters);
             break ;
@@ -91,7 +114,9 @@ class CARGoogleAnalyticsTagHandler: CARTagHandler {
     func initialize(parameters: [NSObject : AnyObject]) {
         if let trackingId = parameters["trackingId"] {
             self.instance.trackerWithTrackingId(trackingId as! String);
-            cargo.logger.carLog(kTAGLoggerLogLevelVerbose, handler: self, message: "tracking ID set as \(trackingId)");
+        }
+        else {
+            cargo.logger.logMissingParam("trackingId", methodName: "GA_init", handler: self);
         }
     }
 
@@ -119,6 +144,22 @@ class CARGoogleAnalyticsTagHandler: CARTagHandler {
 /* ********************************** Specific methods ************************************* */
 
     /**
+     * Used to setup the userId when the user logs in
+     *
+     * @param parameters    dictionary of parameters
+     *                      * requires a userId parameter
+     */
+    func setUserId(parameters: [NSObject: AnyObject]){
+
+        if let userID = parameters[USER_ID] {
+            self.tracker.set(kGAIUserId, value: userID as! String);
+        }
+        else {
+            cargo.logger.logMissingParam(USER_ID, methodName: "GA_setUserId", handler: self);
+        }
+    }
+
+    /**
      *  Used to send a screen event to Google Analytics
      *
      *  @param parameters   Dictionary of parameters
@@ -130,11 +171,9 @@ class CARGoogleAnalyticsTagHandler: CARTagHandler {
             self.tracker.set(kGAIScreenName, value: screenName as! String);
             let builder = GAIDictionaryBuilder.createScreenView();
             self.tracker.send(builder.build() as [NSObject : AnyObject]);
-
-            cargo.logger.carLog(kTAGLoggerLogLevelVerbose, handler: self, message: "tagScreen fired with name '\(screenName)'");
         }
         else {
-            cargo.logger.logMissingParam(EVENT_NAME, methodName: "tagScreen", handler: self);
+            cargo.logger.logMissingParam(SCREEN_NAME, methodName: "GA_tagScreen", handler: self);
         }
     }
 
@@ -154,14 +193,12 @@ class CARGoogleAnalyticsTagHandler: CARTagHandler {
 
             let builder = GAIDictionaryBuilder.createEventWithCategory(category as! String, action: action as! String, label: label as? String, value: value as? NSNumber);
             self.tracker.send(builder.build() as [NSObject : AnyObject]);
-
-            cargo.logger.carLog(kTAGLoggerLogLevelVerbose, handler: self, message: "tagEvent fired with parameters '\(parameters)'");
         }
         else if (parameters["eventCategory"] == nil) {
-            cargo.logger.logMissingParam("eventCategory", methodName: "tagEvent", handler: self);
+            cargo.logger.logMissingParam("eventCategory", methodName: "GA_tagEvent", handler: self);
         }
         else {
-            cargo.logger.logMissingParam("eventAction", methodName: "tagEvent", handler: self);
+            cargo.logger.logMissingParam("eventAction", methodName: "GA_tagEvent", handler: self);
         }
     }
 
