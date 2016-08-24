@@ -123,7 +123,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, TAGContainerOpenerNotifie
         container.refresh()
 
         let cargoInstance:Cargo = Cargo.sharedHelper;
-        cargoInstance.initTagHandlerWithManager(TAGManager.instance(), tagHandler:container);
+        cargoInstance.initTagHandlerWithManager(TAGManager.instance(), tagContainer:container);
         if let opts = launchOptions {
             cargoInstance.launchOptions = opts;
         }

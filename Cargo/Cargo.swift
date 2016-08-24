@@ -11,26 +11,41 @@ import Foundation
 
 class Cargo: NSObject {
     
-    // Déclaration des variables
+/* ********************************* Variables Declaration ********************************* */
+
     static let sharedHelper = Cargo();
     var launchOptions: [NSObject: AnyObject]?;
     var registeredTagHandlers = Dictionary<String, CARTagHandler>();
     var tagManager:TAGManager!;
     var container:TAGContainer!;
     var logger: CARLogger!;
- 
-    // Initialization of Cargo and creation of the logger
+
+
+/* ************************************* Initializer *************************************** */
+
+    /**
+     * Initialization of Cargo and of the logger
+     *
+     */
     private override init() {
         logger = CARLogger(aContext: "Cargo");
         super.init();
     }
 
-    // Setup the tagManager and the GTM container as properties of Cargo
-    // Setup the log level of Cargo Logger from the level of the tagManager logger
-    func initTagHandlerWithManager(tagManager:TAGManager, tagHandler:TAGContainer) {
+
+/* ********************************* Methods declaration *********************************** */
+
+    /**
+     * Setup the tagManager and the GTM container as properties of Cargo
+     * Setup the log level of Cargo Logger from the level of the tagManager logger
+     *
+     * @param tagManager    The tag manager
+     * @param tagContainer  The GTM container
+     */
+    func initTagHandlerWithManager(tagManager:TAGManager, tagContainer:TAGContainer) {
         //GTM
         self.tagManager = tagManager;
-        self.container = tagHandler;
+        self.container = tagContainer;
 
         //Logger
         self.logger.level = self.tagManager.logger.logLevel();
@@ -38,16 +53,23 @@ class Cargo: NSObject {
     }
 
 
-
-    // Called by each handler at the start of the app to register itself
-    // in the registeredTagHandlers variable.
+    /**
+     * Called by each handler to register itself
+     * in the registeredTagHandlers variable.
+     *
+     * @param tagHandler    The tag handler
+     * @param key           The key the handler is register with
+     */
     func registerTagHandler(tagHandler: CARTagHandler, key:String) {
         registeredTagHandlers[key] = tagHandler;
     }
 
 
-    // For each handler stored in the registeredTagHandlers variable,
-    // validate the handler in order to register its GTM callback methods
+    /**
+     * For each handler stored in the registeredTagHandlers variable,
+     * validate the handler in order to register its GTM callback methods
+     *
+     */
     func registerHandlers(){
         for (key, handler) in registeredTagHandlers {
             handler.validate();
