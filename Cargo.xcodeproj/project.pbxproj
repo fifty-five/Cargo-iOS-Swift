@@ -18,12 +18,10 @@
 		0F12EA511D5A1B7800D776E6 /* Cargo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F12EA501D5A1B7800D776E6 /* Cargo.swift */; };
 		0F12EA531D5A252400D776E6 /* CARTagHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F12EA521D5A252300D776E6 /* CARTagHandler.swift */; };
 		635AEFD5D687BF89071DB316 /* Pods_Cargo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38A7C04AAC2F1F62BA80B58D /* Pods_Cargo.framework */; };
+		803F52431D6DE48C002CA82B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 803F52421D6DE48C002CA82B /* GoogleService-Info.plist */; };
 		804A19AD93FF503E76775DFD /* Pods_CargoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E567E1B97FA94B332C64B957 /* Pods_CargoTests.framework */; };
 		8070536B1D5DC8E600A9FF26 /* CARLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8070536A1D5DC8E600A9FF26 /* CARLogger.swift */; };
 		808DF4321D648AD900233DBD /* CARGoogleAnalyticsTagHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808DF4311D648AD900233DBD /* CARGoogleAnalyticsTagHandler.swift */; };
-		80BB40521D65E897001333A5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 80BB40511D65E897001333A5 /* GoogleService-Info.plist */; };
-		80BB40531D65E897001333A5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 80BB40511D65E897001333A5 /* GoogleService-Info.plist */; };
-		80BB40541D65E897001333A5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 80BB40511D65E897001333A5 /* GoogleService-Info.plist */; };
 		80E2B9A21D637E11005D6DB6 /* CARConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E2B9A11D637E11005D6DB6 /* CARConstants.swift */; };
 /* End PBXBuildFile section */
 
@@ -66,11 +64,11 @@
 		38A7C04AAC2F1F62BA80B58D /* Pods_Cargo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Cargo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E52CECA52B0BAFE9DC1C573 /* Pods-Cargo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cargo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Cargo/Pods-Cargo.debug.xcconfig"; sourceTree = "<group>"; };
 		737B204C560D1323CCDF3A36 /* Pods-CargoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CargoTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CargoTests/Pods-CargoTests.release.xcconfig"; sourceTree = "<group>"; };
+		803F52421D6DE48C002CA82B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Cargo/Handlers/GoogleAnalytics/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		80614C9B1D5B851D00BF46E7 /* BridgingHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BridgingHeader.h; sourceTree = "<group>"; };
 		8070536A1D5DC8E600A9FF26 /* CARLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CARLogger.swift; path = Cargo/Logger/CARLogger.swift; sourceTree = "<group>"; };
 		808DF4311D648AD900233DBD /* CARGoogleAnalyticsTagHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CARGoogleAnalyticsTagHandler.swift; path = Cargo/Handlers/GoogleAnalytics/CARGoogleAnalyticsTagHandler.swift; sourceTree = "<group>"; };
 		808FAE201D5CD99F0075942C /* libTagManager.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTagManager.a; path = Pods/GoogleTagManager/Libraries/libTagManager.a; sourceTree = "<group>"; };
-		80BB40511D65E897001333A5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		80E2B9A11D637E11005D6DB6 /* CARConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CARConstants.swift; path = Cargo/CARConstants.swift; sourceTree = "<group>"; };
 		E567E1B97FA94B332C64B957 /* Pods_CargoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CargoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -105,7 +103,6 @@
 		0F12EA0E1D5A165F00D776E6 = {
 			isa = PBXGroup;
 			children = (
-				80BB40511D65E897001333A5 /* GoogleService-Info.plist */,
 				80614C9B1D5B851D00BF46E7 /* BridgingHeader.h */,
 				0F12EA191D5A165F00D776E6 /* SwiftSampleApp */,
 				0F12EA4C1D5A1A8900D776E6 /* Cargo */,
@@ -208,6 +205,7 @@
 		808DF4301D648A8D00233DBD /* GoogleAnalytics */ = {
 			isa = PBXGroup;
 			children = (
+				803F52421D6DE48C002CA82B /* GoogleService-Info.plist */,
 				808DF4311D648AD900233DBD /* CARGoogleAnalyticsTagHandler.swift */,
 			);
 			name = GoogleAnalytics;
@@ -335,7 +333,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0F12EA281D5A165F00D776E6 /* LaunchScreen.storyboard in Resources */,
-				80BB40521D65E897001333A5 /* GoogleService-Info.plist in Resources */,
+				803F52431D6DE48C002CA82B /* GoogleService-Info.plist in Resources */,
 				0F12EA251D5A165F00D776E6 /* Assets.xcassets in Resources */,
 				0F12EA201D5A165F00D776E6 /* Main.storyboard in Resources */,
 			);
@@ -345,7 +343,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				80BB40531D65E897001333A5 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -353,7 +350,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				80BB40541D65E897001333A5 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
