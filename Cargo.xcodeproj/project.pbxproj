@@ -19,7 +19,6 @@
 		0F12EA531D5A252400D776E6 /* CARTagHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F12EA521D5A252300D776E6 /* CARTagHandler.swift */; };
 		635AEFD5D687BF89071DB316 /* Pods_Cargo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38A7C04AAC2F1F62BA80B58D /* Pods_Cargo.framework */; };
 		803F52431D6DE48C002CA82B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 803F52421D6DE48C002CA82B /* GoogleService-Info.plist */; };
-		804A19AD93FF503E76775DFD /* Pods_CargoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E567E1B97FA94B332C64B957 /* Pods_CargoTests.framework */; };
 		8070536B1D5DC8E600A9FF26 /* CARLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8070536A1D5DC8E600A9FF26 /* CARLogger.swift */; };
 		808DF4321D648AD900233DBD /* CARGoogleAnalyticsTagHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808DF4311D648AD900233DBD /* CARGoogleAnalyticsTagHandler.swift */; };
 		80E2B9A21D637E11005D6DB6 /* CARConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E2B9A11D637E11005D6DB6 /* CARConstants.swift */; };
@@ -70,7 +69,6 @@
 		808DF4311D648AD900233DBD /* CARGoogleAnalyticsTagHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CARGoogleAnalyticsTagHandler.swift; path = Cargo/Handlers/GoogleAnalytics/CARGoogleAnalyticsTagHandler.swift; sourceTree = "<group>"; };
 		808FAE201D5CD99F0075942C /* libTagManager.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTagManager.a; path = Pods/GoogleTagManager/Libraries/libTagManager.a; sourceTree = "<group>"; };
 		80E2B9A11D637E11005D6DB6 /* CARConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CARConstants.swift; path = Cargo/CARConstants.swift; sourceTree = "<group>"; };
-		E567E1B97FA94B332C64B957 /* Pods_CargoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CargoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,7 +84,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				804A19AD93FF503E76775DFD /* Pods_CargoTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -189,7 +186,6 @@
 			children = (
 				808FAE201D5CD99F0075942C /* libTagManager.a */,
 				38A7C04AAC2F1F62BA80B58D /* Pods_Cargo.framework */,
-				E567E1B97FA94B332C64B957 /* Pods_CargoTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
