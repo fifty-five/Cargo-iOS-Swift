@@ -4,7 +4,8 @@
       "name":"GoogleAnalytics",
       "dependencies":[
         {
-          "name": "Google/Analytics"
+          "name": "Google/Analytics",
+          "version": "~> 1.0.0"
         }
       ]
     }

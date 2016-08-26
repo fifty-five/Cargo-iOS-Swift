@@ -1,17 +1,13 @@
 PODS:
-  - FirebaseAnalytics (3.3.0):
-    - FirebaseInstanceID (~> 1.0)
-    - GoogleInterchangeUtilities (~> 1.2)
-    - GoogleSymbolUtilities (~> 1.1)
-    - GoogleUtilities (~> 1.2)
-  - FirebaseInstanceID (1.0.8)
-  - Google/Analytics (3.0.3):
+  - Google/Analytics (1.0.7):
     - Google/Core
     - GoogleAnalytics (~> 3.12)
-  - Google/Core (3.0.3):
-    - FirebaseAnalytics (~> 3.2)
+  - Google/Core (1.0.7):
+    - GoogleNetworkingUtilities (~> 1.0)
+    - GoogleSymbolUtilities (~> 1.0)
+    - GoogleUtilities (~> 1.0)
   - GoogleAnalytics (3.16.0)
-  - GoogleInterchangeUtilities (1.2.1):
+  - GoogleNetworkingUtilities (1.2.1):
     - GoogleSymbolUtilities (~> 1.0)
   - GoogleSymbolUtilities (1.1.1)
   - GoogleTagManager (3.15.1):
@@ -20,15 +16,13 @@ PODS:
     - GoogleSymbolUtilities (~> 1.0)
 
 DEPENDENCIES:
-  - Google/Analytics
+  - Google/Analytics (~> 1.0.0)
   - GoogleTagManager (~> 3.15.1)
 
 SPEC CHECKSUMS:
-  FirebaseAnalytics: 228be2991cb28efb96cdafc4d62f64680e615c69
-  FirebaseInstanceID: ba1e640935235e5fac39dfa816fe7660e72e1a8a
-  Google: 813c467362eabc11385f5a5cc9ad0cb651a58f4e
+  Google: 875f5a8ade86dd02e36586e4a54814843938c7f6
   GoogleAnalytics: 3de986b2fa29012c69fa415566006a9c9cf25320
-  GoogleInterchangeUtilities: def8415a862effc67d549d5b5b0b9c7a2f97d4de
+  GoogleNetworkingUtilities: 3e83269048cfb498dc7ec83ab36813360965c74f
   GoogleSymbolUtilities: 33117db1b5f290c6fbf259585e4885b4c84b98d7
   GoogleTagManager: 8e53b02f09a7e5980f5b8d574672b97879f9fcd1
   GoogleUtilities: 56c5ac05b7aa5dc417a1bb85221a9516e04d7032
