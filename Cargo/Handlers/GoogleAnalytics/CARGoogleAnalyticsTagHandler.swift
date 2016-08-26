@@ -113,7 +113,8 @@ class CARGoogleAnalyticsTagHandler: CARTagHandler {
      */
     func initialize(parameters: [NSObject : AnyObject]) {
         if let trackingId = parameters["trackingId"] {
-            self.instance.trackerWithTrackingId(trackingId as! String);
+            self.tracker = self.instance.trackerWithTrackingId(trackingId as! String);
+            cargo.logger.carLog(kTAGLoggerLogLevelVerbose, handler: self, message: "tracking ID set to \(trackingId)");
         }
         else {
             cargo.logger.logMissingParam("trackingId", methodName: "GA_init", handler: self);
