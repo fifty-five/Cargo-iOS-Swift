@@ -10,18 +10,23 @@ import Foundation
 
 /** A class that provides a logger for Cargo */
 class CARLogger: NSObject {
-    
+
 /* ********************************* Variables Declaration ********************************* */
-    
+
     /** The logging level */
     var level:TAGLoggerLogLevelType;
-    
+
     /** The framework name */
     var context:String;
-    
+
     /** Reference to the logger instance */
     var refToSelf:CARLogger!;
-    
+
+    /** Date formatter in order to log with the date */
+    var formatter: NSDateFormatter!;
+
+    /** The format used to print date in logs */
+    let dateFormat = "yyyy-MM-dd HH:mm:ss.SSS ";
 
 
 /* ************************************* Initializers ************************************** */
@@ -33,6 +38,8 @@ class CARLogger: NSObject {
     private override init() {
         self.context = "Cargo";
         self.level = kTAGLoggerLogLevelVerbose;
+        self.formatter = NSDateFormatter();
+        self.formatter.dateFormat = dateFormat;
         super.init();
     }
 
@@ -44,6 +51,8 @@ class CARLogger: NSObject {
     init(aContext:String) {
         self.context = aContext;
         self.level = kTAGLoggerLogLevelVerbose;
+        self.formatter = NSDateFormatter();
+        self.formatter.dateFormat = dateFormat;
         super.init();
         refToSelf = self;
     }
@@ -64,7 +73,7 @@ class CARLogger: NSObject {
         }
 
         if (refToSelf.levelEnabled(intentLevel)){
-            print("\(refToSelf.context) [\(refToSelf.nameOfLevel(intentLevel))]:", message);
+            print("\(formatter.stringFromDate(NSDate())) \(refToSelf.context) [\(refToSelf.nameOfLevel(intentLevel))]:", message);
         }
     }
 
@@ -82,7 +91,7 @@ class CARLogger: NSObject {
         }
 
         if (refToSelf.levelEnabled(intentLevel)){
-            print("\(refToSelf.context) - \(handler.name) [\(refToSelf.nameOfLevel(intentLevel))]:", message);
+            print("\(formatter.stringFromDate(NSDate())) \(refToSelf.context) - \(handler.name) [\(refToSelf.nameOfLevel(intentLevel))]:", message);
         }
     }
 
