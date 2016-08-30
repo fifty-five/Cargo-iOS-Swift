@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Cargo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -15,7 +16,44 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FQc-nB-CwN">
+                                <rect key="frame" x="252" y="200" width="98" height="30"/>
+                                <state key="normal" title="GA_tagScreen"/>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="151" y="195" width="98" height="30"/>
+                                </variation>
+                                <connections>
+                                    <action selector="pressedScreen:" destination="BYZ-38-t0r" eventType="touchUpInside" id="uGa-ne-PfV"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S30-ze-Xib">
+                                <rect key="frame" x="257" y="379" width="88" height="30"/>
+                                <state key="normal" title="GA_tagEvent"/>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="156" y="374" width="88" height="30"/>
+                                </variation>
+                                <connections>
+                                    <action selector="pressedEvent:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rGW-IP-VJb"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UBc-TU-i3H">
+                                <rect key="frame" x="260" y="285" width="81" height="30"/>
+                                <state key="normal" title="GA_setUser"/>
+                                <connections>
+                                    <action selector="pressedUser:" destination="BYZ-38-t0r" eventType="touchUpInside" id="iHn-Wy-N6O"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="UBc-TU-i3H" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="5Fc-Ic-NOb"/>
+                            <constraint firstItem="UBc-TU-i3H" firstAttribute="centerX" secondItem="S30-ze-Xib" secondAttribute="centerX" id="BYA-ZQ-8n1"/>
+                            <constraint firstItem="FQc-nB-CwN" firstAttribute="centerX" secondItem="UBc-TU-i3H" secondAttribute="centerX" id="Ll8-aZ-kbj"/>
+                            <constraint firstItem="UBc-TU-i3H" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ja9-cm-9BG"/>
+                            <constraint firstItem="UBc-TU-i3H" firstAttribute="top" secondItem="FQc-nB-CwN" secondAttribute="bottom" constant="55" id="lhS-no-csB"/>
+                            <constraint firstItem="S30-ze-Xib" firstAttribute="top" secondItem="UBc-TU-i3H" secondAttribute="bottom" constant="64" id="mFm-ta-eIR"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

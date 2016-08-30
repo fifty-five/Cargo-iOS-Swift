@@ -2,8 +2,8 @@
 //  ViewController.swift
 //  SwiftSampleApp
 //
-//  Created by François K on 09/08/2016.
-//  Copyright © 2016 François K. All rights reserved.
+//  Created by Julien Gil on 24/08/16.
+//  Copyright © 2016 fifty-five All rights reserved.
 //
 
 import UIKit
@@ -21,5 +21,19 @@ class ViewController: UIViewController {
     }
 
 
-}
+    @IBAction func pressedEvent(sender : AnyObject) {
+        let dataLayer = Cargo.sharedHelper.tagManager.dataLayer;
+        dataLayer.push(["event": "testGA"]);
+    }
 
+    @IBAction func pressedUser(sender : AnyObject) {
+        let dataLayer = Cargo.sharedHelper.tagManager.dataLayer;
+        dataLayer.push(["event": "setUser"]);
+    }
+
+    @IBAction func pressedScreen(sender : AnyObject) {
+        let dataLayer = Cargo.sharedHelper.tagManager.dataLayer;
+        dataLayer.push(["event": "openScreen", SCREEN_NAME: "home_screen"])
+    }
+
+}

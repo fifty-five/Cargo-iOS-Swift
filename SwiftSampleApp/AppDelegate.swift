@@ -2,8 +2,8 @@
 //  AppDelegate.swift
 //  SwiftSampleApp
 //
-//  Created by François K on 09/08/2016.
-//  Copyright © 2016 François K. All rights reserved.
+//  Created by Julien Gil on 24/08/16.
+//  Copyright © 2016 fifty-five All rights reserved.
 //
 
 import UIKit
@@ -13,6 +13,7 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate, TAGContainerOpenerNotifier {
 
     var window: UIWindow?
+    var launchOptions:[NSObject: AnyObject]?
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -26,6 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, TAGContainerOpenerNotifie
             timeout: nil,
             notifier: self)
         
+        self.launchOptions = launchOptions;
+
         return true
     }
 
@@ -115,12 +118,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, TAGContainerOpenerNotifie
             }
         }
     }
-    
+
     func containerAvailable(container: TAGContainer!) {
         container.refresh()
 
         let cargoInstance:Cargo = Cargo.sharedHelper;
-        cargoInstance.initTagHandlerWithManager(TAGManager.instance(), tagHandler:container);
+        cargoInstance.initTagHandlerWithManager(TAGManager.instance(), tagContainer:container);
+        if let opts = launchOptions {
+            cargoInstance.launchOptions = opts;
+        }
+        cargoInstance.initHandlers();
+        cargoInstance.registerHandlers();
+
+        let dataLayer = cargoInstance.tagManager.dataLayer;
+        dataLayer.push(["event": "applicationStart"]);
+
     }
 
 }

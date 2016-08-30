@@ -10,18 +10,23 @@ import Foundation
 
 /** A class that provides a logger for Cargo */
 class CARLogger: NSObject {
-    
+
 /* ********************************* Variables Declaration ********************************* */
-    
+
     /** The logging level */
     var level:TAGLoggerLogLevelType;
-    
+
     /** The framework name */
     var context:String;
-    
+
     /** Reference to the logger instance */
     var refToSelf:CARLogger!;
-    
+
+    /** Date formatter in order to log with the date */
+    var formatter: NSDateFormatter!;
+
+    /** The format used to print date in logs */
+    let dateFormat = "yyyy-MM-dd HH:mm:ss.SSS ";
 
 
 /* ************************************* Initializers ************************************** */
@@ -33,6 +38,8 @@ class CARLogger: NSObject {
     private override init() {
         self.context = "Cargo";
         self.level = kTAGLoggerLogLevelVerbose;
+        self.formatter = NSDateFormatter();
+        self.formatter.dateFormat = dateFormat;
         super.init();
     }
 
@@ -44,6 +51,8 @@ class CARLogger: NSObject {
     init(aContext:String) {
         self.context = aContext;
         self.level = kTAGLoggerLogLevelVerbose;
+        self.formatter = NSDateFormatter();
+        self.formatter.dateFormat = dateFormat;
         super.init();
         refToSelf = self;
     }
@@ -62,12 +71,30 @@ class CARLogger: NSObject {
         if (carLogSelf == nil) {
             refToSelf = CARLogger();
         }
-        
+
         if (refToSelf.levelEnabled(intentLevel)){
-            print(refToSelf.context, refToSelf.nameOfLevel(intentLevel), message);
+            print("\(formatter.stringFromDate(NSDate())) \(refToSelf.context) [\(refToSelf.nameOfLevel(intentLevel))]:", message);
         }
     }
-    
+
+    /**
+     *  Log a message with the context it comes from
+     *
+     *  @param intentLevel   The level in which the message should be recorded.
+     *  @param handler       The handler the message comes from
+     *  @param message       The message
+     */
+    func carLog(intentLevel:TAGLoggerLogLevelType, handler:CARTagHandler, message:String){
+        let carLogSelf = refToSelf;
+        if (carLogSelf == nil) {
+            refToSelf = CARLogger();
+        }
+
+        if (refToSelf.levelEnabled(intentLevel)){
+            print("\(formatter.stringFromDate(NSDate())) \(refToSelf.context) - \(handler.name) [\(refToSelf.nameOfLevel(intentLevel))]:", message);
+        }
+    }
+
     /**
      *  This method logs a warning about
      *  a missing required parameter.
@@ -75,10 +102,10 @@ class CARLogger: NSObject {
      *  @param paramName  The missing param name
      *  @param methodName The method name
      */
-    func logMissingParam(paramName:String, methodName:String) {
-        carLog(kTAGLoggerLogLevelWarning, message: "[\(self.context)] Parameter '\(paramName)' is required in method '\(methodName)'");
+    func logMissingParam(paramName:String, methodName:String, handler:CARTagHandler) {
+        carLog(kTAGLoggerLogLevelWarning, message: "[\(self.context)] Parameter '\(paramName)' is required in method '\(methodName)' of '\(handler.name)' handler");
     }
-    
+
     /**
      *  This method logs a warning about an
      *  uncastable param.
@@ -89,7 +116,7 @@ class CARLogger: NSObject {
     func logUncastableParam(paramName:String, type:String) {
         carLog(kTAGLoggerLogLevelWarning, message: "param \(paramName) cannot be casted to \(type) ");
     }
-    
+
     /**
      *  This method logs a warning about
      *  a missing initialization of the framework
@@ -97,7 +124,7 @@ class CARLogger: NSObject {
     func logUninitializedFramework() {
         carLog(kTAGLoggerLogLevelWarning, message: "[\(self.context)] You must init framework before using it");
     }
-    
+
     /**
      *  This method logs a setter success
      *
@@ -107,7 +134,7 @@ class CARLogger: NSObject {
     func logParamSetWithSuccess(paramName: String, value: AnyObject) {
         carLog(kTAGLoggerLogLevelInfo, message: "[\(self.context)] Parameter '\(paramName)' has been set to '\(value)' with success");
     }
-    
+
     /**
      *  This method logs a warning about an
      *  unknown param.
@@ -117,7 +144,7 @@ class CARLogger: NSObject {
     func logUnknownParam(paramName:String) {
         carLog(kTAGLoggerLogLevelWarning, message: "[\(self.context)] Parameter '\(paramName)' is unknown");
     }
-    
+
     /**
      *  This method logs a warning about a
      *  missing value from a predifined value set
@@ -131,13 +158,13 @@ class CARLogger: NSObject {
     }
 
 
-    
+
 /* *********************************** Utilities methods *********************************** */
-    
+
     func levelEnabled(intentLevel:TAGLoggerLogLevelType) -> Bool {
         return ((level != kTAGLoggerLogLevelNone) && (valueOf(intentLevel) >= valueOf(level)));
     }
-    
+
     func valueOf(logLevel:TAGLoggerLogLevelType) -> Int {
         var result: Int!;
         switch (logLevel) {
@@ -163,7 +190,6 @@ class CARLogger: NSObject {
         return result;
     }
 
-    
     func nameOfLevel(loggingLevel:TAGLoggerLogLevelType) -> String {
         var result: String!;
         switch (loggingLevel) {
