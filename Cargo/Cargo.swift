@@ -54,6 +54,48 @@ class Cargo: NSObject {
 
 
     /**
+     * Retrieves the handlers.json file, parse it and initialize the handlers declared in it.
+     * This method has to be called after "initTagHandlerWithManager"
+     * and before trying to register handlers
+     *
+     */
+    func initHandlers() {
+        var names = [String]();
+
+        // Retrieves the file and its content
+        if let path = NSBundle.mainBundle().pathForResource("handlers", ofType: "json") {
+            if let handlersJSON = NSData(contentsOfFile: path) {
+
+                // NSJSONSerialization gives us a JSON object
+                // do/catch block is used because JSONObjectWithData:options: may throw an error
+                do {
+                    let json = try NSJSONSerialization.JSONObjectWithData(handlersJSON, options: .AllowFragments);
+
+                    // Gets "handlers" from the JSON and try to cast it to an array of dictionaries
+                    // For all these dictionaries we try to get the name value as a string
+                    // If it works, this string is added to the String array "names"
+                    if let handlers = json["handlers"] as? [[String: AnyObject]] {
+                        for handler in handlers {
+                            if let name = handler["name"] as? String {
+                                names.append(name);
+                            }
+                        }
+                    }
+                }
+                catch {
+                    print("error serializing JSON: \(error)")
+                }
+
+                // check for the handlers which have been declared in the Podfile and initialize them
+                if (names.contains("GoogleAnalytics")) {
+                    _ = CARGoogleAnalyticsTagHandler();
+                }
+            }
+        }
+    }
+
+
+    /**
      * Called by each handler to register itself
      * in the registeredTagHandlers variable.
      *

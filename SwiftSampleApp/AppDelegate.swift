@@ -127,7 +127,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, TAGContainerOpenerNotifie
         if let opts = launchOptions {
             cargoInstance.launchOptions = opts;
         }
-        _ = CARGoogleAnalyticsTagHandler();
+        cargoInstance.initHandlers();
         cargoInstance.registerHandlers();
 
         let dataLayer = cargoInstance.tagManager.dataLayer;
