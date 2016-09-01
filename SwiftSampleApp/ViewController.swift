@@ -24,6 +24,7 @@ class ViewController: UIViewController {
     @IBAction func pressedEvent(sender : AnyObject) {
         let dataLayer = Cargo.sharedHelper.tagManager.dataLayer;
         dataLayer.push(["event": "testGA"]);
+        dataLayer.push(["event": "testTune", "eventName": "a cool event", "eventCurrencyCode": "USD"]);
     }
 
     @IBAction func pressedUser(sender : AnyObject) {
