@@ -110,6 +110,11 @@ class CARTuneTagHandler: CARTagHandler {
      * Attribution will not function without the measureSession call included.
      */
     private func measureSession() {
+        // check if the initialization has been done
+        if (!self.initialized) {
+            cargo.logger.logUninitializedFramework();
+            return;
+        }
         Tune.measureSession();
     }
 
@@ -120,6 +125,12 @@ class CARTuneTagHandler: CARTagHandler {
      *                      the user identity through several ways.
      */
     private func identify(parameters: [NSObject: AnyObject]) {
+        // check if the initialization has been done
+        if (!self.initialized) {
+            cargo.logger.logUninitializedFramework();
+            return;
+        }
+
         if let userId = parameters[USER_ID] {
             Tune.setUserId(userId as! String);
         }
@@ -164,6 +175,12 @@ class CARTuneTagHandler: CARTagHandler {
         var tuneEvent: TuneEvent!;
         var params = parameters;
 
+        // check if the initialization has been done
+        if (!self.initialized) {
+            cargo.logger.logUninitializedFramework();
+            return;
+        }
+
         if let eventName = params[EVENT_NAME] {
             tuneEvent = TuneEvent.init(name: eventName as! String);
             params.removeValueForKey(EVENT_NAME);
@@ -190,8 +207,6 @@ class CARTuneTagHandler: CARTagHandler {
         }
     }
 
-
-
     /**
      * Method used to create and fire a screen view to the Tune Console
      * The mandatory parameters is SCREEN_NAME which is a necessity to build the tagScreen.
@@ -210,6 +225,12 @@ class CARTuneTagHandler: CARTagHandler {
 
         var tuneEvent: TuneEvent!;
         var params = parameters;
+
+        // check if the initialization has been done
+        if (!self.initialized) {
+            cargo.logger.logUninitializedFramework();
+            return;
+        }
 
         if let eventName = params[SCREEN_NAME] {
             tuneEvent = TuneEvent.init(name: eventName as! String);
