@@ -112,7 +112,7 @@ class CARTuneTagHandler: CARTagHandler {
     private func measureSession() {
         // check if the initialization has been done
         if (!self.initialized) {
-            cargo.logger.logUninitializedFramework();
+            cargo.logger.logUninitializedFramework(self);
             return;
         }
         Tune.measureSession();
@@ -127,7 +127,7 @@ class CARTuneTagHandler: CARTagHandler {
     private func identify(parameters: [NSObject: AnyObject]) {
         // check if the initialization has been done
         if (!self.initialized) {
-            cargo.logger.logUninitializedFramework();
+            cargo.logger.logUninitializedFramework(self);
             return;
         }
 
@@ -177,7 +177,7 @@ class CARTuneTagHandler: CARTagHandler {
 
         // check if the initialization has been done
         if (!self.initialized) {
-            cargo.logger.logUninitializedFramework();
+            cargo.logger.logUninitializedFramework(self);
             return;
         }
 
@@ -228,7 +228,7 @@ class CARTuneTagHandler: CARTagHandler {
 
         // check if the initialization has been done
         if (!self.initialized) {
-            cargo.logger.logUninitializedFramework();
+            cargo.logger.logUninitializedFramework(self);
             return;
         }
 
