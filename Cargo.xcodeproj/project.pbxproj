@@ -23,6 +23,7 @@
 		803F52431D6DE48C002CA82B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 803F52421D6DE48C002CA82B /* GoogleService-Info.plist */; };
 		8070536B1D5DC8E600A9FF26 /* CARLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8070536A1D5DC8E600A9FF26 /* CARLogger.swift */; };
 		808DF4321D648AD900233DBD /* CARGoogleAnalyticsTagHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808DF4311D648AD900233DBD /* CARGoogleAnalyticsTagHandler.swift */; };
+		80A1529A1D75C23E0032FA91 /* CARTuneTagHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A152991D75C23E0032FA91 /* CARTuneTagHandler.swift */; };
 		80E2B9A21D637E11005D6DB6 /* CARConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E2B9A11D637E11005D6DB6 /* CARConstants.swift */; };
 /* End PBXBuildFile section */
 
@@ -71,6 +72,7 @@
 		8070536A1D5DC8E600A9FF26 /* CARLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CARLogger.swift; path = Cargo/Logger/CARLogger.swift; sourceTree = "<group>"; };
 		808DF4311D648AD900233DBD /* CARGoogleAnalyticsTagHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CARGoogleAnalyticsTagHandler.swift; path = Cargo/Handlers/GoogleAnalytics/CARGoogleAnalyticsTagHandler.swift; sourceTree = "<group>"; };
 		808FAE201D5CD99F0075942C /* libTagManager.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTagManager.a; path = Pods/GoogleTagManager/Libraries/libTagManager.a; sourceTree = "<group>"; };
+		80A152991D75C23E0032FA91 /* CARTuneTagHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CARTuneTagHandler.swift; path = Cargo/Handlers/Tune/CARTuneTagHandler.swift; sourceTree = "<group>"; };
 		80E2B9A11D637E11005D6DB6 /* CARConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CARConstants.swift; path = Cargo/CARConstants.swift; sourceTree = "<group>"; };
 		A309854C6B05E33F252226E3 /* Pods_CargoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CargoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -183,6 +185,7 @@
 			children = (
 				0F12EA521D5A252300D776E6 /* CARTagHandler.swift */,
 				808DF4301D648A8D00233DBD /* GoogleAnalytics */,
+				80A152961D75C1CC0032FA91 /* Tune */,
 			);
 			name = Handlers;
 			sourceTree = "<group>";
@@ -220,6 +223,14 @@
 				808DF4311D648AD900233DBD /* CARGoogleAnalyticsTagHandler.swift */,
 			);
 			name = GoogleAnalytics;
+			sourceTree = "<group>";
+		};
+		80A152961D75C1CC0032FA91 /* Tune */ = {
+			isa = PBXGroup;
+			children = (
+				80A152991D75C23E0032FA91 /* CARTuneTagHandler.swift */,
+			);
+			name = Tune;
 			sourceTree = "<group>";
 		};
 		D751A0E737BD0D5EF8EEAC1E /* Pods */ = {
@@ -468,6 +479,7 @@
 				0F12EA1D1D5A165F00D776E6 /* ViewController.swift in Sources */,
 				0F12EA231D5A165F00D776E6 /* SwiftSampleApp.xcdatamodeld in Sources */,
 				808DF4321D648AD900233DBD /* CARGoogleAnalyticsTagHandler.swift in Sources */,
+				80A1529A1D75C23E0032FA91 /* CARTuneTagHandler.swift in Sources */,
 				80E2B9A21D637E11005D6DB6 /* CARConstants.swift in Sources */,
 				0F12EA511D5A1B7800D776E6 /* Cargo.swift in Sources */,
 				0F12EA531D5A252400D776E6 /* CARTagHandler.swift in Sources */,

@@ -22,4 +22,6 @@
 #import <GoogleAnalytics/GAIDictionaryBuilder.h>
 #import <GoogleAnalytics/GAITrackedViewController.h>
 
+#import <Tune/Tune.h>
+
 #endif /* BridgingHeader_h */
