@@ -73,7 +73,7 @@ class CARLogger: NSObject {
         }
 
         if (refToSelf.levelEnabled(intentLevel)){
-            print("\(formatter.stringFromDate(NSDate())) \(refToSelf.context) [\(refToSelf.nameOfLevel(intentLevel))]:", message);
+            print("\(formatter.stringFromDate(NSDate()))\(refToSelf.context) [\(refToSelf.nameOfLevel(intentLevel))]:", message);
         }
     }
 
@@ -91,7 +91,7 @@ class CARLogger: NSObject {
         }
 
         if (refToSelf.levelEnabled(intentLevel)){
-            print("\(formatter.stringFromDate(NSDate())) \(refToSelf.context) - \(handler.name) [\(refToSelf.nameOfLevel(intentLevel))]:", message);
+            print("\(formatter.stringFromDate(NSDate()))\(refToSelf.context) [\(refToSelf.nameOfLevel(intentLevel))] - \(handler.name) :", message);
         }
     }
 
@@ -136,6 +136,17 @@ class CARLogger: NSObject {
     }
 
     /**
+     *  This method logs a setter success with context
+     *
+     *  @param paramName The set param
+     *  @param value     The set value
+     *  @param handler   The handler
+     */
+    func logParamSetWithSuccess(paramName: String, value: AnyObject, handler: CARTagHandler) {
+        carLog(kTAGLoggerLogLevelInfo, handler: handler, message: "[\(self.context)] Parameter '\(paramName)' has been set to '\(value)' with success");
+    }
+
+    /**
      *  This method logs a warning about an
      *  unknown param.
      *
@@ -143,6 +154,17 @@ class CARLogger: NSObject {
      */
     func logUnknownParam(paramName:String) {
         carLog(kTAGLoggerLogLevelWarning, message: "[\(self.context)] Parameter '\(paramName)' is unknown");
+    }
+
+    /**
+     *  This method logs a warning about an
+     *  unknown param with context.
+     *
+     *  @param paramName The unknown param
+     *  @param handler   The handler
+     */
+    func logUnknownParam(handler: CARTagHandler, paramName:String) {
+        carLog(kTAGLoggerLogLevelWarning, handler: handler, message: "[\(self.context)] Parameter '\(paramName)' is unknown");
     }
 
     /**
