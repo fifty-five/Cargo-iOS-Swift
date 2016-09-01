@@ -80,7 +80,7 @@ class CARTuneTagHandler: CARTagHandler {
             self.tagEvent(parameters);
             break ;
         case Tune_tagScreen:
-            self.tagScreen(parameters);
+            self.tagEvent(parameters);
             break ;
         default:
             noTagMatch(self, tagName: tagName);
@@ -169,6 +169,24 @@ class CARTuneTagHandler: CARTagHandler {
      *              passed through the GTM container and the execute method.
      *              The only parameter requested here is a name or an id for the event
      *              (EVENT_NAME or EVENT_ID)
+     *
+     *
+     *              BUT ALSO
+     *
+     *
+     * Method used to create and fire a screen view to the Tune Console
+     * The mandatory parameters is SCREEN_NAME which is a necessity to build the tagScreen.
+     * Actually, as no native tagScreen is given in the Tune SDK, we fire a custom event.
+     *
+     * After the creation of the event object, some attributes can be added through the
+     * buildEvent:withParameters: method, using the NSDictionary obtained from the gtm container.
+     * We recommend to use Attribute1/2 if you need more information about the screen.
+     *
+     * @param map   the parameters given at the moment of the dataLayer.push(),
+     *              passed through the GTM container and the execute method.
+     *              The only parameter requested here is a name for the screen
+     *              (SCREEN_NAME)
+
      */
     private func tagEvent(parameters: [NSObject: AnyObject]) {
 
@@ -184,9 +202,15 @@ class CARTuneTagHandler: CARTagHandler {
         if let eventName = params[EVENT_NAME] {
             tuneEvent = TuneEvent.init(name: eventName as! String);
             params.removeValueForKey(EVENT_NAME);
+            cargo.logger.logParamSetWithSuccess(EVENT_NAME, value: eventName, handler: self);
+        }
+        else if let eventName = params[SCREEN_NAME] {
+            tuneEvent = TuneEvent.init(name: eventName as! String);
+            params.removeValueForKey(SCREEN_NAME);
+            cargo.logger.logParamSetWithSuccess(SCREEN_NAME, value: eventName, handler: self);
         }
         else {
-            cargo.logger.logMissingParam(EVENT_NAME, methodName: Tune_tagEvent, handler: self);
+            cargo.logger.logMissingParam("\(EVENT_NAME)/\(SCREEN_NAME)", methodName: "\(Tune_tagEvent)/\(Tune_tagScreen)", handler: self);
             return ;
         }
 
@@ -204,54 +228,6 @@ class CARTuneTagHandler: CARTagHandler {
         }
         else {
             cargo.logger.carLog(kTAGLoggerLogLevelError, handler: self, message: "The tagEvent is nil, the tag did not fire");
-        }
-    }
-
-    /**
-     * Method used to create and fire a screen view to the Tune Console
-     * The mandatory parameters is SCREEN_NAME which is a necessity to build the tagScreen.
-     * Actually, as no native tagScreen is given in the Tune SDK, we fire a custom event.
-     *
-     * After the creation of the event object, some attributes can be added through the
-     * buildEvent:withParameters: method, using the NSDictionary obtained from the gtm container.
-     * We recommend to use Attribute1/2 if you need more information about the screen.
-     *
-     * @param map   the parameters given at the moment of the dataLayer.push(),
-     *              passed through the GTM container and the execute method.
-     *              The only parameter requested here is a name for the screen
-     *              (SCREEN_NAME)
-     */
-    private func tagScreen(parameters: [NSObject: AnyObject]) {
-
-        var tuneEvent: TuneEvent!;
-        var params = parameters;
-
-        // check if the initialization has been done
-        if (!self.initialized) {
-            cargo.logger.logUninitializedFramework(self);
-            return;
-        }
-
-        if let eventName = params[SCREEN_NAME] {
-            tuneEvent = TuneEvent.init(name: eventName as! String);
-            params.removeValueForKey(SCREEN_NAME);
-        }
-        else {
-            cargo.logger.logMissingParam(SCREEN_NAME, methodName: Tune_tagEvent, handler: self);
-            return ;
-        }
-
-        // call on the buildEvent if the dictionary contains optional parameters
-        if (params.count > 0 && (tuneEvent) != nil) {
-            tuneEvent = buildEvent(tuneEvent, parameters: params);
-        }
-
-        // if the TuneEvent object isn't nil, the tag is sent. Otherwise, an error is displayed
-        if ((tuneEvent) != nil) {
-            Tune.measureEvent(tuneEvent);
-        }
-        else {
-            cargo.logger.carLog(kTAGLoggerLogLevelError, handler: self, message: "The tagScreen is nil, the tag did not fire");
         }
     }
 
