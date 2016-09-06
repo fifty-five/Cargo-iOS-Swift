@@ -20,7 +20,7 @@ target 'Cargo' do
   import_pods
 end
 
-target 'CargoTests', :exclusive => true do
+target 'CargoTests' do
   import_gtm
   import_pods
 end
