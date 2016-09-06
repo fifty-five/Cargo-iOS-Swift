@@ -90,6 +90,12 @@ class Cargo: NSObject {
                 if (names.contains("GoogleAnalytics")) {
                     _ = CARGoogleAnalyticsTagHandler();
                 }
+                if (names.contains("Tune")) {
+                    _ = CARTuneTagHandler();
+                }
+                if (names.contains("Firebase")) {
+                    _ = CARFirebaseTagHandler();
+                }
             }
         }
     }

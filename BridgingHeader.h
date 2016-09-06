@@ -22,4 +22,9 @@
 #import <GoogleAnalytics/GAIDictionaryBuilder.h>
 #import <GoogleAnalytics/GAITrackedViewController.h>
 
+#import <FirebaseAnalytics/FIRAnalytics.h>
+#import <FirebaseAnalytics/FIRAnalyticsConfiguration.h>
+
+#import <Tune/Tune.h>
+
 #endif /* BridgingHeader_h */

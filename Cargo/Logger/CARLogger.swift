@@ -73,7 +73,7 @@ class CARLogger: NSObject {
         }
 
         if (refToSelf.levelEnabled(intentLevel)){
-            print("\(formatter.stringFromDate(NSDate())) \(refToSelf.context) [\(refToSelf.nameOfLevel(intentLevel))]:", message);
+            print("\(formatter.stringFromDate(NSDate()))\(refToSelf.context) [\(refToSelf.nameOfLevel(intentLevel))]:", message);
         }
     }
 
@@ -91,7 +91,7 @@ class CARLogger: NSObject {
         }
 
         if (refToSelf.levelEnabled(intentLevel)){
-            print("\(formatter.stringFromDate(NSDate())) \(refToSelf.context) - \(handler.name) [\(refToSelf.nameOfLevel(intentLevel))]:", message);
+            print("\(formatter.stringFromDate(NSDate()))\(refToSelf.context) [\(refToSelf.nameOfLevel(intentLevel))] - \(handler.name) :", message);
         }
     }
 
@@ -103,7 +103,7 @@ class CARLogger: NSObject {
      *  @param methodName The method name
      */
     func logMissingParam(paramName:String, methodName:String, handler:CARTagHandler) {
-        carLog(kTAGLoggerLogLevelWarning, message: "[\(self.context)] Parameter '\(paramName)' is required in method '\(methodName)' of '\(handler.name)' handler");
+        carLog(kTAGLoggerLogLevelWarning, message: "Parameter '\(paramName)' is required in method '\(methodName)' of '\(handler.name)' handler");
     }
 
     /**
@@ -122,7 +122,16 @@ class CARLogger: NSObject {
      *  a missing initialization of the framework
      */
     func logUninitializedFramework() {
-        carLog(kTAGLoggerLogLevelWarning, message: "[\(self.context)] You must init framework before using it");
+        carLog(kTAGLoggerLogLevelWarning, message: "You must initialize the framework before using it");
+    }
+
+    /**
+     *  This method logs a warning about
+     *  a missing initialization of the framework.
+     *  Name of the framework is logged here
+     */
+    func logUninitializedFramework(handler: CARTagHandler) {
+        carLog(kTAGLoggerLogLevelWarning, message: "You must initialize \(handler) before using it");
     }
 
     /**
@@ -132,7 +141,18 @@ class CARLogger: NSObject {
      *  @param value     The set value
      */
     func logParamSetWithSuccess(paramName: String, value: AnyObject) {
-        carLog(kTAGLoggerLogLevelInfo, message: "[\(self.context)] Parameter '\(paramName)' has been set to '\(value)' with success");
+        carLog(kTAGLoggerLogLevelInfo, message: "Parameter '\(paramName)' has been set to '\(value)' with success");
+    }
+
+    /**
+     *  This method logs a setter success with context
+     *
+     *  @param paramName The set param
+     *  @param value     The set value
+     *  @param handler   The handler
+     */
+    func logParamSetWithSuccess(paramName: String, value: AnyObject, handler: CARTagHandler) {
+        carLog(kTAGLoggerLogLevelInfo, handler: handler, message: "Parameter '\(paramName)' has been set to '\(value)' with success");
     }
 
     /**
@@ -142,7 +162,18 @@ class CARLogger: NSObject {
      *  @param paramName The unknown param
      */
     func logUnknownParam(paramName:String) {
-        carLog(kTAGLoggerLogLevelWarning, message: "[\(self.context)] Parameter '\(paramName)' is unknown");
+        carLog(kTAGLoggerLogLevelWarning, message: "Parameter '\(paramName)' is unknown");
+    }
+
+    /**
+     *  This method logs a warning about an
+     *  unknown param with context.
+     *
+     *  @param paramName The unknown param
+     *  @param handler   The handler
+     */
+    func logUnknownParam(handler: CARTagHandler, paramName:String) {
+        carLog(kTAGLoggerLogLevelWarning, handler: handler, message: "Parameter '\(paramName)' is unknown");
     }
 
     /**
@@ -153,8 +184,7 @@ class CARLogger: NSObject {
      *  @param possibleValues The value set
      */
     func logNotFoundValue(value: String, key: String, possibleValues: Array<AnyObject>) {
-        carLog(kTAGLoggerLogLevelWarning,
-               message: "[\(self.context)] Value '\(value)' for key '\(key)' is not found among possible values \(possibleValues)");
+        carLog(kTAGLoggerLogLevelWarning, message: "Value '\(value)' for key '\(key)' is not found among possible values \(possibleValues)");
     }
 
 

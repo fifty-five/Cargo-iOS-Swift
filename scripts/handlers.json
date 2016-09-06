@@ -8,6 +8,24 @@
           "version": "~> 1.0.0"
         }
       ]
+    },
+    {
+      "name":"Tune",
+      "dependencies":[
+        {
+          "name": "Tune",
+          "version" : "~> 4.7.0"
+        }
+      ]
+    },
+    {
+      "name":"Firebase",
+      "dependencies":[
+        {
+          "name": "Firebase",
+          "version" : "~> 3.5.0"
+        }
+      ]
     }
   ]
 }
