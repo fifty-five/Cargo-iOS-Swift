@@ -17,9 +17,10 @@
 		0F12EA3E1D5A165F00D776E6 /* SwiftSampleAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F12EA3D1D5A165F00D776E6 /* SwiftSampleAppUITests.swift */; };
 		0F12EA511D5A1B7800D776E6 /* Cargo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F12EA501D5A1B7800D776E6 /* Cargo.swift */; };
 		0F12EA531D5A252400D776E6 /* CARTagHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F12EA521D5A252300D776E6 /* CARTagHandler.swift */; };
+		0F5CBB521D7EFF8A00684C75 /* CARFirebaseTagHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5CBB511D7EFF8A00684C75 /* CARFirebaseTagHandler.swift */; };
+		0F5CBB551D7F00CD00684C75 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0F5CBB541D7F00CD00684C75 /* GoogleService-Info.plist */; };
 		4A79EF737ECE60B17C4DDD5F /* Pods_Cargo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8375CF76CE684DDB537E4856 /* Pods_Cargo.framework */; };
 		802722331D757A8E00A52526 /* handlers.json in Resources */ = {isa = PBXBuildFile; fileRef = 802722321D757A8E00A52526 /* handlers.json */; };
-		803F52431D6DE48C002CA82B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 803F52421D6DE48C002CA82B /* GoogleService-Info.plist */; };
 		8070536B1D5DC8E600A9FF26 /* CARLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8070536A1D5DC8E600A9FF26 /* CARLogger.swift */; };
 		808DF4321D648AD900233DBD /* CARGoogleAnalyticsTagHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808DF4311D648AD900233DBD /* CARGoogleAnalyticsTagHandler.swift */; };
 		80A1529A1D75C23E0032FA91 /* CARTuneTagHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A152991D75C23E0032FA91 /* CARTuneTagHandler.swift */; };
@@ -61,10 +62,11 @@
 		0F12EA3F1D5A165F00D776E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0F12EA501D5A1B7800D776E6 /* Cargo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Cargo.swift; path = Cargo/Cargo.swift; sourceTree = "<group>"; };
 		0F12EA521D5A252300D776E6 /* CARTagHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CARTagHandler.swift; path = Cargo/Handlers/CARTagHandler.swift; sourceTree = "<group>"; };
+		0F5CBB511D7EFF8A00684C75 /* CARFirebaseTagHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CARFirebaseTagHandler.swift; path = Cargo/Handlers/Firebase/CARFirebaseTagHandler.swift; sourceTree = "<group>"; };
+		0F5CBB541D7F00CD00684C75 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		237787A162AE243EAB87E41B /* Pods-Cargo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cargo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Cargo/Pods-Cargo.debug.xcconfig"; sourceTree = "<group>"; };
 		23EB0A122975528B94BE5CEC /* Pods-Cargo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cargo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Cargo/Pods-Cargo.release.xcconfig"; sourceTree = "<group>"; };
 		802722321D757A8E00A52526 /* handlers.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = handlers.json; path = scripts/handlers.json; sourceTree = "<group>"; };
-		803F52421D6DE48C002CA82B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Cargo/Handlers/GoogleAnalytics/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		80614C9B1D5B851D00BF46E7 /* BridgingHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BridgingHeader.h; sourceTree = "<group>"; };
 		8070536A1D5DC8E600A9FF26 /* CARLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CARLogger.swift; path = Cargo/Logger/CARLogger.swift; sourceTree = "<group>"; };
 		808DF4311D648AD900233DBD /* CARGoogleAnalyticsTagHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CARGoogleAnalyticsTagHandler.swift; path = Cargo/Handlers/GoogleAnalytics/CARGoogleAnalyticsTagHandler.swift; sourceTree = "<group>"; };
@@ -186,8 +188,17 @@
 				0F12EA521D5A252300D776E6 /* CARTagHandler.swift */,
 				808DF4301D648A8D00233DBD /* GoogleAnalytics */,
 				80A152961D75C1CC0032FA91 /* Tune */,
+				0F5CBB531D7EFF9100684C75 /* Firebase */,
 			);
 			name = Handlers;
+			sourceTree = "<group>";
+		};
+		0F5CBB531D7EFF9100684C75 /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				0F5CBB511D7EFF8A00684C75 /* CARFirebaseTagHandler.swift */,
+			);
+			name = Firebase;
 			sourceTree = "<group>";
 		};
 		2413D38215D82028875B65E6 /* Frameworks */ = {
@@ -230,7 +241,7 @@
 		808DF4301D648A8D00233DBD /* GoogleAnalytics */ = {
 			isa = PBXGroup;
 			children = (
-				803F52421D6DE48C002CA82B /* GoogleService-Info.plist */,
+				0F5CBB541D7F00CD00684C75 /* GoogleService-Info.plist */,
 				808DF4311D648AD900233DBD /* CARGoogleAnalyticsTagHandler.swift */,
 			);
 			name = GoogleAnalytics;
@@ -356,9 +367,9 @@
 			files = (
 				0F12EA281D5A165F00D776E6 /* LaunchScreen.storyboard in Resources */,
 				802722331D757A8E00A52526 /* handlers.json in Resources */,
-				803F52431D6DE48C002CA82B /* GoogleService-Info.plist in Resources */,
 				0F12EA251D5A165F00D776E6 /* Assets.xcassets in Resources */,
 				0F12EA201D5A165F00D776E6 /* Main.storyboard in Resources */,
+				0F5CBB551D7F00CD00684C75 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -481,6 +492,7 @@
 				808DF4321D648AD900233DBD /* CARGoogleAnalyticsTagHandler.swift in Sources */,
 				80A1529A1D75C23E0032FA91 /* CARTuneTagHandler.swift in Sources */,
 				80E2B9A21D637E11005D6DB6 /* CARConstants.swift in Sources */,
+				0F5CBB521D7EFF8A00684C75 /* CARFirebaseTagHandler.swift in Sources */,
 				0F12EA511D5A1B7800D776E6 /* Cargo.swift in Sources */,
 				0F12EA531D5A252400D776E6 /* CARTagHandler.swift in Sources */,
 				8070536B1D5DC8E600A9FF26 /* CARLogger.swift in Sources */,
