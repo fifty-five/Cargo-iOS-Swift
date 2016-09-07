@@ -55,10 +55,52 @@ class CARFacebookTagHandler: CARTagHandler {
      */
     func activateApp(){
         self.fbAppEvents.activateApp();
+        //Mettre un carlog
     }
     
+    /**
+     *  Call back from GTM container to execute a specific action
+     *  after tag and parameters are received
+     *
+     *  @param tagName  The tag name
+     *  @param parameters   Dictionary of parameters
+     */
+    override func execute(tagName: String, parameters: [NSObject : AnyObject]) {
+        super.execute(tagName, parameters: parameters);
+        
+        switch (tagName) {
+        case FB_initialize:
+            self.initialize(parameters);
+            break ;
+        case FB_activateApp:
+            self.activateApp()(parameters);
+            break ;
+        case FB_tagEvent:
+            self.tagEvent(parameters);
+            break ;
+        case FB_purchase:
+            self.purchase(parameters);
+            break ;
+        default:
+            noTagMatch(self, tagName: tagName);
+        }
+    }
     
     /* ********************************** Specific methods ************************************* */
     
+    //TODO: tagEvent
+    // Send an event to facebook SDK. Calls differents methods depending on which parameters have been given
+    // Each events can be logged with a valueToSum and a set of parameters (up to 25 parameters).
+    // When reported, all of the valueToSum properties will be summed together. It is an arbitrary number
+    // that can represent any value (e.g., a price or a quantity).
+    // Note that both the valueToSum and parameters arguments are optional.
+    
+    //TODO: purchase
+    // Logs a purchase in your app. with purchaseAmount the money spent, and currencyCode the currency code.
+    // The currency specification is expected to be an ISO 4217 currency code.
+    
+    
+    
+
     
 }
