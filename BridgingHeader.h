@@ -27,4 +27,6 @@
 
 #import <Tune/Tune.h>
 
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+
 #endif /* BridgingHeader_h */
