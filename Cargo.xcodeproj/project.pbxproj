@@ -19,6 +19,7 @@
 		0F12EA531D5A252400D776E6 /* CARTagHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F12EA521D5A252300D776E6 /* CARTagHandler.swift */; };
 		0F5CBB521D7EFF8A00684C75 /* CARFirebaseTagHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5CBB511D7EFF8A00684C75 /* CARFirebaseTagHandler.swift */; };
 		0F5CBB551D7F00CD00684C75 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0F5CBB541D7F00CD00684C75 /* GoogleService-Info.plist */; };
+		0FC6FFEF1D8049E600FE864A /* CARFacebookTagHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6FFEE1D8049E600FE864A /* CARFacebookTagHandler.swift */; };
 		4A79EF737ECE60B17C4DDD5F /* Pods_Cargo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8375CF76CE684DDB537E4856 /* Pods_Cargo.framework */; };
 		802722331D757A8E00A52526 /* handlers.json in Resources */ = {isa = PBXBuildFile; fileRef = 802722321D757A8E00A52526 /* handlers.json */; };
 		8070536B1D5DC8E600A9FF26 /* CARLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8070536A1D5DC8E600A9FF26 /* CARLogger.swift */; };
@@ -64,6 +65,7 @@
 		0F12EA521D5A252300D776E6 /* CARTagHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CARTagHandler.swift; path = Cargo/Handlers/CARTagHandler.swift; sourceTree = "<group>"; };
 		0F5CBB511D7EFF8A00684C75 /* CARFirebaseTagHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CARFirebaseTagHandler.swift; path = Cargo/Handlers/Firebase/CARFirebaseTagHandler.swift; sourceTree = "<group>"; };
 		0F5CBB541D7F00CD00684C75 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		0FC6FFEE1D8049E600FE864A /* CARFacebookTagHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CARFacebookTagHandler.swift; path = Cargo/Handlers/Facebook/CARFacebookTagHandler.swift; sourceTree = "<group>"; };
 		237787A162AE243EAB87E41B /* Pods-Cargo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cargo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Cargo/Pods-Cargo.debug.xcconfig"; sourceTree = "<group>"; };
 		23EB0A122975528B94BE5CEC /* Pods-Cargo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cargo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Cargo/Pods-Cargo.release.xcconfig"; sourceTree = "<group>"; };
 		802722321D757A8E00A52526 /* handlers.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = handlers.json; path = scripts/handlers.json; sourceTree = "<group>"; };
@@ -189,6 +191,7 @@
 				808DF4301D648A8D00233DBD /* GoogleAnalytics */,
 				80A152961D75C1CC0032FA91 /* Tune */,
 				0F5CBB531D7EFF9100684C75 /* Firebase */,
+				0FC6FFF01D804A7F00FE864A /* Facebook */,
 			);
 			name = Handlers;
 			sourceTree = "<group>";
@@ -199,6 +202,14 @@
 				0F5CBB511D7EFF8A00684C75 /* CARFirebaseTagHandler.swift */,
 			);
 			name = Firebase;
+			sourceTree = "<group>";
+		};
+		0FC6FFF01D804A7F00FE864A /* Facebook */ = {
+			isa = PBXGroup;
+			children = (
+				0FC6FFEE1D8049E600FE864A /* CARFacebookTagHandler.swift */,
+			);
+			name = Facebook;
 			sourceTree = "<group>";
 		};
 		2413D38215D82028875B65E6 /* Frameworks */ = {
@@ -497,6 +508,7 @@
 				80E2B9A21D637E11005D6DB6 /* CARConstants.swift in Sources */,
 				0F5CBB521D7EFF8A00684C75 /* CARFirebaseTagHandler.swift in Sources */,
 				0F12EA511D5A1B7800D776E6 /* Cargo.swift in Sources */,
+				0FC6FFEF1D8049E600FE864A /* CARFacebookTagHandler.swift in Sources */,
 				0F12EA531D5A252400D776E6 /* CARTagHandler.swift in Sources */,
 				8070536B1D5DC8E600A9FF26 /* CARLogger.swift in Sources */,
 				0F12EA1B1D5A165F00D776E6 /* AppDelegate.swift in Sources */,
