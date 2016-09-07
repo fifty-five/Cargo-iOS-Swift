@@ -1,4 +1,13 @@
 PODS:
+  - Bolts (1.8.4):
+    - Bolts/AppLinks (= 1.8.4)
+    - Bolts/Tasks (= 1.8.4)
+  - Bolts-Swift (1.2.0)
+  - Bolts/AppLinks (1.8.4):
+    - Bolts/Tasks
+  - Bolts/Tasks (1.8.4)
+  - FBSDKCoreKit (4.15.0):
+    - Bolts (~> 1.7)
   - Firebase (3.5.2):
     - Firebase/Core (= 3.5.2)
   - Firebase/Analytics (3.5.2):
@@ -31,12 +40,17 @@ PODS:
   - Tune (4.7.0)
 
 DEPENDENCIES:
+  - Bolts-Swift (~> 1.2.0)
+  - FBSDKCoreKit (~> 4.15.0)
   - Firebase (~> 3.5.0)
   - Google/Analytics (~> 1.0.0)
   - GoogleTagManager (~> 3.15.1)
   - Tune (~> 4.7.0)
 
 SPEC CHECKSUMS:
+  Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
+  Bolts-Swift: ac4e7d26719ed0f73aa85b9310da1648105fbde3
+  FBSDKCoreKit: 6680cbd33a4243d80700f182d0af36b3fa7f3118
   Firebase: 94e63112efcad75226c0356a8f3032397b8547c9
   FirebaseAnalytics: d968d4d5f6aeb795cd64144337bcd233e530efc6
   FirebaseInstanceID: ba1e640935235e5fac39dfa816fe7660e72e1a8a
@@ -49,6 +63,6 @@ SPEC CHECKSUMS:
   GoogleUtilities: 56c5ac05b7aa5dc417a1bb85221a9516e04d7032
   Tune: a699a5793aca0d920b81dbe0c67eb0f666c6139c
 
-PODFILE CHECKSUM: 73a741dbfb1e73ffa09d9840d92937053e85119a
+PODFILE CHECKSUM: 26bdb2d775589df35025093f1843d8d381270592
 
 COCOAPODS: 1.1.0.beta.2
