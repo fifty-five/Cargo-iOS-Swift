@@ -73,7 +73,7 @@ class CARFacebookTagHandler: CARTagHandler {
             self.initialize(parameters);
             break ;
         case FB_activateApp:
-            self.activateApp()(parameters);
+            self.activateApp();
             break ;
         case FB_tagEvent:
             self.tagEvent(parameters);
@@ -86,21 +86,58 @@ class CARFacebookTagHandler: CARTagHandler {
         }
     }
     
+    
     /* ********************************** Specific methods ************************************* */
     
-    //TODO: tagEvent
     // Send an event to facebook SDK. Calls differents methods depending on which parameters have been given
     // Each events can be logged with a valueToSum and a set of parameters (up to 25 parameters).
     // When reported, all of the valueToSum properties will be summed together. It is an arbitrary number
     // that can represent any value (e.g., a price or a quantity).
     // Note that both the valueToSum and parameters arguments are optional.
+    func tagEvent(parameters: [NSObject : AnyObject]){
+        var params = parameters;
+        
+        if let eventName = params[EVENT_NAME] {
+            params.removeValueForKey(EVENT_NAME);
+            
+            if let valueToSum:Double = params["valueToSum"]{
+                params.removeValueForKey("valueToSum");
+                
+                if(params.count>0){
+                    self.fbAppEvents.logEvent(eventName, valueToSum, params);
+                    //Mettre un carlog
+                }
+                else{
+                    self.fbAppEvents.logEvent(eventName, valueToSum);
+                    //Mettre un carlog
+                }
+            }
+            else{
+                if(params.count>0){
+                    self.fbAppEvents.logEvent(eventName, params);
+                    //Mettre un carlog
+                }
+                else{
+                    self.fbAppEvents.logEvent(eventName);
+                    //Mettre un carlog
+                }
+            }
+        }
+    }
     
-    //TODO: purchase
     // Logs a purchase in your app. with purchaseAmount the money spent, and currencyCode the currency code.
     // The currency specification is expected to be an ISO 4217 currency code.
-    
-    
-    
-
+    func purchase(parameters: [NSObject : AnyObject]) {
+        if (parameters["purchaseAmount"] && parameters["currencyCode"]) {
+            var purchaseAmount:Double = (parameters["purchaseAmount"] as? Double)!;
+            var currencyCode:String = (parameters["currencyCode"] as? String)!;
+            self.fbAppEvents.logPurchase(purchaseAmount, currencyCode);
+            //Mettre un carlog
+        }
+        else {
+            //Mettre un carlog
+            //NSLog(@"Cargo FacebookHandler : in purchase() missing at least one of the parameters. The purchase hasn't been registered");
+        }
+    }
     
 }
