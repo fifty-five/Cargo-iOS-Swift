@@ -1,4 +1,7 @@
 PODS:
+  - ATInternet-iOS-Swift-SDK/iOS (2.3.0):
+    - ATInternet-iOS-Swift-SDK/Res
+  - ATInternet-iOS-Swift-SDK/Res (2.3.0)
   - Bolts (1.8.4):
     - Bolts/AppLinks (= 1.8.4)
     - Bolts/Tasks (= 1.8.4)
@@ -42,6 +45,7 @@ PODS:
   - Tune (4.7.0)
 
 DEPENDENCIES:
+  - ATInternet-iOS-Swift-SDK/iOS (~> 2.3.0)
   - FacebookCore (~> 0.2.0)
   - Firebase (~> 3.6.0)
   - Google/Analytics (~> 1.0.0)
@@ -49,6 +53,7 @@ DEPENDENCIES:
   - Tune (~> 4.7.0)
 
 SPEC CHECKSUMS:
+  ATInternet-iOS-Swift-SDK: afcd5bfc6f94fac4b57aeab90b5bb11c340aa0c7
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   FacebookCore: 2cb3f0fbff218e9d3119cec84bae983b232412de
   FBSDKCoreKit: 7a6baaed4a2b2a244ba253346713bdbc74df135b

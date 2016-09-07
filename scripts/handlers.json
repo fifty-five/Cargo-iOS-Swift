@@ -1,6 +1,15 @@
 {
   "handlers": [
     {
+      "name":"ATInternet",
+      "dependencies":[
+        {
+          "name": "ATInternet-iOS-Swift-SDK/iOS",
+          "version": "~> 2.3.0"
+        }
+      ]
+    },
+    {
       "name":"GoogleAnalytics",
       "dependencies":[
         {
