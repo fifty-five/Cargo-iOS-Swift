@@ -1,4 +1,7 @@
 PODS:
+  - ATInternet-iOS-Swift-SDK/iOS (2.2.41):
+    - ATInternet-iOS-Swift-SDK/Res
+  - ATInternet-iOS-Swift-SDK/Res (2.2.41)
   - Firebase (3.5.2):
     - Firebase/Core (= 3.5.2)
   - Firebase/Analytics (3.5.2):
@@ -31,12 +34,14 @@ PODS:
   - Tune (4.7.0)
 
 DEPENDENCIES:
+  - ATInternet-iOS-Swift-SDK/iOS (~> 2.2.0)
   - Firebase (~> 3.5.0)
   - Google/Analytics (~> 1.0.0)
   - GoogleTagManager (~> 3.15.1)
   - Tune (~> 4.7.0)
 
 SPEC CHECKSUMS:
+  ATInternet-iOS-Swift-SDK: 6e72e2cceac73c8876f66b91d93e64c0e8835a7a
   Firebase: 94e63112efcad75226c0356a8f3032397b8547c9
   FirebaseAnalytics: d968d4d5f6aeb795cd64144337bcd233e530efc6
   FirebaseInstanceID: ba1e640935235e5fac39dfa816fe7660e72e1a8a
@@ -49,6 +54,6 @@ SPEC CHECKSUMS:
   GoogleUtilities: 56c5ac05b7aa5dc417a1bb85221a9516e04d7032
   Tune: a699a5793aca0d920b81dbe0c67eb0f666c6139c
 
-PODFILE CHECKSUM: 73a741dbfb1e73ffa09d9840d92937053e85119a
+PODFILE CHECKSUM: 26bdb2d775589df35025093f1843d8d381270592
 
 COCOAPODS: 1.0.1
