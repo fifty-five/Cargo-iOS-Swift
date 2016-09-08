@@ -89,11 +89,16 @@ class CARFacebookTagHandler: CARTagHandler {
     
     /* ********************************** Specific methods ************************************* */
     
-    // Send an event to facebook SDK. Calls differents methods depending on which parameters have been given
-    // Each events can be logged with a valueToSum and a set of parameters (up to 25 parameters).
-    // When reported, all of the valueToSum properties will be summed together. It is an arbitrary number
-    // that can represent any value (e.g., a price or a quantity).
-    // Note that both the valueToSum and parameters arguments are optional.
+    /**
+     *  Send an event to facebook SDK. Calls differents methods depending on which parameters have been given
+     *  Each events can be logged with a valueToSum and a set of parameters (up to 25 parameters).
+     *  When reported, all of the valueToSum properties will be summed together. It is an arbitrary number
+     *  that can represent any value (e.g., a price or a quantity).
+     *
+     *  @param valueToSum   The value to sum
+     *  @param parameters   Dictionary of parameters
+     *  Note that both the valueToSum and parameters arguments are optional.
+     */
     func tagEvent(parameters: [NSObject : AnyObject]){
         var params = parameters;
         
@@ -125,8 +130,15 @@ class CARFacebookTagHandler: CARTagHandler {
         }
     }
     
-    // Logs a purchase in your app. with purchaseAmount the money spent, and currencyCode the currency code.
-    // The currency specification is expected to be an ISO 4217 currency code.
+    /*
+     *  Logs a purchase in your app. with purchaseAmount the money spent, and currencyCode the currency code.
+     *  The currency specification is expected to be an ISO 4217 currency code.
+     *
+     *  @param purchaseAmount  the amount of the purchase
+     *  @param currency code  the currency of the purchase
+     *  @param parameters   Dictionary of parameters
+     *  Note that both the valueToSum and parameters arguments are optional.
+     */
     func purchase(parameters: [NSObject : AnyObject]) {
         if (parameters["purchaseAmount"] && parameters["currencyCode"]) {
             var purchaseAmount:Double = (parameters["purchaseAmount"] as? Double)!;
