@@ -40,12 +40,12 @@ class CARFacebookTagHandler: CARTagHandler {
     /* ******************************** Core handler methods *********************************** */
     
     /**
-     * Initialize Facebook SDK with the Application id given by Facebook when Facebook app has benn created
+     *  Initialize Facebook SDK with the Application id given by Facebook when Facebook app has benn created
      */
     func initialize(parameters: [NSObject : AnyObject]){
         if let applicationId = parameters["applicationId"]{
             self.fbAppEvents.setLoggingOverrideAppID(applicationId);
-            //mettre un carlog
+            cargo.logger.logParamSetWithSuccess("applicationId", value: applicationId, handler: self);
         }
         self.activateApp()
     }
@@ -55,7 +55,7 @@ class CARFacebookTagHandler: CARTagHandler {
      */
     func activateApp(){
         self.fbAppEvents.activateApp();
-        //Mettre un carlog
+        cargo.logger.logParamSetWithSuccess("Activation", value: "Events logging activation", handler: self);
     }
     
     /**
@@ -110,21 +110,25 @@ class CARFacebookTagHandler: CARTagHandler {
                 
                 if(params.count>0){
                     self.fbAppEvents.logEvent(eventName, valueToSum, params);
-                    //Mettre un carlog
+                    cargo.logger.logParamSetWithSuccess(EVENT_NAME, value: eventName, handler: self);
+                    cargo.logger.logParamSetWithSuccess("valueToSum", value: valueToSum, handler: self);
+                    cargo.logger.logParamSetWithSuccess("params", value: params, handler: self);
                 }
                 else{
                     self.fbAppEvents.logEvent(eventName, valueToSum);
-                    //Mettre un carlog
+                    cargo.logger.logParamSetWithSuccess(EVENT_NAME, value: eventName, handler: self);
+                    cargo.logger.logParamSetWithSuccess("valueToSum", value: valueToSum, handler: self);
                 }
             }
             else{
                 if(params.count>0){
                     self.fbAppEvents.logEvent(eventName, params);
-                    //Mettre un carlog
+                    cargo.logger.logParamSetWithSuccess(EVENT_NAME, value: eventName, handler: self);
+                    cargo.logger.logParamSetWithSuccess("params", value: params, handler: self);
                 }
                 else{
                     self.fbAppEvents.logEvent(eventName);
-                    //Mettre un carlog
+                    cargo.logger.logParamSetWithSuccess(EVENT_NAME, value: eventName, handler: self);
                 }
             }
         }
@@ -144,11 +148,12 @@ class CARFacebookTagHandler: CARTagHandler {
             var purchaseAmount:Double = (parameters["purchaseAmount"] as? Double)!;
             var currencyCode:String = (parameters["currencyCode"] as? String)!;
             self.fbAppEvents.logPurchase(purchaseAmount, currencyCode);
-            //Mettre un carlog
+            cargo.logger.logParamSetWithSuccess("purchaseAmount", value: purchaseAmount, handler: self);
+            cargo.logger.logParamSetWithSuccess("currencyCode", value: currencyCode, handler: self);
+            
         }
         else {
-            //Mettre un carlog
-            //NSLog(@"Cargo FacebookHandler : in purchase() missing at least one of the parameters. The purchase hasn't been registered");
+            cargo.logger.logMissingParam("purchaseAmount OR currencyCode", methodName: "purchase", handler: self);
         }
     }
     
