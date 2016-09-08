@@ -96,6 +96,9 @@ class Cargo: NSObject {
                 if (names.contains("Firebase")) {
                     _ = CARFirebaseTagHandler();
                 }
+                if (names.contains("Facebook")) {
+                    _ = CARFacebookTagHandler();
+                }
             }
         }
     }
