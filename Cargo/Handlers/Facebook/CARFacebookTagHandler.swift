@@ -7,13 +7,13 @@
 //
 
 import Foundation
+import FBSDKCoreKit
+import FBSDKCoreKit.FBSDKAppEvents
+
 
 class CARFacebookTagHandler: CARTagHandler {
     
     /* ********************************* Variables Declaration ********************************* */
-    
-    var fbAppEvents : FBSDKAppEvents;
-    var facebookLogger:  AppEventsLogger;
     
     let FB_initialize = "FB_initialize";
     let FB_activateApp = "FB_activateApp";
@@ -27,8 +27,6 @@ class CARFacebookTagHandler: CARTagHandler {
      */
     init() {
         super.init(key: "FB", name: "Facebook");
-        self.fbAppEvents;
-        self.facebookLogger;
         
         cargo.registerTagHandler(self, key: FB_initialize);
         cargo.registerTagHandler(self, key: FB_activateApp);
@@ -44,7 +42,7 @@ class CARFacebookTagHandler: CARTagHandler {
      */
     func initialize(parameters: [NSObject : AnyObject]){
         if let applicationId = parameters["applicationId"]{
-            self.fbAppEvents.setLoggingOverrideAppID(applicationId);
+            FBSDKAppEvents.setLoggingOverrideAppID(applicationId as! String);
             cargo.logger.logParamSetWithSuccess("applicationId", value: applicationId, handler: self);
         }
         self.activateApp()
@@ -54,7 +52,7 @@ class CARFacebookTagHandler: CARTagHandler {
      * Activate events logging
      */
     func activateApp(){
-        self.fbAppEvents.activateApp();
+        FBSDKAppEvents.activateApp();
         cargo.logger.logParamSetWithSuccess("Activation", value: "Events logging activation", handler: self);
     }
     
@@ -105,29 +103,29 @@ class CARFacebookTagHandler: CARTagHandler {
         if let eventName = params[EVENT_NAME] {
             params.removeValueForKey(EVENT_NAME);
             
-            if let valueToSum:Double = params["valueToSum"]{
+            if let valueToSum:Double = params["valueToSum"] as! Double{
                 params.removeValueForKey("valueToSum");
                 
                 if(params.count>0){
-                    self.fbAppEvents.logEvent(eventName, valueToSum, params);
+                    FBSDKAppEvents.logEvent(eventName as!String, valueToSum: valueToSum, parameters: params);
                     cargo.logger.logParamSetWithSuccess(EVENT_NAME, value: eventName, handler: self);
                     cargo.logger.logParamSetWithSuccess("valueToSum", value: valueToSum, handler: self);
                     cargo.logger.logParamSetWithSuccess("params", value: params, handler: self);
                 }
                 else{
-                    self.fbAppEvents.logEvent(eventName, valueToSum);
+                    FBSDKAppEvents.logEvent(eventName as! String, valueToSum: valueToSum);
                     cargo.logger.logParamSetWithSuccess(EVENT_NAME, value: eventName, handler: self);
                     cargo.logger.logParamSetWithSuccess("valueToSum", value: valueToSum, handler: self);
                 }
             }
             else{
                 if(params.count>0){
-                    self.fbAppEvents.logEvent(eventName, params);
+                    FBSDKAppEvents.logEvent(eventName as! String, parameters: params);
                     cargo.logger.logParamSetWithSuccess(EVENT_NAME, value: eventName, handler: self);
                     cargo.logger.logParamSetWithSuccess("params", value: params, handler: self);
                 }
                 else{
-                    self.fbAppEvents.logEvent(eventName);
+                    FBSDKAppEvents.logEvent(eventName as! String);
                     cargo.logger.logParamSetWithSuccess(EVENT_NAME, value: eventName, handler: self);
                 }
             }
@@ -138,23 +136,21 @@ class CARFacebookTagHandler: CARTagHandler {
      *  Logs a purchase in your app. with purchaseAmount the money spent, and currencyCode the currency code.
      *  The currency specification is expected to be an ISO 4217 currency code.
      *
-     *  @param purchaseAmount  the amount of the purchase
-     *  @param currency code  the currency of the purchase
+     *  @param purchaseAmount  the amount of the purchase (mandatory)
+     *  @param currency code  the currency of the purchase (mandatory)
+     
      *  @param parameters   Dictionary of parameters
-     *  Note that both the valueToSum and parameters arguments are optional.
      */
     func purchase(parameters: [NSObject : AnyObject]) {
-        if (parameters["purchaseAmount"] && parameters["currencyCode"]) {
-            var purchaseAmount:Double = (parameters["purchaseAmount"] as? Double)!;
-            var currencyCode:String = (parameters["currencyCode"] as? String)!;
-            self.fbAppEvents.logPurchase(purchaseAmount, currencyCode);
+        if (parameters["purchaseAmount"] != nil) || (parameters["currencyCode"] != nil){
+            let purchaseAmount = (parameters["purchaseAmount"] as? Double)!;
+            let currencyCode = (parameters["currencyCode"] as? String)!;
+            FBSDKAppEvents.logPurchase(purchaseAmount, currency: currencyCode);
             cargo.logger.logParamSetWithSuccess("purchaseAmount", value: purchaseAmount, handler: self);
             cargo.logger.logParamSetWithSuccess("currencyCode", value: currencyCode, handler: self);
-            
         }
         else {
             cargo.logger.logMissingParam("purchaseAmount OR currencyCode", methodName: "purchase", handler: self);
         }
     }
-    
 }
