@@ -17,6 +17,7 @@
 		0F12EA3E1D5A165F00D776E6 /* SwiftSampleAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F12EA3D1D5A165F00D776E6 /* SwiftSampleAppUITests.swift */; };
 		0F12EA511D5A1B7800D776E6 /* Cargo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F12EA501D5A1B7800D776E6 /* Cargo.swift */; };
 		0F12EA531D5A252400D776E6 /* CARTagHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F12EA521D5A252300D776E6 /* CARTagHandler.swift */; };
+		0F3D67901D8175AE007683D2 /* Facebook-info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0F3D678F1D8175AE007683D2 /* Facebook-info.plist */; };
 		0F5CBB521D7EFF8A00684C75 /* CARFirebaseTagHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5CBB511D7EFF8A00684C75 /* CARFirebaseTagHandler.swift */; };
 		0F5CBB551D7F00CD00684C75 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0F5CBB541D7F00CD00684C75 /* GoogleService-Info.plist */; };
 		0FC6FFEF1D8049E600FE864A /* CARFacebookTagHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6FFEE1D8049E600FE864A /* CARFacebookTagHandler.swift */; };
@@ -63,6 +64,7 @@
 		0F12EA3F1D5A165F00D776E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0F12EA501D5A1B7800D776E6 /* Cargo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Cargo.swift; path = Cargo/Cargo.swift; sourceTree = "<group>"; };
 		0F12EA521D5A252300D776E6 /* CARTagHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CARTagHandler.swift; path = Cargo/Handlers/CARTagHandler.swift; sourceTree = "<group>"; };
+		0F3D678F1D8175AE007683D2 /* Facebook-info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Facebook-info.plist"; sourceTree = "<group>"; };
 		0F5CBB511D7EFF8A00684C75 /* CARFirebaseTagHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CARFirebaseTagHandler.swift; path = Cargo/Handlers/Firebase/CARFirebaseTagHandler.swift; sourceTree = "<group>"; };
 		0F5CBB541D7F00CD00684C75 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0FC6FFEE1D8049E600FE864A /* CARFacebookTagHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CARFacebookTagHandler.swift; path = Cargo/Handlers/Facebook/CARFacebookTagHandler.swift; sourceTree = "<group>"; };
@@ -207,6 +209,7 @@
 		0FC6FFF01D804A7F00FE864A /* Facebook */ = {
 			isa = PBXGroup;
 			children = (
+				0F3D678F1D8175AE007683D2 /* Facebook-info.plist */,
 				0FC6FFEE1D8049E600FE864A /* CARFacebookTagHandler.swift */,
 			);
 			name = Facebook;
@@ -380,6 +383,7 @@
 				802722331D757A8E00A52526 /* handlers.json in Resources */,
 				0F12EA251D5A165F00D776E6 /* Assets.xcassets in Resources */,
 				0F12EA201D5A165F00D776E6 /* Main.storyboard in Resources */,
+				0F3D67901D8175AE007683D2 /* Facebook-info.plist in Resources */,
 				0F5CBB551D7F00CD00684C75 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

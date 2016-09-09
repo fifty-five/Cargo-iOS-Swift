@@ -26,20 +26,20 @@ class ViewController: UIViewController {
         dataLayer.push(["event": "testGA"]);
         dataLayer.push(["event": "testFirebase"]);
         dataLayer.push(["event": "testTune", "eventName": "a cool event", "eventCurrencyCode": "USD"]);
-        dataLayer.push(["event": "testFacebook", "eventName": "a super cool event"]);
+        dataLayer.push(["event": "testFacebook", "eventName": "a super cool event", "valueToSum": 123]);
         
     }
 
     @IBAction func pressedUser(sender : AnyObject) {
         let dataLayer = Cargo.sharedHelper.tagManager.dataLayer;
         dataLayer.push(["event": "setUser"]);
-        dataLayer.push(["applicationId": "374297966234679"]);
+        dataLayer.push(["event": "initialize"]);
     }
 
     @IBAction func pressedScreen(sender : AnyObject) {
         let dataLayer = Cargo.sharedHelper.tagManager.dataLayer;
         dataLayer.push(["event": "openScreen", SCREEN_NAME: "home_screen"]);
-        dataLayer.push(["event": "purchase", "purchaseAmount": "60", "currencyCode": "USD"]); //pour tester l'event purchase du handler Facebook
+        dataLayer.push(["event": "purchase", "purchaseAmount": 60, "currencyCode": "USD"]); //pour tester l'event purchase du handler Facebook
     }
 
 }
