@@ -1,7 +1,7 @@
 PODS:
-  - ATInternet-iOS-Swift-SDK/iOS (2.2.41):
+  - ATInternet-iOS-Swift-SDK/iOS (2.2.51):
     - ATInternet-iOS-Swift-SDK/Res
-  - ATInternet-iOS-Swift-SDK/Res (2.2.41)
+  - ATInternet-iOS-Swift-SDK/Res (2.2.51)
   - Firebase (3.5.2):
     - Firebase/Core (= 3.5.2)
   - Firebase/Analytics (3.5.2):
@@ -41,7 +41,7 @@ DEPENDENCIES:
   - Tune (~> 4.7.0)
 
 SPEC CHECKSUMS:
-  ATInternet-iOS-Swift-SDK: 6e72e2cceac73c8876f66b91d93e64c0e8835a7a
+  ATInternet-iOS-Swift-SDK: 82b9aaf908f18e41204181b215a65cd9133e6d63
   Firebase: 94e63112efcad75226c0356a8f3032397b8547c9
   FirebaseAnalytics: d968d4d5f6aeb795cd64144337bcd233e530efc6
   FirebaseInstanceID: ba1e640935235e5fac39dfa816fe7660e72e1a8a
