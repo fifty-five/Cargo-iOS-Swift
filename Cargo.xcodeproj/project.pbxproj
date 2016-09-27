@@ -380,6 +380,7 @@
 							};
 						};
 						DevelopmentTeam = 79FS8B67FE;
+						LastSwiftMigration = 0800;
 					};
 					0F12EA2D1D5A165F00D776E6 = {
 						CreatedOnToolsVersion = 7.3.1;
