@@ -63,7 +63,7 @@ class CARTuneTagHandler: CARTagHandler {
     *  @param tagName  The tag name
     *  @param parameters   Dictionary of parameters
     */
-    override func execute(tagName: String, parameters: [NSObject : AnyObject]) {
+    override func execute(_ tagName: String, parameters: [AnyHashable: Any]) {
         super.execute(tagName, parameters: parameters);
 
         switch (tagName) {
@@ -93,9 +93,9 @@ class CARTuneTagHandler: CARTagHandler {
      *  @param parameters   Dictionary of parameters which should contain the advertiser ID
      *                      and the conversion key for this account
      */
-    func initialize(parameters: [NSObject : AnyObject]) {
-        if let advertiserId = parameters["advertiserId"], conversionKey = parameters["conversionKey"] {
-            Tune.initializeWithTuneAdvertiserId(advertiserId as! String, tuneConversionKey: conversionKey as! String);
+    func initialize(_ parameters: [AnyHashable: Any]) {
+        if let advertiserId = parameters["advertiserId"], let conversionKey = parameters["conversionKey"] {
+            Tune.initialize(withTuneAdvertiserId: advertiserId as! String, tuneConversionKey: conversionKey as! String);
             self.initialized = true;
         }
         else {
@@ -109,7 +109,7 @@ class CARTuneTagHandler: CARTagHandler {
      * Use it in AppDelegate in the method "applicationDidBecomeActive"
      * Attribution will not function without the measureSession call included.
      */
-    private func measureSession() {
+    fileprivate func measureSession() {
         // check if the initialization has been done
         if (!self.initialized) {
             cargo.logger.logUninitializedFramework(self);
@@ -124,7 +124,7 @@ class CARTuneTagHandler: CARTagHandler {
      * @param parameters    Dictionary of parameters used to set up
      *                      the user identity through several ways.
      */
-    private func identify(parameters: [NSObject: AnyObject]) {
+    fileprivate func identify(_ parameters: [AnyHashable: Any]) {
         // check if the initialization has been done
         if (!self.initialized) {
             cargo.logger.logUninitializedFramework(self);
@@ -188,7 +188,7 @@ class CARTuneTagHandler: CARTagHandler {
      *              (SCREEN_NAME)
 
      */
-    private func tagEvent(parameters: [NSObject: AnyObject]) {
+    fileprivate func tagEvent(_ parameters: [AnyHashable: Any]) {
 
         var tuneEvent: TuneEvent!;
         var params = parameters;
@@ -201,12 +201,12 @@ class CARTuneTagHandler: CARTagHandler {
 
         if let eventName = params[EVENT_NAME] {
             tuneEvent = TuneEvent.init(name: eventName as! String);
-            params.removeValueForKey(EVENT_NAME);
+            params.removeValue(forKey: EVENT_NAME);
             cargo.logger.logParamSetWithSuccess(EVENT_NAME, value: eventName, handler: self);
         }
         else if let eventName = params[SCREEN_NAME] {
             tuneEvent = TuneEvent.init(name: eventName as! String);
-            params.removeValueForKey(SCREEN_NAME);
+            params.removeValue(forKey: SCREEN_NAME);
             cargo.logger.logParamSetWithSuccess(SCREEN_NAME, value: eventName, handler: self);
         }
         else {
@@ -224,7 +224,7 @@ class CARTuneTagHandler: CARTagHandler {
 
         // if the TuneEvent object isn't nil, the tag is sent. Otherwise, an error is displayed
         if ((tuneEvent) != nil) {
-            Tune.measureEvent(tuneEvent);
+            Tune.measure(tuneEvent);
         }
         else {
             cargo.logger.carLog(kTAGLoggerLogLevelError, handler: self, message: "The tagEvent is nil, the tag did not fire");
@@ -245,7 +245,7 @@ class CARTuneTagHandler: CARTagHandler {
      * @return              the custom event
      */
 
-    private func buildEvent(tuneEvent: TuneEvent, parameters: [NSObject: AnyObject]) -> TuneEvent {
+    fileprivate func buildEvent(_ tuneEvent: TuneEvent, parameters: [AnyHashable: Any]) -> TuneEvent {
 
         var params = parameters;
 
@@ -253,43 +253,43 @@ class CARTuneTagHandler: CARTagHandler {
         // if they exist in the parameters dictionary
         if let eventRating = params[EVENT_RATING] {
             tuneEvent.rating = eventRating as! CGFloat;
-            params.removeValueForKey(EVENT_RATING);
+            params.removeValue(forKey: EVENT_RATING);
             cargo.logger.logParamSetWithSuccess("event rating", value: tuneEvent.rating, handler: self);
         }
         if let eventDate1 = params[EVENT_DATE1] {
-            tuneEvent.date1 = eventDate1 as! NSDate;
-            params.removeValueForKey(EVENT_DATE1);
+            tuneEvent.date1 = eventDate1 as! Date;
+            params.removeValue(forKey: EVENT_DATE1);
             cargo.logger.logParamSetWithSuccess("event date1", value: tuneEvent.date1, handler: self);
 
             if let eventDate2 = params[EVENT_DATE2] {
-                tuneEvent.date2 = eventDate2 as! NSDate;
-                params.removeValueForKey(EVENT_DATE2);
+                tuneEvent.date2 = eventDate2 as! Date;
+                params.removeValue(forKey: EVENT_DATE2);
                 cargo.logger.logParamSetWithSuccess("event date2", value: tuneEvent.date2, handler: self);
             }
         }
         if let eventRevenue = params[EVENT_REVENUE] {
             tuneEvent.revenue = eventRevenue as! CGFloat;
-            params.removeValueForKey(EVENT_REVENUE);
+            params.removeValue(forKey: EVENT_REVENUE);
             cargo.logger.logParamSetWithSuccess("event revenue", value: tuneEvent.revenue, handler: self);
         }
         if let eventItems = params[EVENT_ITEMS] {
             tuneEvent.eventItems = eventItems as! [AnyObject];
-            params.removeValueForKey(EVENT_ITEMS);
+            params.removeValue(forKey: EVENT_ITEMS);
             cargo.logger.logParamSetWithSuccess("event eventItems", value: tuneEvent.eventItems, handler: self);
         }
         if let eventLevel = params[EVENT_LEVEL] {
             tuneEvent.level = eventLevel as! Int;
-            params.removeValueForKey(EVENT_LEVEL);
+            params.removeValue(forKey: EVENT_LEVEL);
             cargo.logger.logParamSetWithSuccess("event level", value: tuneEvent.level, handler: self);
         }
         if let eventTransaction = params[EVENT_TRANSACTION_STATE] {
             tuneEvent.transactionState = eventTransaction as! Int;
-            params.removeValueForKey(EVENT_TRANSACTION_STATE);
+            params.removeValue(forKey: EVENT_TRANSACTION_STATE);
             cargo.logger.logParamSetWithSuccess("event transactionState", value: tuneEvent.transactionState, handler: self);
         }
         if let eventReceipt = params[EVENT_RECEIPT] {
-            tuneEvent.receipt = eventReceipt as! NSData;
-            params.removeValueForKey(EVENT_RECEIPT);
+            tuneEvent.receipt = eventReceipt as! Data;
+            params.removeValue(forKey: EVENT_RECEIPT);
             cargo.logger.logParamSetWithSuccess("event receipt", value: tuneEvent.receipt, handler: self);
         }
         if let eventQuantity = params[EVENT_QUANTITY] {
@@ -300,7 +300,7 @@ class CARTuneTagHandler: CARTagHandler {
             else {
                 tuneEvent.quantity = 0;
             }
-            params.removeValueForKey(EVENT_QUANTITY);
+            params.removeValue(forKey: EVENT_QUANTITY);
             cargo.logger.logParamSetWithSuccess("event quantity", value: tuneEvent.quantity, handler: self);
         }
 
@@ -309,13 +309,13 @@ class CARTuneTagHandler: CARTagHandler {
         for property: String in EVENT_PROPERTIES {
 
             if let value = params[property] {
-                var propertyName = (property as NSString).substringFromIndex(5);
-                let firstChar = (propertyName as NSString).substringToIndex(1);
-                propertyName = firstChar.lowercaseString + (propertyName as NSString).substringFromIndex(1);
+                var propertyName = (property as NSString).substring(from: 5);
+                let firstChar = (propertyName as NSString).substring(to: 1);
+                propertyName = firstChar.lowercased() + (propertyName as NSString).substring(from: 1);
 
                 tuneEvent.setValue(value, forKey: propertyName);
-                params.removeValueForKey(property);
-                cargo.logger.logParamSetWithSuccess(propertyName, value: tuneEvent.valueForKey(propertyName)!, handler: self);
+                params.removeValue(forKey: property);
+                cargo.logger.logParamSetWithSuccess(propertyName, value: tuneEvent.value(forKey: propertyName)!, handler: self);
             }
         }
 
@@ -334,16 +334,16 @@ class CARTuneTagHandler: CARTagHandler {
      *                  If the gender doesn't match with the Tune genders,
      *                  sets the gender to UNKNOWN.
      */
-    private func setGender(gender: String) {
-        let upperGender = gender.uppercaseString;
+    fileprivate func setGender(_ gender: String) {
+        let upperGender = gender.uppercased();
         if (upperGender == "MALE") {
-            Tune.setGender(TuneGender.Male);
+            Tune.setGender(TuneGender.male);
         }
         else if (upperGender == "FEMALE") {
-            Tune.setGender(TuneGender.Female);
+            Tune.setGender(TuneGender.female);
         }
         else {
-            Tune.setGender(TuneGender.Unknown);
+            Tune.setGender(TuneGender.unknown);
         }
     }
 }
