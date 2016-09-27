@@ -21,22 +21,22 @@ class ViewController: UIViewController {
     }
 
 
-    @IBAction func pressedEvent(sender : AnyObject) {
+    @IBAction func pressedEvent(_ sender : AnyObject) {
         let dataLayer = Cargo.sharedHelper.tagManager.dataLayer;
-        dataLayer.push(["event": "testGA"]);
-        dataLayer.push(["event": "testFirebase"]);
-        dataLayer.push(["event": "testTune", "eventName": "a cool event", "eventCurrencyCode": "USD"]);
+        dataLayer?.push(["event": "testGA"]);
+        dataLayer?.push(["event": "testFirebase"]);
+        dataLayer?.push(["event": "testTune", "eventName": "a cool event", "eventCurrencyCode": "USD"]);
         
     }
 
-    @IBAction func pressedUser(sender : AnyObject) {
+    @IBAction func pressedUser(_ sender : AnyObject) {
         let dataLayer = Cargo.sharedHelper.tagManager.dataLayer;
-        dataLayer.push(["event": "setUser"]);
+        dataLayer?.push(["event": "setUser"]);
     }
 
-    @IBAction func pressedScreen(sender : AnyObject) {
+    @IBAction func pressedScreen(_ sender : AnyObject) {
         let dataLayer = Cargo.sharedHelper.tagManager.dataLayer;
-        dataLayer.push(["event": "openScreen", SCREEN_NAME: "home_screen"])
+        dataLayer?.push(["event": "openScreen", SCREEN_NAME: "home_screen"])
     }
 
 }
