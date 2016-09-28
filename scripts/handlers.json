@@ -31,12 +31,8 @@
       "name":"Facebook",
       "dependencies":[
         {
-          "name": "Bolts-Swift",
-          "version" : "~> 1.3.0"
-        },
-        {
-          "name" : "FBSDKCoreKit",
-          "version" : "~> 4.16.0"
+          "name": "FacebookCore",
+          "version" : "~> 0.2"
         }
       ]
     }

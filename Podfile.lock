@@ -2,11 +2,13 @@ PODS:
   - Bolts (1.8.4):
     - Bolts/AppLinks (= 1.8.4)
     - Bolts/Tasks (= 1.8.4)
-  - Bolts-Swift (1.2.0)
   - Bolts/AppLinks (1.8.4):
     - Bolts/Tasks
   - Bolts/Tasks (1.8.4)
-  - FBSDKCoreKit (4.15.1):
+  - FacebookCore (0.2.0):
+    - Bolts (~> 1.8)
+    - FBSDKCoreKit (~> 4.15)
+  - FBSDKCoreKit (4.16.0):
     - Bolts (~> 1.7)
   - Firebase (3.5.2):
     - Firebase/Core (= 3.5.2)
@@ -40,8 +42,7 @@ PODS:
   - Tune (4.7.0)
 
 DEPENDENCIES:
-  - Bolts-Swift (~> 1.2.0)
-  - FBSDKCoreKit (~> 4.15.0)
+  - FacebookCore (~> 0.2)
   - Firebase (~> 3.5.0)
   - Google/Analytics (~> 1.0.0)
   - GoogleTagManager (~> 3.15.1)
@@ -49,8 +50,8 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
-  Bolts-Swift: ac4e7d26719ed0f73aa85b9310da1648105fbde3
-  FBSDKCoreKit: fc7fa53d16b095ee3fd53f0cd59f1df8bcbb634d
+  FacebookCore: 2cb3f0fbff218e9d3119cec84bae983b232412de
+  FBSDKCoreKit: 7a6baaed4a2b2a244ba253346713bdbc74df135b
   Firebase: 94e63112efcad75226c0356a8f3032397b8547c9
   FirebaseAnalytics: 3f5358d9104adf159cc8d99b7b501e50099a39ad
   FirebaseInstanceID: ba1e640935235e5fac39dfa816fe7660e72e1a8a
