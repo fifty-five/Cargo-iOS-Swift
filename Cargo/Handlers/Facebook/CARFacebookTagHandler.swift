@@ -19,6 +19,7 @@ class CARFacebookTagHandler: CARTagHandler {
     let FB_tagEvent = "FB_tagEvent";
     let FB_purchase = "FB_purchase";
 
+
 /* ************************************* Initializer *************************************** */
     
     /**

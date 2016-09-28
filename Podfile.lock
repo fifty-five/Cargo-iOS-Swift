@@ -42,7 +42,7 @@ PODS:
   - Tune (4.7.0)
 
 DEPENDENCIES:
-  - FacebookCore (~> 0.2)
+  - FacebookCore (~> 0.2.0)
   - Firebase (~> 3.5.0)
   - Google/Analytics (~> 1.0.0)
   - GoogleTagManager (~> 3.15.1)
