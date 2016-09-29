@@ -10,11 +10,11 @@ PODS:
     - FBSDKCoreKit (~> 4.15)
   - FBSDKCoreKit (4.16.0):
     - Bolts (~> 1.7)
-  - Firebase (3.5.2):
-    - Firebase/Core (= 3.5.2)
-  - Firebase/Analytics (3.5.2):
-    - FirebaseAnalytics (~> 3.3)
-  - Firebase/Core (3.5.2):
+  - Firebase (3.6.0):
+    - Firebase/Core (= 3.6.0)
+  - Firebase/Analytics (3.6.0):
+    - FirebaseAnalytics (= 3.4.2)
+  - Firebase/Core (3.6.0):
     - Firebase/Analytics
   - FirebaseAnalytics (3.4.2):
     - FirebaseInstanceID (~> 1.0)
@@ -43,7 +43,7 @@ PODS:
 
 DEPENDENCIES:
   - FacebookCore (~> 0.2.0)
-  - Firebase (~> 3.5.0)
+  - Firebase (~> 3.6.0)
   - Google/Analytics (~> 1.0.0)
   - GoogleTagManager (~> 3.15.1)
   - Tune (~> 4.7.0)
@@ -52,7 +52,7 @@ SPEC CHECKSUMS:
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   FacebookCore: 2cb3f0fbff218e9d3119cec84bae983b232412de
   FBSDKCoreKit: 7a6baaed4a2b2a244ba253346713bdbc74df135b
-  Firebase: 94e63112efcad75226c0356a8f3032397b8547c9
+  Firebase: 34187200ef4979dbd485c7aa685ef078bf587c86
   FirebaseAnalytics: 3f5358d9104adf159cc8d99b7b501e50099a39ad
   FirebaseInstanceID: ba1e640935235e5fac39dfa816fe7660e72e1a8a
   Google: 875f5a8ade86dd02e36586e4a54814843938c7f6
