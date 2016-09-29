@@ -70,6 +70,7 @@
 		0FC6FFEE1D8049E600FE864A /* CARFacebookTagHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CARFacebookTagHandler.swift; path = Cargo/Handlers/Facebook/CARFacebookTagHandler.swift; sourceTree = "<group>"; };
 		237787A162AE243EAB87E41B /* Pods-Cargo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cargo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Cargo/Pods-Cargo.debug.xcconfig"; sourceTree = "<group>"; };
 		23EB0A122975528B94BE5CEC /* Pods-Cargo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cargo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Cargo/Pods-Cargo.release.xcconfig"; sourceTree = "<group>"; };
+		8024CCEC1D9D4B5600ABA307 /* Cargo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Cargo.entitlements; path = Cargo/Cargo.entitlements; sourceTree = "<group>"; };
 		802722321D757A8E00A52526 /* handlers.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = handlers.json; path = scripts/handlers.json; sourceTree = "<group>"; };
 		80614C9B1D5B851D00BF46E7 /* BridgingHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BridgingHeader.h; sourceTree = "<group>"; };
 		8070536A1D5DC8E600A9FF26 /* CARLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CARLogger.swift; path = Cargo/Logger/CARLogger.swift; sourceTree = "<group>"; };
@@ -170,6 +171,7 @@
 		0F12EA4C1D5A1A8900D776E6 /* Cargo */ = {
 			isa = PBXGroup;
 			children = (
+				8024CCEC1D9D4B5600ABA307 /* Cargo.entitlements */,
 				0F12EA501D5A1B7800D776E6 /* Cargo.swift */,
 				80E2B9A11D637E11005D6DB6 /* CARConstants.swift */,
 				807053691D5DC8BA00A9FF26 /* Logger */,
@@ -343,7 +345,13 @@
 				TargetAttributes = {
 					0F12EA161D5A165F00D776E6 = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 79FS8B67FE;
 						LastSwiftMigration = 0800;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 					0F12EA2D1D5A165F00D776E6 = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -667,13 +675,15 @@
 			baseConfigurationReference = 237787A162AE243EAB87E41B /* Pods-Cargo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Cargo/Cargo.entitlements;
+				DEVELOPMENT_TEAM = 79FS8B67FE;
 				INFOPLIST_FILE = SwiftSampleApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Pods/GoogleTagManager/Libraries",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.fiftyfive.SwiftSampleApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fiftyfive.App;
 				PRODUCT_NAME = Cargo;
 				SWIFT_OBJC_BRIDGING_HEADER = BridgingHeader.h;
 				SWIFT_VERSION = 3.0;
@@ -685,13 +695,15 @@
 			baseConfigurationReference = 23EB0A122975528B94BE5CEC /* Pods-Cargo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Cargo/Cargo.entitlements;
+				DEVELOPMENT_TEAM = 79FS8B67FE;
 				INFOPLIST_FILE = SwiftSampleApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Pods/GoogleTagManager/Libraries",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.fiftyfive.SwiftSampleApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fiftyfive.App;
 				PRODUCT_NAME = Cargo;
 				SWIFT_OBJC_BRIDGING_HEADER = BridgingHeader.h;
 				SWIFT_VERSION = 3.0;
