@@ -48,7 +48,7 @@ class CARFirebaseTagHandler: CARTagHandler {
      *  @param tagName  The tag name
      *  @param parameters   Dictionary of parameters
      */
-    override func execute(tagName: String, parameters: [NSObject : AnyObject]) {
+    override func execute(_ tagName: String, parameters: [AnyHashable: Any]) {
         super.execute(tagName, parameters: parameters);
         
         switch (tagName) {
@@ -77,7 +77,7 @@ class CARFirebaseTagHandler: CARTagHandler {
      *
      *  @param parameters   Dictionary of parameters which should contain the tracking ID
      */
-    func initialize(parameters: [NSObject : AnyObject]) {
+    func initialize(_ parameters: [AnyHashable: Any]) {
         if let enabled = parameters[enableCollection]{
             FirebaseAnalyticsConf.setAnalyticsCollectionEnabled(enabled as! Bool);
             cargo.logger.logParamSetWithSuccess(enableCollection, value: enabled as! Bool);
@@ -96,7 +96,7 @@ class CARFirebaseTagHandler: CARTagHandler {
      * @param parameters    dictionary of parameters
      *                      * requires a userId parameter
      */
-    func identify(parameters: [NSObject: AnyObject]){
+    func identify(_ parameters: [AnyHashable: Any]){
         
         if let userID = parameters[USER_ID] {
             FIRAnalytics.setUserID(userID as? String);
@@ -125,17 +125,17 @@ class CARFirebaseTagHandler: CARTagHandler {
      *              passed through the GTM container and the execute method.
      *              * EVENT_NAME : the only parameter requested here
      */
-    func tagEvent(parameters: [NSObject: AnyObject]){
+    func tagEvent(_ parameters: [AnyHashable: Any]){
         var params = parameters;
         
         if let eventName = params[EVENT_NAME] {
-            params.removeValueForKey(EVENT_NAME);
+            params.removeValue(forKey: EVENT_NAME);
             if (params.count > 0) {
-                FIRAnalytics.logEventWithName(eventName as! String, parameters: params as? [String : NSObject]);
+                FIRAnalytics.logEvent(withName: eventName as! String, parameters: params as? [String : NSObject]);
                 cargo.logger.logParamSetWithSuccess(eventName as! String, value: params);
             }
             else {
-                FIRAnalytics.logEventWithName(eventName as! String, parameters: nil);
+                FIRAnalytics.logEvent(withName: eventName as! String, parameters: nil);
                 cargo.logger.logParamSetWithSuccess(eventName as!String, value: parameters);
             }
         }

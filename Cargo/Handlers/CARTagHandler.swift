@@ -40,7 +40,7 @@ class CARTagHandler : NSObject, TAGFunctionCallTagHandler {
      *  @param tagName  The tag name
      *  @param parameters   Dictionary of parameters
      */
-    func execute(tagName:String, parameters:[NSObject : AnyObject]){
+    func execute(_ tagName:String, parameters:[AnyHashable: Any]){
         cargo.logger.carLog(kTAGLoggerLogLevelDebug, handler: self, message: "Function \(tagName) has been received with parameters \(parameters)");
     }
 
@@ -50,7 +50,7 @@ class CARTagHandler : NSObject, TAGFunctionCallTagHandler {
      *  @param handler  The handler it happens in
      *  @param tagName  The tag name which doesn't match
      */
-    func noTagMatch(handler: CARTagHandler, tagName: String) {
+    func noTagMatch(_ handler: CARTagHandler, tagName: String) {
         let infoMessage = "\(tagName) does not match any known tag";
         cargo.logger.carLog(kTAGLoggerLogLevelInfo, handler: handler, message: infoMessage);
     }

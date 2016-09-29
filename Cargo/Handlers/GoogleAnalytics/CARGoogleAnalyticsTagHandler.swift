@@ -51,25 +51,25 @@ class CARGoogleAnalyticsTagHandler: CARTagHandler {
 
         // Optional: configure GAI options.
         let gai = GAI.sharedInstance();
-        gai.trackUncaughtExceptions = true;  // report uncaught exceptions
+        gai?.trackUncaughtExceptions = true;  // report uncaught exceptions
         switch (cargo.logger.level) {
         case kTAGLoggerLogLevelNone:
-            gai.logger.logLevel = GAILogLevel.None;
+            gai?.logger.logLevel = GAILogLevel.none;
             break ;
         case kTAGLoggerLogLevelInfo:
-            gai.logger.logLevel = GAILogLevel.Info;
+            gai?.logger.logLevel = GAILogLevel.info;
             break ;
         case kTAGLoggerLogLevelWarning:
-            gai.logger.logLevel = GAILogLevel.Warning;
+            gai?.logger.logLevel = GAILogLevel.warning;
             break ;
         case kTAGLoggerLogLevelDebug:
-            gai.logger.logLevel = GAILogLevel.Warning;
+            gai?.logger.logLevel = GAILogLevel.warning;
             break ;
         case kTAGLoggerLogLevelVerbose:
-            gai.logger.logLevel = GAILogLevel.Verbose;
+            gai?.logger.logLevel = GAILogLevel.verbose;
             break ;
         default:
-            gai.logger.logLevel = GAILogLevel.Error;
+            gai?.logger.logLevel = GAILogLevel.error;
         }
     }
 
@@ -82,7 +82,7 @@ class CARGoogleAnalyticsTagHandler: CARTagHandler {
      *  @param tagName  The tag name
      *  @param parameters   Dictionary of parameters
      */
-    override func execute(tagName: String, parameters: [NSObject : AnyObject]) {
+    override func execute(_ tagName: String, parameters: [AnyHashable: Any]) {
         super.execute(tagName, parameters: parameters);
 
         switch (tagName) {
@@ -111,9 +111,9 @@ class CARGoogleAnalyticsTagHandler: CARTagHandler {
      *
      *  @param parameters   Dictionary of parameters which should contain the tracking ID
      */
-    func initialize(parameters: [NSObject : AnyObject]) {
+    func initialize(_ parameters: [AnyHashable: Any]) {
         if let trackingId = parameters["trackingId"] {
-            self.tracker = self.instance.trackerWithTrackingId(trackingId as! String);
+            self.tracker = self.instance.tracker(withTrackingId: trackingId as! String);
             cargo.logger.carLog(kTAGLoggerLogLevelVerbose, handler: self, message: "tracking ID set to \(trackingId)");
         }
         else {
@@ -126,7 +126,7 @@ class CARGoogleAnalyticsTagHandler: CARTagHandler {
      *
      *  @param parameters   Dictionary of parameters
      */
-    func set(parameters: [NSObject : AnyObject]) {
+    func set(_ parameters: [AnyHashable: Any]) {
 
         if let trackUnCaughtException = parameters["trackUncaughtExceptions"] {
             self.instance.trackUncaughtExceptions = trackUnCaughtException as! Bool;
@@ -137,7 +137,7 @@ class CARGoogleAnalyticsTagHandler: CARTagHandler {
             cargo.logger.carLog(kTAGLoggerLogLevelVerbose, handler: self, message: "allowIdfaCollection set as \(allowIdfaCollection)");
         }
         if let dispatchInterval = parameters["dispatchInterval"] {
-            self.instance.dispatchInterval = dispatchInterval as! NSTimeInterval;
+            self.instance.dispatchInterval = dispatchInterval as! TimeInterval;
             cargo.logger.carLog(kTAGLoggerLogLevelVerbose, handler: self, message: "dispatchInterval set as \(dispatchInterval)");
         }
     }
@@ -150,7 +150,7 @@ class CARGoogleAnalyticsTagHandler: CARTagHandler {
      * @param parameters    dictionary of parameters
      *                      * requires a userId parameter
      */
-    func setUserId(parameters: [NSObject: AnyObject]){
+    func setUserId(_ parameters: [AnyHashable: Any]){
 
         if let userID = parameters[USER_ID] {
             self.tracker.set(kGAIUserId, value: userID as! String);
@@ -166,12 +166,12 @@ class CARGoogleAnalyticsTagHandler: CARTagHandler {
      *  @param parameters   Dictionary of parameters
      *                      * requires a screenName value (String)
      */
-    func tagScreen(parameters: [NSObject : AnyObject]) {
+    func tagScreen(_ parameters: [AnyHashable: Any]) {
 
         if let screenName = parameters[SCREEN_NAME] {
             self.tracker.set(kGAIScreenName, value: screenName as! String);
-            let builder = GAIDictionaryBuilder.createScreenView();
-            self.tracker.send(builder.build() as [NSObject : AnyObject]);
+            let builder: NSObject = GAIDictionaryBuilder.createScreenView().build();
+            self.tracker.send(builder as! [NSObject : AnyObject]);
         }
         else {
             cargo.logger.logMissingParam(SCREEN_NAME, methodName: "GA_tagScreen", handler: self);
@@ -187,13 +187,13 @@ class CARGoogleAnalyticsTagHandler: CARTagHandler {
      *                      * optional value of label (String)
      *                      * optional value of value (NSNumber)
      */
-    func tagEvent(parameters: [NSObject : AnyObject]) {
+    func tagEvent(_ parameters: [AnyHashable: Any]) {
         if let category = parameters["eventCategory"], let action = parameters["eventAction"] {
             let label = parameters["eventLabel"];
             let value = parameters["eventValue"];
 
-            let builder = GAIDictionaryBuilder.createEventWithCategory(category as! String, action: action as! String, label: label as? String, value: value as? NSNumber);
-            self.tracker.send(builder.build() as [NSObject : AnyObject]);
+            let builder: NSObject = GAIDictionaryBuilder.createEvent(withCategory: category as! String, action: action as! String, label: label as? String, value: value as? NSNumber).build();
+            self.tracker.send(builder as! [NSObject : AnyObject]);
         }
         else if (parameters["eventCategory"] == nil) {
             cargo.logger.logMissingParam("eventCategory", methodName: "GA_tagEvent", handler: self);
