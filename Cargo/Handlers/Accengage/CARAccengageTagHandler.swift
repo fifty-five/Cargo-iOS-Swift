@@ -18,6 +18,7 @@ class CARAccengageTagHandler: CARTagHandler {
     let ACC_tagPurchaseEvent = "ACC_tagPurchaseEvent";
     let ACC_tagCartEvent = "ACC_tagCartEvent";
     let ACC_tagLead = "ACC_tagLead";
+    let ACC_updateDeviceInfo = "ACC_updateDeviceInfo";
 
 
 /* ************************************* Initializer *************************************** */
@@ -33,6 +34,7 @@ class CARAccengageTagHandler: CARTagHandler {
         cargo.registerTagHandler(self, key: ACC_tagPurchaseEvent);
         cargo.registerTagHandler(self, key: ACC_tagCartEvent);
         cargo.registerTagHandler(self, key: ACC_tagLead);
+        cargo.registerTagHandler(self, key: ACC_updateDeviceInfo);
     }
 
 
@@ -60,6 +62,12 @@ class CARAccengageTagHandler: CARTagHandler {
             break ;
         case ACC_tagCartEvent:
             self.tagCartEvent(parameters);
+            break ;
+        case ACC_tagLead:
+            self.tagLead(parameters);
+            break ;
+        case ACC_updateDeviceInfo:
+            self.updateDeviceInfo(parameters);
             break ;
         default:
             noTagMatch(self, tagName: tagName);
@@ -203,6 +211,16 @@ class CARAccengageTagHandler: CARTagHandler {
         else {
             cargo.logger.logMissingParam("leadLabel or leadValue", methodName: ACC_tagLead, handler: self);
         }
+    }
+
+    /**
+     * Method used in order to update the device infos, like the device id or name...
+     * If you want to send a date, be sure it is formatted as it follows : "yyyy-MM-dd HH:mm:ss zzz"
+     *
+     * @param parameters Dictionary of parameters you want to be set for this device.
+     */
+    func updateDeviceInfo(_ parameters: [AnyHashable: Any]) {
+        BMA4STracker.updateDeviceInfo(parameters);
     }
 
 /* ************************************* Utilities ***************************************** */
