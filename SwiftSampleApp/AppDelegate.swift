@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import FBSDKCoreKit
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, TAGContainerOpenerNotifier {
@@ -30,7 +31,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate, TAGContainerOpenerNotifie
         
         self.launchOptions = launchOptions;
 
+        if #available(iOS 10.0, *) {
+            let center = UNUserNotificationCenter.current();
+            center.requestAuthorization(options: [.badge, .alert, .sound]) { (granted, error) in
+                // Enable or disable features based on authorization.
+            };
+        } else {
+            // Fallback on earlier versions
+        }
+        application.registerForRemoteNotifications()
         return true
+    }
+
+    // getting device token for push notifs
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+
+        let deviceTokenString = deviceToken.reduce("", {$0 + String(format: "%02X", $1)})
+        print(deviceTokenString);
+    }
+
+    // in case of error on push notifs
+    private func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+
+        print("i am not available in simulator \(error)");
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
@@ -134,6 +157,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, TAGContainerOpenerNotifie
         _ = CARTuneTagHandler();
         _ = CARFirebaseTagHandler();
         _ = CARFacebookTagHandler();
+        _ = CARAccengageTagHandler();
         cargoInstance.registerHandlers();
 
         let dataLayer = cargoInstance.tagManager.dataLayer;
