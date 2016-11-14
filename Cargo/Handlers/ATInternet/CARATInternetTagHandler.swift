@@ -13,6 +13,7 @@ class CARATInternetTagHandler: CARTagHandler {
 
 /* ********************************* Variables Declaration ********************************* */
 
+    /** Constants used to define callbacks in the register and in the execute method */
     let AT_init = "AT_init";
     let AT_setConfig = "AT_setConfig";
     let AT_tagScreen = "AT_tagScreen";
@@ -26,12 +27,16 @@ class CARATInternetTagHandler: CARTagHandler {
     let BASKET = "isBasketView";
     let ACTION = "action";
 
+    /** The tracker of the AT Internet SDK which sends the events */
     var tracker: Tracker;
 
-/* ************************************* Initializer *************************************** */
+
+
+/* ************************************ Handler core methods ************************************ */
 
     /**
-     *  Initialize the handler
+     *  Initialize the handler, sets the default tracker and register the callbacks to the container
+     *  Call it in the AppDelegate after you retrieved the GTM container and initialized Cargo.
      */
     init() {
         self.tracker = ATInternet.sharedInstance.defaultTracker;
@@ -43,21 +48,21 @@ class CARATInternetTagHandler: CARTagHandler {
         cargo.registerTagHandler(self, key: AT_tagEvent);
     }
 
-/* ******************************** Core handler methods *********************************** */
-
     /**
-     *  Call back from GTM container to execute a specific action
-     *  after tag and parameters are received
+     * A callback method for the registered callbacks method name mentionned in the register method.
      *
-     *  @param tagName  The tag name
-     *  @param parameters   Dictionary of parameters
+     * @param tagName      The method name called through the container (defined in the GTM interface)
+     * @param parameters   Dictionary of parameters key-object used as a way to give parameters
+     *                     to the class method aimed here
      */
     override func execute(_ tagName: String, parameters: [AnyHashable: Any]) {
         super.execute(tagName, parameters: parameters);
 
+        // At first, checks if we want to initialize
         if (tagName == AT_init) {
             self.initialize(parameters);
         }
+        // Else if the handler is initialized, looks for the right method to call
         else if (initialized == true) {
             switch (tagName) {
             case AT_setConfig:
@@ -73,33 +78,51 @@ class CARATInternetTagHandler: CARTagHandler {
                 noTagMatch(self, tagName: tagName);
             }
         }
+        // If it wasn't initialized, logs that the framework needs to be initialized
         else {
             cargo.logger.logUninitializedFramework(self);
         }
     }
+
+
+
+/* ************************************* SDK initialization ************************************* */
 
     /**
      * The method you have to call first, because it initializes
      * the AT Internet tracker with the parameters you give.
      *
      *  @param parameters   Dictionary of parameters
+     *                      * trackerName (String) : if you want to use a particular tracker
+     *                      * dictionary ([String: String]) : your setup for the tracker
+     *                      
+     *                                                  OR
+     *
+     *                      * siteId (String) : id you got when you register your app, 
+     *                                          used to report hits to your AT interface
      */
     func initialize(_ parameters: [AnyHashable: Any]) {
         var params = parameters;
 
-        // we check if the required name is set, and then initialize the tracker with required values
+        // check if a tracker name is set, then initialize the tracker with required values
         if let trackerName = params[TRACKER_NAME] {
             params.removeValue(forKey: TRACKER_NAME);
+            if params["siteId"] != nil {
+                // the handler is initialized once the siteId has been set
+                self.initialized = true;
+            }
             tracker = ATInternet.sharedInstance.tracker(trackerName as! String,
                                                         configuration:params as! [String : String]);
             cargo.logger.logParamSetWithSuccess(TRACKER_NAME, value: parameters);
         }
+        // if the id is present, set up the tracker (async) and logs through a callback method
         else if let siteId = params["siteId"] {
             tracker.setConfig(TrackerConfigurationKeys.Site, value: siteId as! String,
                               completionHandler: { (isSet) -> Void in
                                 self.cargo.logger.carLog(kTAGLoggerLogLevelInfo, handler: self,
                                                          message: "AT Internet siteId set to \(siteId)");
             });
+            // the handler is initialized once the siteId has been set
             self.initialized = true;
         }
         else {
@@ -111,6 +134,8 @@ class CARATInternetTagHandler: CARTagHandler {
      * The method you may call if you want to reconfigure your tracker
      *
      *  @param parameters   Dictionary of parameters
+     *                      * override (boolean) : if you want your values to override the existant data
+     *                      * Dictionary ([String: String]) : your setup for the tracker
      */
     func setConfig(parameters: [AnyHashable: Any]) {
         var params = parameters;
@@ -118,6 +143,7 @@ class CARATInternetTagHandler: CARTagHandler {
         if let override = params[OVERRIDE] {
             params.removeValue(forKey: OVERRIDE);
 
+            // set up the tracker (async) and logs through a callback method
             tracker.setConfig(params as! [String : String], override: override as! Bool) { (isSet) -> Void in
                 self.cargo.logger.carLog(kTAGLoggerLogLevelInfo, handler: self,
                                     message: "tracker reconfigured with \(params) and override set to \(override)");
@@ -125,16 +151,36 @@ class CARATInternetTagHandler: CARTagHandler {
         }
     }
 
-/* ********************************** Specific methods ************************************* */
 
+
+/* ****************************************** Tracking ****************************************** */
+
+    /**
+     * Method used to create and fire a screen view to AT Internet
+     * The mandatory parameter is screenName
+     *
+     * @param parameters    the parameters given at the moment of the dataLayer.push(),
+     *                      passed through the GTM container and the execute method.
+     *                      * screenName (String) : the name of the screen that has been seen
+     *                      * chapter1 (String) : a custom dimension to set some more context
+     *                      * chapter2 (String) : a second custom dim to set some more context
+     *                      * chapter3 (String) : a third custom dim to set some more context
+     *                      * level2 (int) : to add a second level to the screen
+     *                      * isBasketView (bool) : set to true if the screen view is a basket one
+     *                      * action (ScreenAction) : defines the action type
+     */
     func tagScreen(parameters: [AnyHashable: Any]) {
 
+        // check for the mandatory parameter screenName
         if let screenName = parameters[SCREEN_NAME] {
+            // create the screen object
             var screen = tracker.screens.add(screenName as! String);
             cargo.logger.logParamSetWithSuccess(SCREEN_NAME, value: screen.name);
 
+            // check for optional parameters. returns object with these properties set if needed.
             screen = self.setAdditionalScreenProperties(parameters: parameters as [NSObject : AnyObject], screen: screen);
 
+            // fire the hit
             screen.sendView();
         }
         else {
@@ -142,32 +188,54 @@ class CARATInternetTagHandler: CARTagHandler {
         }
     }
 
+    /**
+     * Method used to create and fire an event to the AT Internet interface
+     * The mandatory parameters are eventName, eventType which are a necessity to build the event.
+     * Without these parameters, the event won't be built.
+     *
+     * @param params    the parameters given at the moment of the dataLayer.push(),
+     *                  passed through the GTM container and the execute method.
+     *                  * eventName (String) : the name for this event.
+     *                  * eventType (String) : defines the type of event you want to send.
+     *                    the different values can be :     - sendTouch
+     *                                                      - sendNavigation
+     *                                                      - sendDownload
+     *                                                      - sendExit
+     *                                                      - sendSearch
+     *                  * chapter1/2/3 (String) : used to add more context to the event
+     *                  * level2 (int) : to add a second level to the event
+     *                  * action (GestureAction) : defines the action type
+     */
     func tagEvent(parameters: [AnyHashable: Any]) {
         
+        // check for the mandatory parameters eventName and eventType
         if let eventName = parameters[EVENT_NAME], let eventType = parameters[EVENT_TYPE] {
+            // create the event object
             var event = tracker.gestures.add(eventName as! String);
             cargo.logger.logParamSetWithSuccess(EVENT_NAME, value: event.name);
-
+            
+            // check for optional parameters. returns object with these properties set if needed.
             event = self.setAdditionalEventProperties(parameters: parameters as [NSObject : AnyObject], event: event);
             
+            // fire a hit with the requested type
             switch eventType as! String {
-                case "touch":
+                case "sendTouch":
                     event.sendTouch();
-                case "navigation":
+                case "sendNavigation":
                     event.sendNavigation();
-                case "download":
+                case "sendDownload":
                     event.sendDownload();
-                case "exit":
+                case "sendExit":
                     event.sendExit();
-                case "search":
+                case "sendSearch":
                     event.sendSearch();
                 default:
                     cargo.logger.logNotFoundValue(eventType as! String, key: EVENT_TYPE,
-                                                  possibleValues: ["touch",
-                                                                   "navigation",
+                                                  possibleValues: ["sendTouch",
+                                                                   "sendNavigation",
                                                                    "download",
-                                                                   "exit",
-                                                                   "search"]);
+                                                                   "sendExit",
+                                                                   "sendSearch"]);
             }
         }
         else {
@@ -177,6 +245,12 @@ class CARATInternetTagHandler: CARTagHandler {
     
 /* *********************************** Utility methods ************************************* */
 
+    /**
+     *  A custom method which looks for additional parmaters for the screen creation.
+     *  If some optional parameters are found, set the correct property of the screen object.
+     *
+     *  @return : returns the screen object with all the properties set as wanted.
+     */
     private func setAdditionalScreenProperties(parameters: [AnyHashable: Any], screen: Screen) -> Screen {
         let screen = screen;
 
@@ -211,7 +285,12 @@ class CARATInternetTagHandler: CARTagHandler {
         return screen;
     }
 
-    
+    /**
+     *  A custom method which looks for additional parmaters for the event creation.
+     *  If some optional parameters are found, set the correct property of the event object.
+     *
+     *  @return : returns the event object with all the properties set as wanted.
+     */
     private func setAdditionalEventProperties(parameters: [AnyHashable: Any], event: Gesture) -> Gesture {
         let event = event;
         
