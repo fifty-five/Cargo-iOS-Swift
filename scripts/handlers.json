@@ -4,8 +4,8 @@
       "name":"ATInternet",
       "dependencies":[
         {
-          "name": "ATInternet-iOS-Swift-SDK/iOS",
-          "version": "~> 2.3.0"
+          "name": "ATInternet-Apple-SDK/Tracker",
+          "version": "~> 1.0.1"
         }
       ]
     },

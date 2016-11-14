@@ -1,7 +1,5 @@
 PODS:
-  - ATInternet-iOS-Swift-SDK/iOS (2.3.0):
-    - ATInternet-iOS-Swift-SDK/Res
-  - ATInternet-iOS-Swift-SDK/Res (2.3.0)
+  - ATInternet-Apple-SDK/Tracker (1.0.1)
   - Bolts (1.8.4):
     - Bolts/AppLinks (= 1.8.4)
     - Bolts/Tasks (= 1.8.4)
@@ -11,7 +9,7 @@ PODS:
   - FacebookCore (0.2.0):
     - Bolts (~> 1.8)
     - FBSDKCoreKit (~> 4.15)
-  - FBSDKCoreKit (4.16.0):
+  - FBSDKCoreKit (4.17.0):
     - Bolts (~> 1.7)
   - Firebase (3.6.0):
     - Firebase/Core (= 3.6.0)
@@ -33,19 +31,19 @@ PODS:
     - GoogleSymbolUtilities (~> 1.0)
     - GoogleUtilities (~> 1.0)
   - GoogleAnalytics (3.17.0)
-  - GoogleInterchangeUtilities (1.2.1):
-    - GoogleSymbolUtilities (~> 1.0)
-  - GoogleNetworkingUtilities (1.2.1):
-    - GoogleSymbolUtilities (~> 1.0)
-  - GoogleSymbolUtilities (1.1.1)
+  - GoogleInterchangeUtilities (1.2.2):
+    - GoogleSymbolUtilities (~> 1.1)
+  - GoogleNetworkingUtilities (1.2.2):
+    - GoogleSymbolUtilities (~> 1.1)
+  - GoogleSymbolUtilities (1.1.2)
   - GoogleTagManager (3.15.2):
     - GoogleAnalytics (= 3.17.0)
-  - GoogleUtilities (1.3.1):
-    - GoogleSymbolUtilities (~> 1.0)
+  - GoogleUtilities (1.3.2):
+    - GoogleSymbolUtilities (~> 1.1)
   - Tune (4.7.0)
 
 DEPENDENCIES:
-  - ATInternet-iOS-Swift-SDK/iOS (~> 2.3.0)
+  - ATInternet-Apple-SDK/Tracker (~> 1.0.1)
   - FacebookCore (~> 0.2.0)
   - Firebase (~> 3.6.0)
   - Google/Analytics (~> 1.0.0)
@@ -53,22 +51,22 @@ DEPENDENCIES:
   - Tune (~> 4.7.0)
 
 SPEC CHECKSUMS:
-  ATInternet-iOS-Swift-SDK: afcd5bfc6f94fac4b57aeab90b5bb11c340aa0c7
+  ATInternet-Apple-SDK: d74537454118b47aba826e396c0338fff8b097ab
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   FacebookCore: 2cb3f0fbff218e9d3119cec84bae983b232412de
-  FBSDKCoreKit: 7a6baaed4a2b2a244ba253346713bdbc74df135b
+  FBSDKCoreKit: 30a21d2d7b92984b3d80497113433c00824c35e9
   Firebase: 34187200ef4979dbd485c7aa685ef078bf587c86
   FirebaseAnalytics: 3f5358d9104adf159cc8d99b7b501e50099a39ad
   FirebaseInstanceID: ba1e640935235e5fac39dfa816fe7660e72e1a8a
   Google: 875f5a8ade86dd02e36586e4a54814843938c7f6
   GoogleAnalytics: f42cc53a87a51fe94334821868d9c8481ff47a7b
-  GoogleInterchangeUtilities: def8415a862effc67d549d5b5b0b9c7a2f97d4de
-  GoogleNetworkingUtilities: 3e83269048cfb498dc7ec83ab36813360965c74f
-  GoogleSymbolUtilities: 33117db1b5f290c6fbf259585e4885b4c84b98d7
+  GoogleInterchangeUtilities: d5bc4d88d5b661ab72f9d70c58d02ca8c27ad1f7
+  GoogleNetworkingUtilities: 3edd3a8161347494f2da60ea0deddc8a472d94cb
+  GoogleSymbolUtilities: 631ee17048aa5e9ab133470d768ea997a5ef9b96
   GoogleTagManager: 43b61f634e42e4b9566ab41e9fd6aa0f6adf47a5
-  GoogleUtilities: 56c5ac05b7aa5dc417a1bb85221a9516e04d7032
+  GoogleUtilities: 8bbc733218aad26306f9d4a253823986110e3358
   Tune: a699a5793aca0d920b81dbe0c67eb0f666c6139c
 
 PODFILE CHECKSUM: 26bdb2d775589df35025093f1843d8d381270592
 
-COCOAPODS: 1.1.0.rc.2
+COCOAPODS: 1.2.0.beta.1
