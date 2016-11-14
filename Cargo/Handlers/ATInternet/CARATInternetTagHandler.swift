@@ -16,6 +16,7 @@ class CARATInternetTagHandler: CARTagHandler {
     let AT_init = "AT_init";
     let AT_setConfig = "AT_setConfig";
     let AT_tagScreen = "AT_tagScreen";
+    let AT_tagEvent = "AT_tagEvent";
 
     let TRACKER_NAME = "trackerName";
     let OVERRIDE = "override";
@@ -25,11 +26,7 @@ class CARATInternetTagHandler: CARTagHandler {
     let BASKET = "isBasketView";
     let ACTION = "action";
 
-<<<<<<< HEAD
     var tracker: Tracker;
-=======
-    let tracker: Tracker;
->>>>>>> b372e5c01f0b6680d901d2640ca4a28d1cbf0dc1
 
 /* ************************************* Initializer *************************************** */
 
@@ -37,15 +34,13 @@ class CARATInternetTagHandler: CARTagHandler {
      *  Initialize the handler
      */
     init() {
-        super.init(key: "AT", name: "AT Internet");
-<<<<<<< HEAD
         self.tracker = ATInternet.sharedInstance.defaultTracker;
-=======
->>>>>>> b372e5c01f0b6680d901d2640ca4a28d1cbf0dc1
+        super.init(key: "AT", name: "AT Internet");
 
         cargo.registerTagHandler(self, key: AT_init);
         cargo.registerTagHandler(self, key: AT_setConfig);
         cargo.registerTagHandler(self, key: AT_tagScreen);
+        cargo.registerTagHandler(self, key: AT_tagEvent);
     }
 
 /* ******************************** Core handler methods *********************************** */
@@ -60,18 +55,26 @@ class CARATInternetTagHandler: CARTagHandler {
     override func execute(_ tagName: String, parameters: [AnyHashable: Any]) {
         super.execute(tagName, parameters: parameters);
 
-        switch (tagName) {
-        case AT_init:
+        if (tagName == AT_init) {
             self.initialize(parameters);
-            break ;
-        case AT_setConfig:
-            self.setConfig(parameters: parameters);
-            break ;
-        case AT_tagScreen:
-            self.tagScreen(parameters: parameters);
-            break ;
-        default:
-            noTagMatch(self, tagName: tagName);
+        }
+        else if (initialized == true) {
+            switch (tagName) {
+            case AT_setConfig:
+                self.setConfig(parameters: parameters);
+                break ;
+            case AT_tagScreen:
+                self.tagScreen(parameters: parameters);
+                break ;
+            case AT_tagEvent:
+                self.tagEvent(parameters: parameters);
+                break ;
+            default:
+                noTagMatch(self, tagName: tagName);
+            }
+        }
+        else {
+            cargo.logger.logUninitializedFramework(self);
         }
     }
 
@@ -90,10 +93,17 @@ class CARATInternetTagHandler: CARTagHandler {
             tracker = ATInternet.sharedInstance.tracker(trackerName as! String,
                                                         configuration:params as! [String : String]);
             cargo.logger.logParamSetWithSuccess(TRACKER_NAME, value: parameters);
+        }
+        else if let siteId = params["siteId"] {
+            tracker.setConfig(TrackerConfigurationKeys.Site, value: siteId as! String,
+                              completionHandler: { (isSet) -> Void in
+                                self.cargo.logger.carLog(kTAGLoggerLogLevelInfo, handler: self,
+                                                         message: "AT Internet siteId set to \(siteId)");
+            });
             self.initialized = true;
         }
         else {
-            cargo.logger.logMissingParam(TRACKER_NAME, methodName: AT_init, handler: self);
+            cargo.logger.logMissingParam("siteId or \(TRACKER_NAME)", methodName: "initialize", handler: self);
         }
     }
 
@@ -107,6 +117,7 @@ class CARATInternetTagHandler: CARTagHandler {
 
         if let override = params[OVERRIDE] {
             params.removeValue(forKey: OVERRIDE);
+
             tracker.setConfig(params as! [String : String], override: override as! Bool) { (isSet) -> Void in
                 self.cargo.logger.carLog(kTAGLoggerLogLevelInfo, handler: self,
                                     message: "tracker reconfigured with \(params) and override set to \(override)");
@@ -118,28 +129,57 @@ class CARATInternetTagHandler: CARTagHandler {
 
     func tagScreen(parameters: [AnyHashable: Any]) {
 
-        if (initialized) {
-            if let screenName = parameters[SCREEN_NAME] {
-                var screen = tracker.screens.add(screenName as! String);
-                cargo.logger.logParamSetWithSuccess(SCREEN_NAME, value: screen.name);
+        if let screenName = parameters[SCREEN_NAME] {
+            var screen = tracker.screens.add(screenName as! String);
+            cargo.logger.logParamSetWithSuccess(SCREEN_NAME, value: screen.name);
 
-                screen = self.addChapters(parameters: parameters as [NSObject : AnyObject], screen: screen);
-                screen = self.setAdditionalProperties(parameters: parameters as [NSObject : AnyObject], screen: screen);
+            screen = self.addScreenChapters(parameters: parameters as [NSObject : AnyObject], screen: screen);
+            screen = self.setAdditionalScreenProperties(parameters: parameters as [NSObject : AnyObject], screen: screen);
 
-                screen.sendView();
-            }
-            else {
-                cargo.logger.logMissingParam(SCREEN_NAME, methodName: "tagScreen", handler: self);
-            }
+            screen.sendView();
         }
         else {
-            cargo.logger.logUninitializedFramework(self);
+            cargo.logger.logMissingParam(SCREEN_NAME, methodName: "tagScreen", handler: self);
         }
     }
 
+    func tagEvent(parameters: [AnyHashable: Any]) {
+        
+        if let eventName = parameters[EVENT_NAME], let eventType = parameters[EVENT_TYPE] {
+            var event = tracker.gestures.add(eventName as! String);
+            cargo.logger.logParamSetWithSuccess(EVENT_NAME, value: event.name);
+
+            event = self.addEventChapters(parameters: parameters as [NSObject : AnyObject], event: event);
+            event = self.setAdditionalEventProperties(parameters: parameters as [NSObject : AnyObject], event: event);
+            
+            switch eventType as! String {
+                case "touch":
+                    event.sendTouch();
+                case "navigation":
+                    event.sendNavigation();
+                case "download":
+                    event.sendDownload();
+                case "exit":
+                    event.sendExit();
+                case "search":
+                    event.sendSearch();
+                default:
+                    cargo.logger.logNotFoundValue(eventType as! String, key: EVENT_TYPE,
+                                                  possibleValues: ["touch",
+                                                                   "navigation",
+                                                                   "download",
+                                                                   "exit",
+                                                                   "search"]);
+            }
+        }
+        else {
+            cargo.logger.logMissingParam("\(EVENT_NAME) and/or \(EVENT_TYPE)", methodName: "tagEvent", handler: self);
+        }
+    }
+    
 /* *********************************** Utility methods ************************************* */
 
-    private func addChapters(parameters: [AnyHashable: Any], screen: Screen) -> Screen {
+    private func addScreenChapters(parameters: [AnyHashable: Any], screen: Screen) -> Screen {
         let screen = screen;
 
         if let chapter1 = parameters[CHAPTER1] {
@@ -159,7 +199,7 @@ class CARATInternetTagHandler: CARTagHandler {
         return screen;
     }
 
-    private func setAdditionalProperties(parameters: [AnyHashable: Any], screen: Screen) -> Screen {
+    private func setAdditionalScreenProperties(parameters: [AnyHashable: Any], screen: Screen) -> Screen {
         let screen = screen;
 
         if let level2 = parameters[LEVEL2] {
@@ -174,8 +214,43 @@ class CARATInternetTagHandler: CARTagHandler {
             screen.action = action as! AbstractScreen.ScreenAction;
             cargo.logger.logParamSetWithSuccess(ACTION, value: screen.action);
         }
-
         return screen;
+    }
+
+
+
+    private func addEventChapters(parameters: [AnyHashable: Any], event: Gesture) -> Gesture {
+        let event = event;
+        
+        if let chapter1 = parameters[CHAPTER1] {
+            event.chapter1 = chapter1 as? String;
+            cargo.logger.logParamSetWithSuccess(CHAPTER1, value: event.chapter1!);
+            
+            if let chapter2 = parameters[CHAPTER2] {
+                event.chapter2 = chapter2 as? String;
+                cargo.logger.logParamSetWithSuccess(CHAPTER2, value: event.chapter2!);
+                
+                if let chapter3 = parameters[CHAPTER3] {
+                    event.chapter2 = chapter3 as? String;
+                    cargo.logger.logParamSetWithSuccess(CHAPTER3, value: event.chapter3!);
+                }
+            }
+        }
+        return event;
+    }
+    
+    private func setAdditionalEventProperties(parameters: [AnyHashable: Any], event: Gesture) -> Gesture {
+        let event = event;
+        
+        if let level2 = parameters[LEVEL2] {
+            event.level2 = level2 as! Int;
+            cargo.logger.logParamSetWithSuccess(SCREEN_NAME, value: event.name);
+        }
+        if let action = parameters[ACTION] {
+            event.action = action as! Gesture.GestureAction;
+            cargo.logger.logParamSetWithSuccess(ACTION, value: event.action);
+        }
+        return event;
     }
 
 }
