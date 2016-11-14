@@ -25,7 +25,7 @@ class CARATInternetTagHandler: CARTagHandler {
     let BASKET = "isBasketView";
     let ACTION = "action";
 
-    let tracker: Tracker;
+    var tracker: Tracker;
 
 /* ************************************* Initializer *************************************** */
 
@@ -34,6 +34,7 @@ class CARATInternetTagHandler: CARTagHandler {
      */
     init() {
         super.init(key: "AT", name: "AT Internet");
+        self.tracker = ATInternet.sharedInstance.defaultTracker;
 
         cargo.registerTagHandler(self, key: AT_init);
         cargo.registerTagHandler(self, key: AT_setConfig);
@@ -49,7 +50,7 @@ class CARATInternetTagHandler: CARTagHandler {
      *  @param tagName  The tag name
      *  @param parameters   Dictionary of parameters
      */
-    override func execute(tagName: String, parameters: [NSObject : AnyObject]) {
+    override func execute(_ tagName: String, parameters: [AnyHashable: Any]) {
         super.execute(tagName, parameters: parameters);
 
         switch (tagName) {
@@ -57,10 +58,10 @@ class CARATInternetTagHandler: CARTagHandler {
             self.initialize(parameters);
             break ;
         case AT_setConfig:
-            self.setConfig(parameters);
+            self.setConfig(parameters: parameters);
             break ;
         case AT_tagScreen:
-            self.tagScreen(parameters);
+            self.tagScreen(parameters: parameters);
             break ;
         default:
             noTagMatch(self, tagName: tagName);
@@ -73,13 +74,14 @@ class CARATInternetTagHandler: CARTagHandler {
      *
      *  @param parameters   Dictionary of parameters
      */
-    func initialize(parameters: [NSObject : AnyObject]) {
+    func initialize(_ parameters: [AnyHashable: Any]) {
         var params = parameters;
 
         // we check if the required name is set, and then initialize the tracker with required values
         if let trackerName = params[TRACKER_NAME] {
-            params.removeValueForKey(TRACKER_NAME);
-            tracker = ATInternet.sharedInstance.tracker(trackerName, configuration:params);
+            params.removeValue(forKey: TRACKER_NAME);
+            tracker = ATInternet.sharedInstance.tracker(trackerName as! String,
+                                                        configuration:params as! [String : String]);
             cargo.logger.logParamSetWithSuccess(TRACKER_NAME, value: parameters);
             self.initialized = true;
         }
@@ -93,13 +95,13 @@ class CARATInternetTagHandler: CARTagHandler {
      *
      *  @param parameters   Dictionary of parameters
      */
-    func setConfig(parameters: [NSObject : AnyObject]) {
+    func setConfig(parameters: [AnyHashable: Any]) {
         var params = parameters;
 
         if let override = params[OVERRIDE] {
-            params.removeValueForKey(OVERRIDE);
-            tracker.setConfig(params, override: override) { (isSet) -> Void in
-                cargo.logger.carLog(kTAGLoggerLogLevelInfo, handler: self,
+            params.removeValue(forKey: OVERRIDE);
+            tracker.setConfig(params as! [String : String], override: override as! Bool) { (isSet) -> Void in
+                self.cargo.logger.carLog(kTAGLoggerLogLevelInfo, handler: self,
                                     message: "tracker reconfigured with \(params) and override set to \(override)");
             }
         }
@@ -107,20 +109,20 @@ class CARATInternetTagHandler: CARTagHandler {
 
 /* ********************************** Specific methods ************************************* */
 
-    func tagScreen(parameters: [NSObject: AnyObject]) {
+    func tagScreen(parameters: [AnyHashable: Any]) {
 
         if (initialized) {
             if let screenName = parameters[SCREEN_NAME] {
                 var screen = tracker.screens.add(screenName as! String);
                 cargo.logger.logParamSetWithSuccess(SCREEN_NAME, value: screen.name);
 
-                screen = self.addChapters(parameters, screen: screen);
-                screen = self.setAdditionalProperties(parameters, screen: screen);
+                screen = self.addChapters(parameters: parameters as [NSObject : AnyObject], screen: screen);
+                screen = self.setAdditionalProperties(parameters: parameters as [NSObject : AnyObject], screen: screen);
 
                 screen.sendView();
             }
             else {
-                cargo.logger.logMissingParam(SCREEN_NAME, methodName: tagScreen, handler: self);
+                cargo.logger.logMissingParam(SCREEN_NAME, methodName: "tagScreen", handler: self);
             }
         }
         else {
@@ -130,28 +132,28 @@ class CARATInternetTagHandler: CARTagHandler {
 
 /* *********************************** Utility methods ************************************* */
 
-    private func addChapters(parameters: [NSObject: AnyObject], screen: screen) {
-        var screen = screen;
+    private func addChapters(parameters: [AnyHashable: Any], screen: Screen) -> Screen {
+        let screen = screen;
 
         if let chapter1 = parameters[CHAPTER1] {
-            screen.chapter1 = chapter1 as! String;
-            cargo.logger.logParamSetWithSuccess(CHAPTER1, value: screen.chapter1);
+            screen.chapter1 = chapter1 as? String;
+            cargo.logger.logParamSetWithSuccess(CHAPTER1, value: screen.chapter1!);
 
             if let chapter2 = parameters[CHAPTER2] {
-                screen.chapter2 = chapter2 as! String;
-                cargo.logger.logParamSetWithSuccess(CHAPTER2, value: screen.chapter2);
+                screen.chapter2 = chapter2 as? String;
+                cargo.logger.logParamSetWithSuccess(CHAPTER2, value: screen.chapter2!);
 
                 if let chapter3 = parameters[CHAPTER3] {
-                    screen.chapter2 = chapter3 as! String;
-                    cargo.logger.logParamSetWithSuccess(CHAPTER3, value: screen.chapter3);
+                    screen.chapter2 = chapter3 as? String;
+                    cargo.logger.logParamSetWithSuccess(CHAPTER3, value: screen.chapter3!);
                 }
             }
         }
         return screen;
     }
 
-    private func setAdditionalProperties(parameters: [NSObject: AnyObject], screen: screen) {
-        var screen = screen;
+    private func setAdditionalProperties(parameters: [AnyHashable: Any], screen: Screen) -> Screen {
+        let screen = screen;
 
         if let level2 = parameters[LEVEL2] {
             screen.level2 = level2 as! Int;
@@ -159,10 +161,10 @@ class CARATInternetTagHandler: CARTagHandler {
         }
         if let basket = parameters[BASKET] {
             screen.isBasketScreen = basket as! Bool;
-            cargo.logger.logParamSetWithSuccess(BASKET, value: screen.isBasketView);
+            cargo.logger.logParamSetWithSuccess(BASKET, value: screen.isBasketScreen);
         }
         if let action = parameters[ACTION] {
-            screen.action = action as! Action.View;
+            screen.action = action as! AbstractScreen.ScreenAction;
             cargo.logger.logParamSetWithSuccess(ACTION, value: screen.action);
         }
 
