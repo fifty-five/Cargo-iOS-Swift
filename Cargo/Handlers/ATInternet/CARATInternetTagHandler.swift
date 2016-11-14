@@ -25,7 +25,11 @@ class CARATInternetTagHandler: CARTagHandler {
     let BASKET = "isBasketView";
     let ACTION = "action";
 
+<<<<<<< HEAD
     var tracker: Tracker;
+=======
+    let tracker: Tracker;
+>>>>>>> b372e5c01f0b6680d901d2640ca4a28d1cbf0dc1
 
 /* ************************************* Initializer *************************************** */
 
@@ -34,7 +38,10 @@ class CARATInternetTagHandler: CARTagHandler {
      */
     init() {
         super.init(key: "AT", name: "AT Internet");
+<<<<<<< HEAD
         self.tracker = ATInternet.sharedInstance.defaultTracker;
+=======
+>>>>>>> b372e5c01f0b6680d901d2640ca4a28d1cbf0dc1
 
         cargo.registerTagHandler(self, key: AT_init);
         cargo.registerTagHandler(self, key: AT_setConfig);
