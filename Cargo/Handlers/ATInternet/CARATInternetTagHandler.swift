@@ -191,7 +191,7 @@ class CARATInternetTagHandler: CARTagHandler {
                 cargo.logger.logParamSetWithSuccess(CHAPTER2, value: screen.chapter2!);
 
                 if let chapter3 = parameters[CHAPTER3] {
-                    screen.chapter2 = chapter3 as? String;
+                    screen.chapter3 = chapter3 as? String;
                     cargo.logger.logParamSetWithSuccess(CHAPTER3, value: screen.chapter3!);
                 }
             }
@@ -231,7 +231,7 @@ class CARATInternetTagHandler: CARTagHandler {
                 cargo.logger.logParamSetWithSuccess(CHAPTER2, value: event.chapter2!);
                 
                 if let chapter3 = parameters[CHAPTER3] {
-                    event.chapter2 = chapter3 as? String;
+                    event.chapter3 = chapter3 as? String;
                     cargo.logger.logParamSetWithSuccess(CHAPTER3, value: event.chapter3!);
                 }
             }
