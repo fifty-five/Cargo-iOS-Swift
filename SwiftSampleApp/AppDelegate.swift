@@ -134,6 +134,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, TAGContainerOpenerNotifie
         _ = CARTuneTagHandler();
         _ = CARFirebaseTagHandler();
         _ = CARFacebookTagHandler();
+        _ = CARATInternetTagHandler();
         cargoInstance.registerHandlers();
 
         let dataLayer = cargoInstance.tagManager.dataLayer;
