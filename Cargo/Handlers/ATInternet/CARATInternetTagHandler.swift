@@ -133,7 +133,6 @@ class CARATInternetTagHandler: CARTagHandler {
             var screen = tracker.screens.add(screenName as! String);
             cargo.logger.logParamSetWithSuccess(SCREEN_NAME, value: screen.name);
 
-            screen = self.addScreenChapters(parameters: parameters as [NSObject : AnyObject], screen: screen);
             screen = self.setAdditionalScreenProperties(parameters: parameters as [NSObject : AnyObject], screen: screen);
 
             screen.sendView();
@@ -149,7 +148,6 @@ class CARATInternetTagHandler: CARTagHandler {
             var event = tracker.gestures.add(eventName as! String);
             cargo.logger.logParamSetWithSuccess(EVENT_NAME, value: event.name);
 
-            event = self.addEventChapters(parameters: parameters as [NSObject : AnyObject], event: event);
             event = self.setAdditionalEventProperties(parameters: parameters as [NSObject : AnyObject], event: event);
             
             switch eventType as! String {
@@ -179,26 +177,6 @@ class CARATInternetTagHandler: CARTagHandler {
     
 /* *********************************** Utility methods ************************************* */
 
-    private func addScreenChapters(parameters: [AnyHashable: Any], screen: Screen) -> Screen {
-        let screen = screen;
-
-        if let chapter1 = parameters[CHAPTER1] {
-            screen.chapter1 = chapter1 as? String;
-            cargo.logger.logParamSetWithSuccess(CHAPTER1, value: screen.chapter1!);
-
-            if let chapter2 = parameters[CHAPTER2] {
-                screen.chapter2 = chapter2 as? String;
-                cargo.logger.logParamSetWithSuccess(CHAPTER2, value: screen.chapter2!);
-
-                if let chapter3 = parameters[CHAPTER3] {
-                    screen.chapter3 = chapter3 as? String;
-                    cargo.logger.logParamSetWithSuccess(CHAPTER3, value: screen.chapter3!);
-                }
-            }
-        }
-        return screen;
-    }
-
     private func setAdditionalScreenProperties(parameters: [AnyHashable: Any], screen: Screen) -> Screen {
         let screen = screen;
 
@@ -214,30 +192,25 @@ class CARATInternetTagHandler: CARTagHandler {
             screen.action = action as! AbstractScreen.ScreenAction;
             cargo.logger.logParamSetWithSuccess(ACTION, value: screen.action);
         }
-        return screen;
-    }
-
-
-
-    private func addEventChapters(parameters: [AnyHashable: Any], event: Gesture) -> Gesture {
-        let event = event;
         
         if let chapter1 = parameters[CHAPTER1] {
-            event.chapter1 = chapter1 as? String;
-            cargo.logger.logParamSetWithSuccess(CHAPTER1, value: event.chapter1!);
+            screen.chapter1 = chapter1 as? String;
+            cargo.logger.logParamSetWithSuccess(CHAPTER1, value: screen.chapter1!);
             
             if let chapter2 = parameters[CHAPTER2] {
-                event.chapter2 = chapter2 as? String;
-                cargo.logger.logParamSetWithSuccess(CHAPTER2, value: event.chapter2!);
+                screen.chapter2 = chapter2 as? String;
+                cargo.logger.logParamSetWithSuccess(CHAPTER2, value: screen.chapter2!);
                 
                 if let chapter3 = parameters[CHAPTER3] {
-                    event.chapter3 = chapter3 as? String;
-                    cargo.logger.logParamSetWithSuccess(CHAPTER3, value: event.chapter3!);
+                    screen.chapter3 = chapter3 as? String;
+                    cargo.logger.logParamSetWithSuccess(CHAPTER3, value: screen.chapter3!);
                 }
             }
         }
-        return event;
+
+        return screen;
     }
+
     
     private func setAdditionalEventProperties(parameters: [AnyHashable: Any], event: Gesture) -> Gesture {
         let event = event;
@@ -249,6 +222,21 @@ class CARATInternetTagHandler: CARTagHandler {
         if let action = parameters[ACTION] {
             event.action = action as! Gesture.GestureAction;
             cargo.logger.logParamSetWithSuccess(ACTION, value: event.action);
+        }
+
+        if let chapter1 = parameters[CHAPTER1] {
+            event.chapter1 = chapter1 as? String;
+            cargo.logger.logParamSetWithSuccess(CHAPTER1, value: event.chapter1!);
+
+            if let chapter2 = parameters[CHAPTER2] {
+                event.chapter2 = chapter2 as? String;
+                cargo.logger.logParamSetWithSuccess(CHAPTER2, value: event.chapter2!);
+
+                if let chapter3 = parameters[CHAPTER3] {
+                    event.chapter3 = chapter3 as? String;
+                    cargo.logger.logParamSetWithSuccess(CHAPTER3, value: event.chapter3!);
+                }
+            }
         }
         return event;
     }
