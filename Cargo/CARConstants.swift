@@ -43,6 +43,7 @@ let USER_FACEBOOK_ID: String = "userFacebookId";
 /* ********************************* transaction ********************************* */
 let TRANSACTION_ID: String = "transactionId";
 let TRANSACTION_TOTAL: String = "transactionTotal";
+let TRANSACTION_CURRENCY_CODE: String = "transactionCurrencyCode";
 let TRANSACTION_PRODUCTS: String = "transactionProducts";
 let TRANSACTION_PRODUCT_NAME: String = "name";
 let TRANSACTION_PRODUCT_SKU: String = "sku";

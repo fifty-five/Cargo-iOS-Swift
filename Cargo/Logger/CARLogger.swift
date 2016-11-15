@@ -216,7 +216,7 @@ class CARLogger: NSObject {
     /// - Returns: the String defining the log level
     func nameOfLevel(_ logingLevel:TAGLoggerLogLevelType) -> String {
         var result: String!;
-        switch (loggingLevel) {
+        switch (logingLevel) {
             case kTAGLoggerLogLevelVerbose:
                 result = "VERB";
                 break;
