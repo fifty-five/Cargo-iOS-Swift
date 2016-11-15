@@ -45,7 +45,7 @@ class CARFacebookTagHandler: CARTagHandler {
         super.execute(tagName, parameters: parameters);
 
         if (tagName == FB_initialize) {
-            self.initialize(parameters);
+            self.initialize(parameters: parameters);
             return ;
         }
         // check whether the SDK has been initialized before calling any method

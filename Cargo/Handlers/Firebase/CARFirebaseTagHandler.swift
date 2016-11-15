@@ -101,14 +101,15 @@ class CARFirebaseTagHandler: CARTagHandler {
     ///   - userId: unique ID used to identify an unique user
     ///   - parameters: additional properties you may set to your user
     func identify(_ parameters: [AnyHashable: Any]){
+        var params = parameters;
 
-        if let userID = parameters[USER_ID] {
-            FIRAnalytics.setUserID(userID as! String);
+        if let userID = params[USER_ID] {
+            FIRAnalytics.setUserID(userID as? String);
             cargo.logger.logParamSetWithSuccess(USER_ID, value: userID as! String);
-            parameters.removeValue(forKey: USER_ID);
+            params.removeValue(forKey: USER_ID);
         }
-        else if (parameters.count > 0) {
-            for (key, value) in parameters {
+        else if (params.count > 0) {
+            for (key, value) in params {
                 FIRAnalytics.setUserPropertyString(value as? String, forName:key as! String);
                 cargo.logger.logParamSetWithSuccess((key as? String)!, value: (value as? String)!);
             }
