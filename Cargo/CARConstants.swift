@@ -16,14 +16,10 @@ let DISPATCH_PERIOD: String = "dispatchPeriod";
 let LEVEL2: String = "level2";
 let CUSTOM_DIM1: String = "customDim1";
 let CUSTOM_DIM2: String = "customDim2";
-/* ******************************************************************************* */
-
 
 
 /* *********************************** screen ************************************ */
 let SCREEN_NAME: String = "screenName";
-/* ******************************************************************************* */
-
 
 
 /* ************************************ event ************************************ */
@@ -31,8 +27,6 @@ let EVENT_NAME: String = "eventName";
 let EVENT_ID: String = "eventId";
 let EVENT_VALUE: String = "eventValue";
 let EVENT_TYPE: String = "eventType";
-/* ******************************************************************************* */
-
 
 
 /* ************************************ user ************************************* */
@@ -44,8 +38,6 @@ let USER_GENDER: String = "userGender";
 let USER_GOOGLE_ID: String = "userGoogleId";
 let USER_TWITTER_ID: String = "userTwitterId";
 let USER_FACEBOOK_ID: String = "userFacebookId";
-/* ******************************************************************************* */
-
 
 
 /* ********************************* transaction ********************************* */
@@ -57,4 +49,3 @@ let TRANSACTION_PRODUCT_SKU: String = "sku";
 let TRANSACTION_PRODUCT_PRICE: String = "price";
 let TRANSACTION_PRODUCT_CATEGORY: String = "category";
 let TRANSACTION_PRODUCT_QUANTITY: String = "quantity";
-/* ******************************************************************************* */
