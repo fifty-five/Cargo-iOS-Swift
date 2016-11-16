@@ -9,9 +9,11 @@
 import Foundation
 import Tracker
 
+
+/// The class which handles interactions with the AT Internet SDK
 class CARATInternetTagHandler: CARTagHandler {
 
-/* ********************************* Variables Declaration ********************************* */
+/* *********************************** Variables Declaration ************************************ */
 
     /** Constants used to define callbacks in the register and in the execute method */
     let AT_init = "AT_init";
@@ -31,13 +33,10 @@ class CARATInternetTagHandler: CARTagHandler {
     var tracker: Tracker;
 
 
-
 /* ************************************ Handler core methods ************************************ */
 
-    /**
-     *  Initialize the handler, sets the default tracker and register the callbacks to the container
-     *  Call it in the AppDelegate after you retrieved the GTM container and initialized Cargo.
-     */
+    /// Initialize the handler, sets the default tracker and register the callbacks to the container
+    /// Call it in the AppDelegate after you retrieved the GTM container and initialized Cargo.
     init() {
         self.tracker = ATInternet.sharedInstance.defaultTracker;
         super.init(key: "AT", name: "AT Internet");
@@ -48,13 +47,12 @@ class CARATInternetTagHandler: CARTagHandler {
         cargo.registerTagHandler(self, key: AT_tagEvent);
     }
 
-    /**
-     * A callback method for the registered callbacks method name mentionned in the register method.
-     *
-     * @param tagName      The method name called through the container (defined in the GTM interface)
-     * @param parameters   Dictionary of parameters key-object used as a way to give parameters
-     *                     to the class method aimed here
-     */
+    /// A callback method for the registered callbacks method name mentionned in the register method.
+    ///
+    /// - Parameters:
+    ///   - tagName: The method name called through the container (defined in the GTM interface)
+    ///   - parameters: Dictionary of parameters key-object used as a way to give parameters
+    ///                 to the class method aimed here
     override func execute(_ tagName: String, parameters: [AnyHashable: Any]) {
         super.execute(tagName, parameters: parameters);
 
@@ -85,22 +83,19 @@ class CARATInternetTagHandler: CARTagHandler {
     }
 
 
-
 /* ************************************* SDK initialization ************************************* */
 
-    /**
-     * The method you have to call first, because it initializes
-     * the AT Internet tracker with the parameters you give.
-     *
-     *  @param parameters   Dictionary of parameters
-     *                      * trackerName (String) : if you want to use a particular tracker
-     *                      * dictionary ([String: String]) : your setup for the tracker
-     *                      
-     *                                                  OR
-     *
-     *                      * siteId (String) : id you got when you register your app, 
-     *                                          used to report hits to your AT interface
-     */
+    /// The method you have to call first, because it initializes
+    /// the AT Internet tracker with the parameters you give.
+    ///
+    /// - Parameters:
+    ///   - trackerName : if you want to use a particular tracker
+    ///   - dictionary ([String: String]) : your setup for the tracker
+    ///
+    ///                               OR
+    ///
+    ///   - siteId : id you got when you register your app,
+    ///              used to report hits to your AT interface
     func initialize(_ parameters: [AnyHashable: Any]) {
         var params = parameters;
 
@@ -130,13 +125,11 @@ class CARATInternetTagHandler: CARTagHandler {
         }
     }
 
-    /**
-     * The method you may call if you want to reconfigure your tracker
-     *
-     *  @param parameters   Dictionary of parameters
-     *                      * override (boolean) : if you want your values to override the existant data
-     *                      * Dictionary ([String: String]) : your setup for the tracker
-     */
+    /// The method you may call if you want to reconfigure your tracker
+    ///
+    /// - Parameters:
+    ///   - override (boolean) : if you want your values to override the existant data
+    ///   - Dictionary ([String: String]) : your setup for the tracker
     func setConfig(parameters: [AnyHashable: Any]) {
         var params = parameters;
 
@@ -152,23 +145,19 @@ class CARATInternetTagHandler: CARTagHandler {
     }
 
 
-
 /* ****************************************** Tracking ****************************************** */
 
-    /**
-     * Method used to create and fire a screen view to AT Internet
-     * The mandatory parameter is screenName
-     *
-     * @param parameters    the parameters given at the moment of the dataLayer.push(),
-     *                      passed through the GTM container and the execute method.
-     *                      * screenName (String) : the name of the screen that has been seen
-     *                      * chapter1 (String) : a custom dimension to set some more context
-     *                      * chapter2 (String) : a second custom dim to set some more context
-     *                      * chapter3 (String) : a third custom dim to set some more context
-     *                      * level2 (int) : to add a second level to the screen
-     *                      * isBasketView (bool) : set to true if the screen view is a basket one
-     *                      * action (ScreenAction) : defines the action type
-     */
+    /// Method used to create and fire a screen view to AT Internet
+    /// The mandatory parameter is screenName
+    ///
+    /// - Parameters:
+    ///   - screenName (String) : the name of the screen that has been seen
+    ///   - chapter1 (String) : a custom dimension to set some more context
+    ///   - chapter2 (String) : a second custom dim to set some more context
+    ///   - chapter3 (String) : a third custom dim to set some more context
+    ///   - level2 (int) : to add a second level to the screen
+    ///   - isBasketView (bool) : set to true if the screen view is a basket one
+    ///   - action (ScreenAction) : defines the action type
     func tagScreen(parameters: [AnyHashable: Any]) {
 
         // check for the mandatory parameter screenName
@@ -206,6 +195,22 @@ class CARATInternetTagHandler: CARTagHandler {
      *                  * level2 (int) : to add a second level to the event
      *                  * action (GestureAction) : defines the action type
      */
+    
+    /// Method used to create and fire an event to the AT Internet interface
+    /// The mandatory parameters are eventName, eventType which are a necessity to build the event.
+    /// Without these parameters, the event won't be built.
+    ///
+    /// - Parameters:
+    ///   - eventName (String) : the name for this event.
+    ///   - eventType (String) : defines the type of event you want to send.
+    ///                    the different values can be : - sendTouch
+    ///                                                  - sendNavigation
+    ///                                                  - sendDownload
+    ///                                                  - sendExit
+    ///                                                  - sendSearch
+    ///   - chapter1/2/3 (String) : used to add more context to the event
+    ///   - level2 (int) : to add a second level to the event
+    ///   - action (GestureAction) : defines the action type
     func tagEvent(parameters: [AnyHashable: Any]) {
         
         // check for the mandatory parameters eventName and eventType
@@ -242,15 +247,17 @@ class CARATInternetTagHandler: CARTagHandler {
             cargo.logger.logMissingParam("\(EVENT_NAME) and/or \(EVENT_TYPE)", methodName: "tagEvent", handler: self);
         }
     }
-    
-/* *********************************** Utility methods ************************************* */
 
-    /**
-     *  A custom method which looks for additional parmaters for the screen creation.
-     *  If some optional parameters are found, set the correct property of the screen object.
-     *
-     *  @return : returns the screen object with all the properties set as wanted.
-     */
+
+/* ****************************************** Utility ******************************************* */
+
+    /// A custom method which looks for additional paramters for the screen creation.
+    /// If some optional parameters are found, set the correct property of the screen object.
+    ///
+    /// - Parameters:
+    ///   - parameters: a dictionary of additional parameters
+    ///   - screen: a screen object you want to set extra parameters to
+    /// - Returns: the screen object with the parameters
     private func setAdditionalScreenProperties(parameters: [AnyHashable: Any], screen: Screen) -> Screen {
         let screen = screen;
 
@@ -285,12 +292,13 @@ class CARATInternetTagHandler: CARTagHandler {
         return screen;
     }
 
-    /**
-     *  A custom method which looks for additional parmaters for the event creation.
-     *  If some optional parameters are found, set the correct property of the event object.
-     *
-     *  @return : returns the event object with all the properties set as wanted.
-     */
+    /// A custom method which looks for additional parmaters for the event creation.
+    /// If some optional parameters are found, set the correct property of the event object.
+    ///
+    /// - Parameters:
+    ///   - parameters: a dictionary of additional parameters
+    ///   - event: an event object you want to set extra parameters to
+    /// - Returns: the event object with the parameters
     private func setAdditionalEventProperties(parameters: [AnyHashable: Any], event: Gesture) -> Gesture {
         let event = event;
         
@@ -321,4 +329,3 @@ class CARATInternetTagHandler: CARTagHandler {
     }
 
 }
-
