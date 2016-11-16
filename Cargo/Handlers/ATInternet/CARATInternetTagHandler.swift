@@ -31,6 +31,7 @@ class CARATInternetTagHandler: CARTagHandler {
 
     /** The tracker of the AT Internet SDK which sends the events */
     var tracker: Tracker;
+    var debug: Bool = false;
 
 
 /* ************************************ Handler core methods ************************************ */
@@ -40,7 +41,9 @@ class CARATInternetTagHandler: CARTagHandler {
     init() {
         self.tracker = ATInternet.sharedInstance.defaultTracker;
         super.init(key: "AT", name: "AT Internet");
-
+        if (self.cargo.logger.valueOf(self.cargo.logger.level) <= 0) {
+            self.tracker.enableDebugger = true;
+        }
         cargo.registerTagHandler(self, key: AT_init);
         cargo.registerTagHandler(self, key: AT_setConfig);
         cargo.registerTagHandler(self, key: AT_tagScreen);
