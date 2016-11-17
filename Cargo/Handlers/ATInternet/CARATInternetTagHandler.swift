@@ -21,6 +21,8 @@ class CARATInternetTagHandler: CARTagHandler {
     let AT_tagScreen = "AT_tagScreen";
     let AT_tagEvent = "AT_tagEvent";
 
+    let SITE_ID = "siteId";
+    let LOG = "log";
     let TRACKER_NAME = "trackerName";
     let OVERRIDE = "override";
     let CHAPTER1 = "chapter1";
@@ -92,59 +94,45 @@ class CARATInternetTagHandler: CARTagHandler {
     /// the AT Internet tracker with the parameters you give.
     ///
     /// - Parameters:
-    ///   - trackerName : if you want to use a particular tracker
-    ///   - dictionary ([String: String]) : your setup for the tracker
-    ///
-    ///                               OR
-    ///
+    ///   - log : the log you want to use
     ///   - siteId : id you got when you register your app,
     ///              used to report hits to your AT interface
     func initialize(_ parameters: [AnyHashable: Any]) {
-        var params = parameters;
 
-        // check if a tracker name is set, then initialize the tracker with required values
-        if let trackerName = params[TRACKER_NAME] {
-            params.removeValue(forKey: TRACKER_NAME);
-            if params["siteId"] != nil {
-                // the handler is initialized once the siteId has been set
-                self.initialized = true;
+        if let siteId = parameters[SITE_ID], let log = parameters[LOG] {
+            tracker.setSiteId(Int(siteId as! String)!) { (isSet) -> Void in
+                self.cargo.logger.logParamSetWithSuccess(self.SITE_ID, value: siteId, handler: self);
             }
-            tracker = ATInternet.sharedInstance.tracker(trackerName as! String,
-                                                        configuration:params as! [String : String]);
-            cargo.logger.logParamSetWithSuccess(TRACKER_NAME, value: parameters);
-        }
-        // if the id is present, set up the tracker (async) and logs through a callback method
-        else if let siteId = params["siteId"] {
-            tracker.setConfig(TrackerConfigurationKeys.Site, value: siteId as! String,
-                              completionHandler: { (isSet) -> Void in
-                                self.cargo.logger.carLog(kTAGLoggerLogLevelInfo, handler: self,
-                                                         message: "AT Internet siteId set to \(siteId)");
-            });
-            // the handler is initialized once the siteId has been set
+            tracker.setLog(log as! String) { (isSet) -> Void in
+                self.cargo.logger.logParamSetWithSuccess(self.LOG, value: log, handler: self);
+            }
             self.initialized = true;
         }
         else {
-            cargo.logger.logMissingParam("siteId or \(TRACKER_NAME)", methodName: "initialize", handler: self);
+            self.cargo.logger.logMissingParam("\(SITE_ID) and/or \(LOG)",
+                methodName: AT_init, handler: self);
         }
     }
 
     /// The method you may call if you want to reconfigure your tracker
     ///
     /// - Parameters:
-    ///   - override (boolean) : if you want your values to override the existant data
+    ///   - override (boolean) : if you want your values set to override ALL the existant data
+    ///                          (set to false by default)
     ///   - Dictionary ([String: String]) : your setup for the tracker
     func setConfig(parameters: [AnyHashable: Any]) {
         var params = parameters;
+        var override = false;
 
-        if let override = params[OVERRIDE] {
+        if let tempOverride = params[OVERRIDE] {
+            override = tempOverride as! Bool;
             params.removeValue(forKey: OVERRIDE);
-
-            // set up the tracker (async) and logs through a callback method
-            tracker.setConfig(params as! [String : String], override: override as! Bool) { (isSet) -> Void in
-                self.cargo.logger.carLog(kTAGLoggerLogLevelInfo, handler: self,
-                                    message: "tracker reconfigured with \(params) and override set to \(override)");
-            }
         }
+        // set up the tracker (async) and logs through a callback method
+        tracker.setConfig(params as! [String : String], override: override) { (isSet) -> Void in
+            self.cargo.logger.carLog(kTAGLoggerLogLevelInfo, handler: self,
+                                message: "tracker reconfigured with \(params) and override set to \(override)");
+        };
     }
 
 
@@ -180,25 +168,6 @@ class CARATInternetTagHandler: CARTagHandler {
         }
     }
 
-    /**
-     * Method used to create and fire an event to the AT Internet interface
-     * The mandatory parameters are eventName, eventType which are a necessity to build the event.
-     * Without these parameters, the event won't be built.
-     *
-     * @param params    the parameters given at the moment of the dataLayer.push(),
-     *                  passed through the GTM container and the execute method.
-     *                  * eventName (String) : the name for this event.
-     *                  * eventType (String) : defines the type of event you want to send.
-     *                    the different values can be :     - sendTouch
-     *                                                      - sendNavigation
-     *                                                      - sendDownload
-     *                                                      - sendExit
-     *                                                      - sendSearch
-     *                  * chapter1/2/3 (String) : used to add more context to the event
-     *                  * level2 (int) : to add a second level to the event
-     *                  * action (GestureAction) : defines the action type
-     */
-    
     /// Method used to create and fire an event to the AT Internet interface
     /// The mandatory parameters are eventName, eventType which are a necessity to build the event.
     /// Without these parameters, the event won't be built.
@@ -215,16 +184,16 @@ class CARATInternetTagHandler: CARTagHandler {
     ///   - level2 (int) : to add a second level to the event
     ///   - action (GestureAction) : defines the action type
     func tagEvent(parameters: [AnyHashable: Any]) {
-        
+
         // check for the mandatory parameters eventName and eventType
         if let eventName = parameters[EVENT_NAME], let eventType = parameters[EVENT_TYPE] {
             // create the event object
             var event = tracker.gestures.add(eventName as! String);
             cargo.logger.logParamSetWithSuccess(EVENT_NAME, value: event.name);
-            
+
             // check for optional parameters. returns object with these properties set if needed.
             event = self.setAdditionalEventProperties(parameters: parameters as [NSObject : AnyObject], event: event);
-            
+
             // fire a hit with the requested type
             switch eventType as! String {
                 case "sendTouch":
@@ -276,22 +245,21 @@ class CARATInternetTagHandler: CARTagHandler {
             screen.action = action as! AbstractScreen.ScreenAction;
             cargo.logger.logParamSetWithSuccess(ACTION, value: screen.action);
         }
-        
+
         if let chapter1 = parameters[CHAPTER1] {
             screen.chapter1 = chapter1 as? String;
             cargo.logger.logParamSetWithSuccess(CHAPTER1, value: screen.chapter1!);
-            
+
             if let chapter2 = parameters[CHAPTER2] {
                 screen.chapter2 = chapter2 as? String;
                 cargo.logger.logParamSetWithSuccess(CHAPTER2, value: screen.chapter2!);
-                
+
                 if let chapter3 = parameters[CHAPTER3] {
                     screen.chapter3 = chapter3 as? String;
                     cargo.logger.logParamSetWithSuccess(CHAPTER3, value: screen.chapter3!);
                 }
             }
         }
-
         return screen;
     }
 
@@ -304,7 +272,7 @@ class CARATInternetTagHandler: CARTagHandler {
     /// - Returns: the event object with the parameters
     private func setAdditionalEventProperties(parameters: [AnyHashable: Any], event: Gesture) -> Gesture {
         let event = event;
-        
+
         if let level2 = parameters[LEVEL2] {
             event.level2 = level2 as! Int;
             cargo.logger.logParamSetWithSuccess(SCREEN_NAME, value: event.name);
