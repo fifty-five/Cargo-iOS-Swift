@@ -1,5 +1,6 @@
 PODS:
   - Accengage-iOS-SDK (5.6.0)
+  - ATInternet-Apple-SDK/Tracker (1.0.2)
   - Bolts (1.8.4):
     - Bolts/AppLinks (= 1.8.4)
     - Bolts/Tasks (= 1.8.4)
@@ -9,7 +10,7 @@ PODS:
   - FacebookCore (0.2.0):
     - Bolts (~> 1.8)
     - FBSDKCoreKit (~> 4.15)
-  - FBSDKCoreKit (4.16.0):
+  - FBSDKCoreKit (4.17.0):
     - Bolts (~> 1.7)
   - Firebase (3.6.0):
     - Firebase/Core (= 3.6.0)
@@ -44,6 +45,7 @@ PODS:
 
 DEPENDENCIES:
   - Accengage-iOS-SDK (~> 5.6.0)
+  - ATInternet-Apple-SDK/Tracker (~> 1.0.1)
   - FacebookCore (~> 0.2.0)
   - Firebase (~> 3.6.0)
   - Google/Analytics (~> 1.0.0)
@@ -52,9 +54,10 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   Accengage-iOS-SDK: ef9fe212d6d1b9936ffa80dd490e4a38bef7e579
+  ATInternet-Apple-SDK: f0825287c9d7322d3c4d6b1d45d61403d2204199
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   FacebookCore: 2cb3f0fbff218e9d3119cec84bae983b232412de
-  FBSDKCoreKit: 7a6baaed4a2b2a244ba253346713bdbc74df135b
+  FBSDKCoreKit: 30a21d2d7b92984b3d80497113433c00824c35e9
   Firebase: 34187200ef4979dbd485c7aa685ef078bf587c86
   FirebaseAnalytics: 3f5358d9104adf159cc8d99b7b501e50099a39ad
   FirebaseInstanceID: ba1e640935235e5fac39dfa816fe7660e72e1a8a

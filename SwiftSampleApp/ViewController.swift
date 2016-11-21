@@ -28,6 +28,7 @@ class ViewController: UIViewController {
         dataLayer?.push(["event": "testFirebase"]);
         dataLayer?.push(["event": "testTune", "eventName": "a cool event", "eventCurrencyCode": "USD"]);
         dataLayer?.push(["event": "testFacebook", "eventName": "a super cool event", "valueToSum": 123]);
+        dataLayer?.push(["event": "testAT"]);
     }
 
     @IBAction func pressedUser(_ sender : AnyObject) {
