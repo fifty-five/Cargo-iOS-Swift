@@ -150,34 +150,25 @@ class CARGoogleAnalyticsTagHandler: CARTagHandler {
 
         // overriding the value for parameter "trackUnCaughtException" and log its new value
         if let trackUnCaughtException = parameters["trackUncaughtExceptions"] as? Bool {
-            self.instance.trackUncaughtExceptions = trackUnCaughtException;
             trackException = trackUnCaughtException;
         }
-        else {
-            self.instance.trackUncaughtExceptions = trackException;
-        }
+        self.instance.trackUncaughtExceptions = trackException;
         cargo.logger.logParamSetWithSuccess("trackUncaughtExceptions",
                                             value: trackException, handler: self);
 
         // overriding the value for parameter "allowIdfaCollection" and log its new value
         if let allowIdfaCollection = parameters["allowIdfaCollection"] as? Bool {
-            self.tracker.allowIDFACollection = allowIdfaCollection;
             idfaCollection = allowIdfaCollection;
         }
-        else {
-            self.tracker.allowIDFACollection = idfaCollection;
-        }
+        self.tracker.allowIDFACollection = idfaCollection;
         cargo.logger.logParamSetWithSuccess("allowIdfaCollection",
                                             value: idfaCollection, handler: self);
 
         // overriding the value for parameter "dispatchInterval" and log its new value
         if let dispatchInterval = parameters["dispatchInterval"] as? TimeInterval {
-            self.instance.dispatchInterval = dispatchInterval;
             dispInterval = dispatchInterval;
         }
-        else {
-            self.instance.dispatchInterval = dispInterval;
-        }
+        self.instance.dispatchInterval = dispInterval;
         cargo.logger.logParamSetWithSuccess("dispatchInterval",
                                             value: dispInterval, handler: self);
     }
