@@ -8,17 +8,20 @@
 
 import Foundation
 
+
+/// The class which handles interactions with the Tune SDK.
 class CARTuneTagHandler: CARTagHandler {
 
-/* ********************************* Variables Declaration ********************************* */
+/* *********************************** Variables Declaration ************************************ */
 
+    /** Constants used to define callbacks in the register and in the execute method */
     let Tune_init = "Tune_init";
     let Tune_session = "Tune_measureSession";
     let Tune_identify = "Tune_identify";
     let Tune_tagEvent = "Tune_tagEvent";
     let Tune_tagScreen = "Tune_tagScreen";
 
-    // Those are used in the buildEvent method.
+    /** All the parameters that could be set as attributes to a TuneEvent object */
     let EVENT_RATING = "eventRating";
     let EVENT_DATE1 = "eventDate1";
     let EVENT_DATE2 = "eventDate2";
@@ -28,16 +31,25 @@ class CARTuneTagHandler: CARTagHandler {
     let EVENT_RECEIPT = "eventReceipt";
     let EVENT_QUANTITY = "eventQuantity";
     let EVENT_TRANSACTION_STATE = "eventTransactionState";
-    let EVENT_PROPERTIES: [String] = ["eventCurrencyCode", "eventRefId", "eventContentId", "eventContentType", "eventSearchString", "eventAttribute1", "eventAttribute2", "eventAttribute3", "eventAttribute4", "eventAttribute5"];
+    
+    /** the formatted name "eventRandomAttribute" is important here as the string is used in the
+     eventBuilder method to call on TuneEvent methods. */
+    let EVENT_PROPERTIES: [String] = ["eventCurrencyCode", "eventRefId",
+                                      "eventContentId", "eventContentType",
+                                      "eventSearchString", "eventAttribute1",
+                                      "eventAttribute2", "eventAttribute3",
+                                      "eventAttribute4", "eventAttribute5"];
 
-/* ************************************* Initializer *************************************** */
+/* ************************************ Handler core methods ************************************ */
 
-    /**
-     *  Initialize the handler
-     */
+    /// Called to instantiate the handler with its key and name properties.
+    /// Enable or disable the Tune debug mode, based on the log level activated in the Cargo logger
+    /// Register the callbacks to the container. After a dataLayer.push(),
+    /// these will trigger the execute method of this handler.
     init() {
         super.init(key: "TUN", name: "Tune");
 
+        // enables Tune debug mode if the cargo logger is set to verbose, disables it otherwise
         if (cargo.tagManager.logger.logLevel() == kTAGLoggerLogLevelVerbose) {
             Tune.setDebugMode(true);
         } else {
@@ -51,82 +63,87 @@ class CARTuneTagHandler: CARTagHandler {
         cargo.registerTagHandler(self, key: Tune_tagScreen);
     }
 
-/* ******************************** Core handler methods *********************************** */
-
-    /**
-    *  Call back from GTM container to execute a specific action
-    *  after tag and parameters are received
-    *
-    *  @param tagName  The tag name
-    *  @param parameters   Dictionary of parameters
-    */
+    /// Callback from GTM container designed to execute a specific method
+    /// from its tag and the parameters received.
+    ///
+    /// - Parameters:
+    ///   - tagName: the tag name of the aimed method
+    ///   - parameters: Dictionary of parameters
     override func execute(_ tagName: String, parameters: [AnyHashable: Any]) {
         super.execute(tagName, parameters: parameters);
 
-        switch (tagName) {
-        case Tune_init:
+        if (tagName == Tune_init) {
             self.initialize(parameters);
-            break ;
-        case Tune_session:
-            self.measureSession();
-            break ;
-        case Tune_identify:
-            self.identify(parameters);
-            break ;
-        case Tune_tagEvent:
-            self.tagEvent(parameters);
-            break ;
-        case Tune_tagScreen:
-            self.tagEvent(parameters);
-            break ;
-        default:
-            noTagMatch(self, tagName: tagName);
+            return ;
+        }
+        // check whether the SDK has been initialized before calling any method
+        else if (self.initialized) {
+            switch (tagName) {
+                case Tune_session:
+                    self.measureSession();
+                    break ;
+                case Tune_identify:
+                    self.identify(parameters);
+                    break ;
+                case Tune_tagEvent:
+                    self.tagEvent(parameters);
+                    break ;
+                case Tune_tagScreen:
+                    self.tagEvent(parameters);
+                    break ;
+                default:
+                    noTagMatch(self, tagName: tagName);
+            }
+        }
+        else {
+            cargo.logger.logUninitializedFramework(self);
         }
     }
 
-    /**
-     *  Is called to set the advertiser ID & conversion key
-     *
-     *  @param parameters   Dictionary of parameters which should contain the advertiser ID
-     *                      and the conversion key for this account
-     */
+
+/* ************************************ SDK initialization ************************************** */
+
+    /// The method you need to call first. Allow you to initialize Tune SDK
+    /// Register the advertiserId & conversionKey to the Tune SDK.
+    ///
+    /// - Parameters:
+    ///   - advertiserId: advertiser ID Tune gives when you register your app
+    ///   - conversionKey: conversion key Tune gives when you register your app
     func initialize(_ parameters: [AnyHashable: Any]) {
         if let advertiserId = parameters["advertiserId"], let conversionKey = parameters["conversionKey"] {
-            Tune.initialize(withTuneAdvertiserId: advertiserId as! String, tuneConversionKey: conversionKey as! String);
+            Tune.initialize(withTuneAdvertiserId: advertiserId as! String,
+                            tuneConversionKey: conversionKey as! String);
+            // the SDK is now initialized
             self.initialized = true;
+            cargo.logger.logParamSetWithSuccess("advertiserId", value: advertiserId, handler: self);
+            cargo.logger.logParamSetWithSuccess("conversionKey", value: conversionKey, handler: self);
         }
         else {
             cargo.logger.logMissingParam("advertiserId/conversionKey", methodName: Tune_init, handler: self);
         }
     }
 
-/* ********************************** Specific methods ************************************* */
+/* ****************************************** Tracking ****************************************** */
 
-    /**
-     * Use it in AppDelegate in the method "applicationDidBecomeActive"
-     * Attribution will not function without the measureSession call included.
-     */
+    /// Use it in AppDelegate in the method "applicationDidBecomeActive"
+    /// Attribution will not function without the measureSession call included.
     fileprivate func measureSession() {
-        // check if the initialization has been done
-        if (!self.initialized) {
-            cargo.logger.logUninitializedFramework(self);
-            return;
-        }
         Tune.measureSession();
     }
 
-    /**
-     * Allows you to identify your user through several ways
-     *
-     * @param parameters    Dictionary of parameters used to set up
-     *                      the user identity through several ways.
-     */
+    /// Used in order to identify the user as a unique visitor and to associate to a unique id
+    /// the related social networks ids, age, mail, username, gender...
+    ///
+    /// - Parameters:
+    ///   - userId (String) : an identifier attributed to a unique user (mandatory param)
+    ///   - userGoogleId (String) : the google id if your user logged in with
+    ///   - userFacebookId (String) : the facebook id if your user logged in with
+    ///   - userTwitterId (String) : the twitter id if your user logged in with
+    ///   - userAge (String) : the age of your user
+    ///   - userName (String) : the username/name of your user
+    ///   - userEmail (String) : the mail adress of your user
+    ///   - userGender (String) : the gender of your user (MALE/FEMALE/UNKNOWN)
     fileprivate func identify(_ parameters: [AnyHashable: Any]) {
-        // check if the initialization has been done
-        if (!self.initialized) {
-            cargo.logger.logUninitializedFramework(self);
-            return;
-        }
 
         if let userId = parameters[USER_ID] {
             Tune.setUserId(userId as! String);
@@ -155,36 +172,41 @@ class CARTuneTagHandler: CARTagHandler {
         }
     }
 
-    /**
-     * Method used to create and fire an event to the Tune Console
-     * The only mandatory parameter is EVENT_NAME which is a necessity to build the event
-     * Without this parameter, the event won't be built.
-     * After the creation of the event object, some attributes can be added through the eventBuilder
-     * method, using the map obtained from the gtm container.
-     *
-     * @param map   the parameters given at the moment of the dataLayer.push(),
-     *              passed through the GTM container and the execute method.
-     *              The only parameter requested here is a name or an id for the event
-     *              (EVENT_NAME or EVENT_ID)
-     *
-     *
-     *              BUT ALSO
-     *
-     *
-     * Method used to create and fire a screen view to the Tune Console
-     * The mandatory parameters is SCREEN_NAME which is a necessity to build the tagScreen.
-     * Actually, as no native tagScreen is given in the Tune SDK, we fire a custom event.
-     *
-     * After the creation of the event object, some attributes can be added through the
-     * buildEvent:withParameters: method, using the NSDictionary obtained from the gtm container.
-     * We recommend to use Attribute1/2 if you need more information about the screen.
-     *
-     * @param map   the parameters given at the moment of the dataLayer.push(),
-     *              passed through the GTM container and the execute method.
-     *              The only parameter requested here is a name for the screen
-     *              (SCREEN_NAME)
-
-     */
+    /// Method used to create and fire an event to the Tune Console
+    /// The only mandatory parameter is eventName which is a necessity to build the event
+    /// Without this parameter, the event won't be built.
+    /// After the creation of the event object, some attributes can be added through the eventBuilder
+    /// method, using the map obtained from the gtm container.
+    ///
+    ///
+    /// This method is also used to create and fire a screen view to the Tune Console
+    /// The mandatory parameters is screenName which is a necessity to build the tagScreen.
+    /// Actually, as no native tagScreen is given in the Tune SDK, we fire a custom event.
+    ///
+    /// After the creation of the event object, some attributes can be added through the
+    /// buildEvent:withParameters: method, using the NSDictionary obtained from the gtm container.
+    /// We recommend to use Attribute1/2 if you need more information about the screen.
+    ///
+    /// - Parameters:
+    ///   - eventName (String) : the name of the event (mandatory, unless eventId is set)
+    ///   - eventId (int) : id linked to the event (mandatory, unless eventName is set)
+    ///   - eventCurrencyCode
+    ///   - eventAdvertiserRefId
+    ///   - eventContentId
+    ///   - eventContentType
+    ///   - eventSearchString
+    ///   - eventAttribute1
+    ///   - eventAttribute2
+    ///   - eventAttribute3
+    ///   - eventAttribute4
+    ///   - eventAttribute5
+    ///   - eventRating
+    ///   - eventDate1
+    ///   - eventDate2 : Date1 needs to be set
+    ///   - eventRevenue
+    ///   - eventItems
+    ///   - eventLevel
+    ///   - eventReceipt
     fileprivate func tagEvent(_ parameters: [AnyHashable: Any]) {
 
         var tuneEvent: TuneEvent!;
@@ -196,52 +218,53 @@ class CARTuneTagHandler: CARTagHandler {
             return;
         }
 
+        // block for the event creation part of this method.
+        // Creates a tune event, and remove the eventName value from the dictionary
         if let eventName = params[EVENT_NAME] {
             tuneEvent = TuneEvent.init(name: eventName as! String);
             params.removeValue(forKey: EVENT_NAME);
             cargo.logger.logParamSetWithSuccess(EVENT_NAME, value: eventName, handler: self);
         }
+        // block for the screen creation part of this method.
+        // Creates a tune event, and remove the screenName value from the dictionary
         else if let eventName = params[SCREEN_NAME] {
             tuneEvent = TuneEvent.init(name: eventName as! String);
             params.removeValue(forKey: SCREEN_NAME);
             cargo.logger.logParamSetWithSuccess(SCREEN_NAME, value: eventName, handler: self);
         }
         else {
-            cargo.logger.logMissingParam("\(EVENT_NAME)/\(SCREEN_NAME)", methodName: "\(Tune_tagEvent)/\(Tune_tagScreen)", handler: self);
+            cargo.logger.logMissingParam("\(EVENT_NAME) or \(SCREEN_NAME)", methodName: "\(Tune_tagEvent) or \(Tune_tagScreen)", handler: self);
             return ;
         }
 
-        // call on the buildEvent if the dictionary contains optional parameters
+        // call on the buildEvent whether the dictionary contains optional parameters
         if (params.count > 0 && (tuneEvent) != nil) {
             tuneEvent = buildEvent(tuneEvent, parameters: params);
         }
-        else if (params.count > 0) {
-            cargo.logger.carLog(kTAGLoggerLogLevelDebug, handler: self, message: "tuneEvent object is nil");
-        }
-
+        
         // if the TuneEvent object isn't nil, the tag is sent. Otherwise, an error is displayed
-        if ((tuneEvent) != nil) {
+        if (tuneEvent != nil) {
             Tune.measure(tuneEvent);
         }
         else {
-            cargo.logger.carLog(kTAGLoggerLogLevelError, handler: self, message: "The tagEvent is nil, the tag did not fire");
+            cargo.logger.carLog(kTAGLoggerLogLevelError, handler: self,
+                                message: "The Tune event is nil, the tag did not fire");
         }
     }
 
-/* *********************************** Utility methods ************************************* */
 
-    /**
-     * The method is used to add attributes to the event given as a parameter. The dictionary contains
-     * the key of the attributes to attach to this event. For the name of the key you have to give,
-     * please have a look at all the EVENT_... constants on the top of this file. The NSString Array
-     * contains all the parameters requested as NSString from Tune SDK, reflection is used to call the
-     * corresponding instance methods.
-     *
-     * @param parameters    the key/value list of the attributes you want to attach to your event
-     * @param tuneEvent     the event you want to custom
-     * @return              the custom event
-     */
-
+/* ****************************************** Utility ******************************************* */
+    
+    /// The method is used to add attributes to the event given as a parameter. The dictionary contains
+    /// the key of the attributes to attach to this event. For the name of the key you have to give,
+    /// please have a look at all the EVENT_... constants on the top of this file. The NSString Array
+    /// contains all the parameters requested as NSString from Tune SDK, reflection is used to call the
+    /// corresponding instance methods.
+    ///
+    /// - Parameters:
+    ///   - tuneEvent: the event you want to custom
+    ///   - parameters: the key/value list of the attributes you want to attach to your event
+    /// - Returns: the custom event
     fileprivate func buildEvent(_ tuneEvent: TuneEvent, parameters: [AnyHashable: Any]) -> TuneEvent {
 
         var params = parameters;
@@ -324,13 +347,10 @@ class CARTuneTagHandler: CARTagHandler {
         return tuneEvent;
     }
 
-    /**
-     * A simple method called by identify() to set the gender in a secured way
-     *
-     * @param gender    The gender given in the identify method.
-     *                  If the gender doesn't match with the Tune genders,
-     *                  sets the gender to UNKNOWN.
-     */
+    /// A simple method called by identify() to set the Tune gender through a secured way
+    ///
+    /// - Parameter gender: The gender given in the identify method. If the gender doesn't match any
+    ///                     Tune genders, sets the gender to UNKNOWN.
     fileprivate func setGender(_ gender: String) {
         let upperGender = gender.uppercased();
         if (upperGender == "MALE") {

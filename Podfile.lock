@@ -1,5 +1,6 @@
 PODS:
   - ATInternet-Apple-SDK/Tracker (1.0.2)
+  - Accengage-iOS-SDK (5.6.0)
   - Bolts (1.8.4):
     - Bolts/AppLinks (= 1.8.4)
     - Bolts/Tasks (= 1.8.4)
@@ -44,6 +45,7 @@ PODS:
 
 DEPENDENCIES:
   - ATInternet-Apple-SDK/Tracker (~> 1.0.1)
+  - Accengage-iOS-SDK (~> 5.6.0)
   - FacebookCore (~> 0.2.0)
   - Firebase (~> 3.6.0)
   - Google/Analytics (~> 1.0.0)
@@ -52,6 +54,7 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   ATInternet-Apple-SDK: f0825287c9d7322d3c4d6b1d45d61403d2204199
+  Accengage-iOS-SDK: ef9fe212d6d1b9936ffa80dd490e4a38bef7e579
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   FacebookCore: 2cb3f0fbff218e9d3119cec84bae983b232412de
   FBSDKCoreKit: 30a21d2d7b92984b3d80497113433c00824c35e9
@@ -67,6 +70,6 @@ SPEC CHECKSUMS:
   GoogleUtilities: 8bbc733218aad26306f9d4a253823986110e3358
   Tune: a699a5793aca0d920b81dbe0c67eb0f666c6139c
 
-PODFILE CHECKSUM: 26bdb2d775589df35025093f1843d8d381270592
+PODFILE CHECKSUM: e03bae64e8c567907a67df7647fe3e7b81eae6cb
 
 COCOAPODS: 1.2.0.beta.1

@@ -5,6 +5,9 @@ platform :ios, '8.0'
 # Uncomment this line if you're using Swift
 use_frameworks!
 
+source 'https://github.com/Accengage/CocoaPodsSpecs.git'
+source 'https://github.com/CocoaPods/Specs.git'
+
 def import_pods
   Build.all_pods.each do |p|
     send :pod, p.name, p.version
