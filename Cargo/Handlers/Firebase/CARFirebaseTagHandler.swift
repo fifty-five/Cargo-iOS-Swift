@@ -70,7 +70,7 @@ class CARFirebaseTagHandler: CARTagHandler {
                 self.tagEvent(parameters); //because tagscreen is considered as an event anf Firebase v3.5.2
                 break ;
             default:
-                noTagMatch(self, tagName: tagName);
+                noTagMatch(tagName: tagName);
         }
     }
 
@@ -85,10 +85,10 @@ class CARFirebaseTagHandler: CARTagHandler {
     func initialize(_ parameters: [AnyHashable: Any]) {
         if let enabled = parameters[enableCollection]{
             FirebaseAnalyticsConf.setAnalyticsCollectionEnabled(enabled as! Bool);
-            cargo.logger.logParamSetWithSuccess(enableCollection, value: enabled as! Bool);
+            logger.logParamSetWithSuccess(enableCollection, value: enabled as! Bool);
         }
         else{
-            cargo.logger.logMissingParam(enableCollection, methodName: "Firebase_initialize", handler: self);
+            logger.logMissingParam(enableCollection, methodName: "Firebase_initialize", handler: self);
         }
     }
 
@@ -105,17 +105,17 @@ class CARFirebaseTagHandler: CARTagHandler {
 
         if let userID = params[USER_ID] {
             FIRAnalytics.setUserID(userID as? String);
-            cargo.logger.logParamSetWithSuccess(USER_ID, value: userID as! String);
+            logger.logParamSetWithSuccess(USER_ID, value: userID as! String);
             params.removeValue(forKey: USER_ID);
         }
         else if (params.count > 0) {
             for (key, value) in params {
                 FIRAnalytics.setUserPropertyString(value as? String, forName:key as! String);
-                cargo.logger.logParamSetWithSuccess((key as? String)!, value: (value as? String)!);
+                logger.logParamSetWithSuccess((key as? String)!, value: (value as? String)!);
             }
         }
         else {
-            cargo.logger.logMissingParam(USER_ID, methodName: "Firebase_identify", handler: self);
+            logger.logMissingParam(USER_ID, methodName: "Firebase_identify", handler: self);
         }
     }
 
@@ -138,15 +138,15 @@ class CARFirebaseTagHandler: CARTagHandler {
             if (params.count > 0) {
                 FIRAnalytics.logEvent(withName: eventName as! String,
                                       parameters: params as? [String : NSObject]);
-                cargo.logger.logParamSetWithSuccess(eventName as! String, value: params);
+                logger.logParamSetWithSuccess(eventName as! String, value: params);
             }
             else {
                 FIRAnalytics.logEvent(withName: eventName as! String, parameters: nil);
-                cargo.logger.logParamSetWithSuccess(eventName as!String, value: parameters);
+                logger.logParamSetWithSuccess(eventName as!String, value: parameters);
             }
         }
         else{
-            cargo.logger.logMissingParam(EVENT_NAME, methodName: "Firebase_tagEvent", handler: self);
+            logger.logMissingParam(EVENT_NAME, methodName: "Firebase_tagEvent", handler: self);
         }
     }
 

@@ -72,11 +72,11 @@ class CARAccengageTagHandler: CARTagHandler {
                     self.updateDeviceInfo(parameters);
                     break ;
                 default:
-                    noTagMatch(self, tagName: tagName);
+                    noTagMatch(tagName: tagName);
             }
         }
         else {
-            cargo.logger.logUninitializedFramework(self);
+            logger.logUninitializedFramework(self);
         }
     }
 
@@ -96,11 +96,11 @@ class CARAccengageTagHandler: CARTagHandler {
                                options: cargo.launchOptions);
             // the SDK is now initialized
             self.initialized = true;
-            cargo.logger.logParamSetWithSuccess("partnerId", value: partnerId, handler: self);
-            cargo.logger.logParamSetWithSuccess("privateKey", value: privateKey, handler: self);
+            logger.logParamSetWithSuccess("partnerId", value: partnerId, handler: self);
+            logger.logParamSetWithSuccess("privateKey", value: privateKey, handler: self);
         }
         else {
-            cargo.logger.logMissingParam("partner_id and/or private_key",
+            logger.logMissingParam("partner_id and/or private_key",
                                          methodName: "ACC_init", handler: self);
         }
     }
@@ -133,7 +133,7 @@ class CARAccengageTagHandler: CARTagHandler {
             BMA4STracker.trackEvent(withType: eventType, parameters: tempArray);
         }
         else {
-            cargo.logger.logMissingParam(EVENT_TYPE, methodName: "ACC_tagEvent", handler: self);
+            logger.logMissingParam(EVENT_TYPE, methodName: "ACC_tagEvent", handler: self);
         }
     }
 
@@ -176,13 +176,13 @@ class CARAccengageTagHandler: CARTagHandler {
             }
             // either TRANSACTION_PRODUCTS or TRANSACTION_TOTAL is mandatory parameter
             else {
-                cargo.logger.logMissingParam("\(TRANSACTION_TOTAL) or \(TRANSACTION_PRODUCTS)",
+                logger.logMissingParam("\(TRANSACTION_TOTAL) or \(TRANSACTION_PRODUCTS)",
                     methodName: "ACC_tagPurchaseEvent",
                     handler: self);
             }
         }
         else {
-            cargo.logger.logMissingParam("\(TRANSACTION_ID) and/or \(TRANSACTION_CURRENCY_CODE)",
+            logger.logMissingParam("\(TRANSACTION_ID) and/or \(TRANSACTION_CURRENCY_CODE)",
                 methodName: "ACC_tagPurchaseEvent",
                 handler: self);
         }
@@ -208,7 +208,7 @@ class CARAccengageTagHandler: CARTagHandler {
                                    currency: currency, quantity: item.quantity);
         }
         else {
-            cargo.logger.logMissingParam("cartId or product or currencyCode",
+            logger.logMissingParam("cartId or product or currencyCode",
                                          methodName: ACC_tagCartEvent, handler: self);
         }
     }
@@ -224,7 +224,7 @@ class CARAccengageTagHandler: CARTagHandler {
             BMA4STracker.trackLead(withLabel: label, value: value);
         }
         else {
-            cargo.logger.logMissingParam("leadLabel or leadValue", methodName: ACC_tagLead, handler: self);
+            logger.logMissingParam("leadLabel or leadValue", methodName: ACC_tagLead, handler: self);
         }
     }
 
