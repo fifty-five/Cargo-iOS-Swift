@@ -27,7 +27,7 @@ class CARTagHandler : NSObject, TAGFunctionCallTagHandler {
     /** The instance of Cargo */
     let cargo = Cargo.sharedHelper;
     /** Instance of the logger */
-    let logger = Cargo.sharedHelper.logger!;
+    var logger: CARLogger;
 
 /* *************************************** Initializer ****************************************** */
 
@@ -39,6 +39,7 @@ class CARTagHandler : NSObject, TAGFunctionCallTagHandler {
     init(key:String, name:String){
         self.key = key;
         self.name = name;
+        self.logger = CARLogger.init(aContext: "\(self.key)_handler");
     }
 
 /* *********************************** Methods declaration ************************************** */
@@ -49,19 +50,7 @@ class CARTagHandler : NSObject, TAGFunctionCallTagHandler {
     ///   - tagName: the tag name of the callback method
     ///   - parameters: the parameters sent to the method through a dictionary
     func execute(_ tagName:String, parameters:[AnyHashable: Any]){
-        logger.carLog(kTAGLoggerLogLevelDebug,
-                            handler: self,
-                            message: "Function \(tagName) has been received with parameters \(parameters)");
-    }
-    
-    /// Logs when a tag doesn't match a method
-    ///
-    /// - Parameters:
-    ///   - handler: The handler it happens in
-    ///   - tagName: The tag name which doesn't match
-    func noTagMatch(tagName: String) {
-        let infoMessage = "\(tagName) does not implement this method";
-        logger.carLog(kTAGLoggerLogLevelWarning, handler: self, message: infoMessage);
+        logger.logReceivedFunction(tagName, parameters: parameters as! [String : Any]);
     }
 
     
