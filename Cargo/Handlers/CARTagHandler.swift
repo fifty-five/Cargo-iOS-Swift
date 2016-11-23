@@ -24,8 +24,10 @@ class CARTagHandler : NSObject, TAGFunctionCallTagHandler {
     /** Defines whether the sdk has been initialized */
     var initialized: Bool = false ;
 
-    /** The instance of Cargo, to access the logger among other attributes */
+    /** The instance of Cargo */
     let cargo = Cargo.sharedHelper;
+    /** Instance of the logger */
+    let logger = Cargo.sharedHelper.logger!;
 
 /* *************************************** Initializer ****************************************** */
 
@@ -47,7 +49,7 @@ class CARTagHandler : NSObject, TAGFunctionCallTagHandler {
     ///   - tagName: the tag name of the callback method
     ///   - parameters: the parameters sent to the method through a dictionary
     func execute(_ tagName:String, parameters:[AnyHashable: Any]){
-        cargo.logger.carLog(kTAGLoggerLogLevelDebug,
+        logger.carLog(kTAGLoggerLogLevelDebug,
                             handler: self,
                             message: "Function \(tagName) has been received with parameters \(parameters)");
     }
@@ -57,9 +59,9 @@ class CARTagHandler : NSObject, TAGFunctionCallTagHandler {
     /// - Parameters:
     ///   - handler: The handler it happens in
     ///   - tagName: The tag name which doesn't match
-    func noTagMatch(_ handler: CARTagHandler, tagName: String) {
-        let infoMessage = "\(tagName) does not match any known tag";
-        cargo.logger.carLog(kTAGLoggerLogLevelInfo, handler: handler, message: infoMessage);
+    func noTagMatch(tagName: String) {
+        let infoMessage = "\(tagName) does not implement this method";
+        logger.carLog(kTAGLoggerLogLevelWarning, handler: self, message: infoMessage);
     }
 
     

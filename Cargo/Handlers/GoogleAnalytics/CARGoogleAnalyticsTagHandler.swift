@@ -75,11 +75,11 @@ class CARGoogleAnalyticsTagHandler: CARTagHandler {
                     self.tagScreen(parameters);
                     break ;
                 default:
-                    noTagMatch(self, tagName: tagName);
+                    noTagMatch(tagName: tagName);
             }
         }
         else {
-            cargo.logger.logUninitializedFramework(self);
+            logger.logUninitializedFramework(self);
         }
     }
 
@@ -94,7 +94,7 @@ class CARGoogleAnalyticsTagHandler: CARTagHandler {
         let gai = GAI.sharedInstance();
         gai?.trackUncaughtExceptions = true;  // report uncaught exceptions
         // the log level of GA is decided from the log level of the Cargo logger
-        switch (cargo.logger.level) {
+        switch (logger.level) {
         case kTAGLoggerLogLevelNone:
             gai?.logger.logLevel = GAILogLevel.none;
             break ;
@@ -127,10 +127,10 @@ class CARGoogleAnalyticsTagHandler: CARTagHandler {
             self.tracker = self.instance.tracker(withTrackingId: trackingId as! String);
             // the SDK is now initialized
             self.initialized = true;
-            cargo.logger.logParamSetWithSuccess("trackingId", value: trackingId, handler: self);
+            logger.logParamSetWithSuccess("trackingId", value: trackingId, handler: self);
         }
         else {
-            cargo.logger.logMissingParam("trackingId", methodName: "GA_init", handler: self);
+            logger.logMissingParam("trackingId", methodName: "GA_init", handler: self);
         }
     }
 
@@ -153,7 +153,7 @@ class CARGoogleAnalyticsTagHandler: CARTagHandler {
             trackException = trackUnCaughtException;
         }
         self.instance.trackUncaughtExceptions = trackException;
-        cargo.logger.logParamSetWithSuccess("trackUncaughtExceptions",
+        logger.logParamSetWithSuccess("trackUncaughtExceptions",
                                             value: trackException, handler: self);
 
         // overriding the value for parameter "allowIdfaCollection" and log its new value
@@ -161,7 +161,7 @@ class CARGoogleAnalyticsTagHandler: CARTagHandler {
             idfaCollection = allowIdfaCollection;
         }
         self.tracker.allowIDFACollection = idfaCollection;
-        cargo.logger.logParamSetWithSuccess("allowIdfaCollection",
+        logger.logParamSetWithSuccess("allowIdfaCollection",
                                             value: idfaCollection, handler: self);
 
         // overriding the value for parameter "dispatchInterval" and log its new value
@@ -169,7 +169,7 @@ class CARGoogleAnalyticsTagHandler: CARTagHandler {
             dispInterval = dispatchInterval;
         }
         self.instance.dispatchInterval = dispInterval;
-        cargo.logger.logParamSetWithSuccess("dispatchInterval",
+        logger.logParamSetWithSuccess("dispatchInterval",
                                             value: dispInterval, handler: self);
     }
 
@@ -183,7 +183,7 @@ class CARGoogleAnalyticsTagHandler: CARTagHandler {
             self.tracker.set(kGAIUserId, value: userID as! String);
         }
         else {
-            cargo.logger.logMissingParam(USER_ID, methodName: "GA_setUserId", handler: self);
+            logger.logMissingParam(USER_ID, methodName: "GA_setUserId", handler: self);
         }
     }
 
@@ -203,7 +203,7 @@ class CARGoogleAnalyticsTagHandler: CARTagHandler {
             self.tracker.send(builder as! [NSObject : AnyObject]);
         }
         else {
-            cargo.logger.logMissingParam(SCREEN_NAME, methodName: "GA_tagScreen", handler: self);
+            logger.logMissingParam(SCREEN_NAME, methodName: "GA_tagScreen", handler: self);
         }
     }
     
@@ -228,10 +228,10 @@ class CARGoogleAnalyticsTagHandler: CARTagHandler {
             self.tracker.send(builder as! [NSObject : AnyObject]);
         }
         else if (parameters["eventCategory"] == nil) {
-            cargo.logger.logMissingParam("eventCategory", methodName: "GA_tagEvent", handler: self);
+            logger.logMissingParam("eventCategory", methodName: "GA_tagEvent", handler: self);
         }
         else {
-            cargo.logger.logMissingParam("eventAction", methodName: "GA_tagEvent", handler: self);
+            logger.logMissingParam("eventAction", methodName: "GA_tagEvent", handler: self);
         }
     }
 
