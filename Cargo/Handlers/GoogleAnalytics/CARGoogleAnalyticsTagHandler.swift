@@ -75,11 +75,11 @@ class CARGoogleAnalyticsTagHandler: CARTagHandler {
                     self.tagScreen(parameters);
                     break ;
                 default:
-                    noTagMatch(tagName: tagName);
+                    logger.logUnknownFunctionTag(tagName);
             }
         }
         else {
-            logger.logUninitializedFramework(self);
+            logger.logUninitializedFramework();
         }
     }
 
@@ -127,10 +127,10 @@ class CARGoogleAnalyticsTagHandler: CARTagHandler {
             self.tracker = self.instance.tracker(withTrackingId: trackingId as! String);
             // the SDK is now initialized
             self.initialized = true;
-            logger.logParamSetWithSuccess("trackingId", value: trackingId, handler: self);
+            logger.logParamSetWithSuccess("trackingId", value: trackingId);
         }
         else {
-            logger.logMissingParam("trackingId", methodName: "GA_init", handler: self);
+            logger.logMissingParam("trackingId", methodName: "GA_init");
         }
     }
 
@@ -154,7 +154,7 @@ class CARGoogleAnalyticsTagHandler: CARTagHandler {
         }
         self.instance.trackUncaughtExceptions = trackException;
         logger.logParamSetWithSuccess("trackUncaughtExceptions",
-                                            value: trackException, handler: self);
+                                            value: trackException);
 
         // overriding the value for parameter "allowIdfaCollection" and log its new value
         if let allowIdfaCollection = parameters["allowIdfaCollection"] as? Bool {
@@ -162,7 +162,7 @@ class CARGoogleAnalyticsTagHandler: CARTagHandler {
         }
         self.tracker.allowIDFACollection = idfaCollection;
         logger.logParamSetWithSuccess("allowIdfaCollection",
-                                            value: idfaCollection, handler: self);
+                                            value: idfaCollection);
 
         // overriding the value for parameter "dispatchInterval" and log its new value
         if let dispatchInterval = parameters["dispatchInterval"] as? TimeInterval {
@@ -170,7 +170,7 @@ class CARGoogleAnalyticsTagHandler: CARTagHandler {
         }
         self.instance.dispatchInterval = dispInterval;
         logger.logParamSetWithSuccess("dispatchInterval",
-                                            value: dispInterval, handler: self);
+                                            value: dispInterval);
     }
 
     /// Used to setup the userId when the user logs in
@@ -183,7 +183,7 @@ class CARGoogleAnalyticsTagHandler: CARTagHandler {
             self.tracker.set(kGAIUserId, value: userID as! String);
         }
         else {
-            logger.logMissingParam(USER_ID, methodName: "GA_setUserId", handler: self);
+            logger.logMissingParam(USER_ID, methodName: "GA_setUserId");
         }
     }
 
@@ -203,7 +203,7 @@ class CARGoogleAnalyticsTagHandler: CARTagHandler {
             self.tracker.send(builder as! [NSObject : AnyObject]);
         }
         else {
-            logger.logMissingParam(SCREEN_NAME, methodName: "GA_tagScreen", handler: self);
+            logger.logMissingParam(SCREEN_NAME, methodName: "GA_tagScreen");
         }
     }
     
@@ -228,10 +228,10 @@ class CARGoogleAnalyticsTagHandler: CARTagHandler {
             self.tracker.send(builder as! [NSObject : AnyObject]);
         }
         else if (parameters["eventCategory"] == nil) {
-            logger.logMissingParam("eventCategory", methodName: "GA_tagEvent", handler: self);
+            logger.logMissingParam("eventCategory", methodName: "GA_tagEvent");
         }
         else {
-            logger.logMissingParam("eventAction", methodName: "GA_tagEvent", handler: self);
+            logger.logMissingParam("eventAction", methodName: "GA_tagEvent");
         }
     }
 

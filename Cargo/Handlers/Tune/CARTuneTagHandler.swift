@@ -92,11 +92,11 @@ class CARTuneTagHandler: CARTagHandler {
                     self.tagEvent(parameters);
                     break ;
                 default:
-                    noTagMatch(tagName: tagName);
+                    logger.logUnknownFunctionTag(tagName);
             }
         }
         else {
-            logger.logUninitializedFramework(self);
+            logger.logUninitializedFramework();
         }
     }
 
@@ -115,11 +115,11 @@ class CARTuneTagHandler: CARTagHandler {
                             tuneConversionKey: conversionKey as! String);
             // the SDK is now initialized
             self.initialized = true;
-            logger.logParamSetWithSuccess("advertiserId", value: advertiserId, handler: self);
-            logger.logParamSetWithSuccess("conversionKey", value: conversionKey, handler: self);
+            logger.logParamSetWithSuccess("advertiserId", value: advertiserId);
+            logger.logParamSetWithSuccess("conversionKey", value: conversionKey);
         }
         else {
-            logger.logMissingParam("advertiserId/conversionKey", methodName: Tune_init, handler: self);
+            logger.logMissingParam("advertiserId/conversionKey", methodName: Tune_init);
         }
     }
 
@@ -214,7 +214,7 @@ class CARTuneTagHandler: CARTagHandler {
 
         // check if the initialization has been done
         if (!self.initialized) {
-            logger.logUninitializedFramework(self);
+            logger.logUninitializedFramework();
             return;
         }
 
@@ -223,17 +223,17 @@ class CARTuneTagHandler: CARTagHandler {
         if let eventName = params[EVENT_NAME] {
             tuneEvent = TuneEvent.init(name: eventName as! String);
             params.removeValue(forKey: EVENT_NAME);
-            logger.logParamSetWithSuccess(EVENT_NAME, value: eventName, handler: self);
+            logger.logParamSetWithSuccess(EVENT_NAME, value: eventName);
         }
         // block for the screen creation part of this method.
         // Creates a tune event, and remove the screenName value from the dictionary
         else if let eventName = params[SCREEN_NAME] {
             tuneEvent = TuneEvent.init(name: eventName as! String);
             params.removeValue(forKey: SCREEN_NAME);
-            logger.logParamSetWithSuccess(SCREEN_NAME, value: eventName, handler: self);
+            logger.logParamSetWithSuccess(SCREEN_NAME, value: eventName);
         }
         else {
-            logger.logMissingParam("\(EVENT_NAME) or \(SCREEN_NAME)", methodName: "\(Tune_tagEvent) or \(Tune_tagScreen)", handler: self);
+            logger.logMissingParam("\(EVENT_NAME) or \(SCREEN_NAME)", methodName: "\(Tune_tagEvent) or \(Tune_tagScreen)");
             return ;
         }
 
@@ -247,7 +247,7 @@ class CARTuneTagHandler: CARTagHandler {
             Tune.measure(tuneEvent);
         }
         else {
-            logger.carLog(kTAGLoggerLogLevelError, handler: self,
+            logger.carLog(kTAGLoggerLogLevelError,
                                 message: "The Tune event is nil, the tag did not fire");
         }
     }
@@ -274,43 +274,43 @@ class CARTuneTagHandler: CARTagHandler {
         if let eventRating = params[EVENT_RATING] {
             tuneEvent.rating = eventRating as! CGFloat;
             params.removeValue(forKey: EVENT_RATING);
-            logger.logParamSetWithSuccess("event rating", value: tuneEvent.rating, handler: self);
+            logger.logParamSetWithSuccess("event rating", value: tuneEvent.rating);
         }
         if let eventDate1 = params[EVENT_DATE1] {
             tuneEvent.date1 = eventDate1 as! Date;
             params.removeValue(forKey: EVENT_DATE1);
-            logger.logParamSetWithSuccess("event date1", value: tuneEvent.date1, handler: self);
+            logger.logParamSetWithSuccess("event date1", value: tuneEvent.date1);
 
             if let eventDate2 = params[EVENT_DATE2] {
                 tuneEvent.date2 = eventDate2 as! Date;
                 params.removeValue(forKey: EVENT_DATE2);
-                logger.logParamSetWithSuccess("event date2", value: tuneEvent.date2, handler: self);
+                logger.logParamSetWithSuccess("event date2", value: tuneEvent.date2);
             }
         }
         if let eventRevenue = params[EVENT_REVENUE] {
             tuneEvent.revenue = eventRevenue as! CGFloat;
             params.removeValue(forKey: EVENT_REVENUE);
-            logger.logParamSetWithSuccess("event revenue", value: tuneEvent.revenue, handler: self);
+            logger.logParamSetWithSuccess("event revenue", value: tuneEvent.revenue);
         }
         if let eventItems = params[EVENT_ITEMS] {
             tuneEvent.eventItems = eventItems as! [AnyObject];
             params.removeValue(forKey: EVENT_ITEMS);
-            logger.logParamSetWithSuccess("event eventItems", value: tuneEvent.eventItems, handler: self);
+            logger.logParamSetWithSuccess("event eventItems", value: tuneEvent.eventItems);
         }
         if let eventLevel = params[EVENT_LEVEL] {
             tuneEvent.level = eventLevel as! Int;
             params.removeValue(forKey: EVENT_LEVEL);
-            logger.logParamSetWithSuccess("event level", value: tuneEvent.level, handler: self);
+            logger.logParamSetWithSuccess("event level", value: tuneEvent.level);
         }
         if let eventTransaction = params[EVENT_TRANSACTION_STATE] {
             tuneEvent.transactionState = eventTransaction as! Int;
             params.removeValue(forKey: EVENT_TRANSACTION_STATE);
-            logger.logParamSetWithSuccess("event transactionState", value: tuneEvent.transactionState, handler: self);
+            logger.logParamSetWithSuccess("event transactionState", value: tuneEvent.transactionState);
         }
         if let eventReceipt = params[EVENT_RECEIPT] {
             tuneEvent.receipt = eventReceipt as! Data;
             params.removeValue(forKey: EVENT_RECEIPT);
-            logger.logParamSetWithSuccess("event receipt", value: tuneEvent.receipt, handler: self);
+            logger.logParamSetWithSuccess("event receipt", value: tuneEvent.receipt);
         }
         if let eventQuantity = params[EVENT_QUANTITY] {
             let qty = eventQuantity as! Int;
@@ -321,7 +321,7 @@ class CARTuneTagHandler: CARTagHandler {
                 tuneEvent.quantity = 0;
             }
             params.removeValue(forKey: EVENT_QUANTITY);
-            logger.logParamSetWithSuccess("event quantity", value: tuneEvent.quantity, handler: self);
+            logger.logParamSetWithSuccess("event quantity", value: tuneEvent.quantity);
         }
 
         // set all the String typed properties of TuneEvent,
@@ -335,13 +335,13 @@ class CARTuneTagHandler: CARTagHandler {
 
                 tuneEvent.setValue(value, forKey: propertyName);
                 params.removeValue(forKey: property);
-                logger.logParamSetWithSuccess(propertyName, value: tuneEvent.value(forKey: propertyName)!, handler: self);
+                logger.logParamSetWithSuccess(propertyName, value: tuneEvent.value(forKey: propertyName)!);
             }
         }
 
         // print logs for the parameters which don't match any TuneEvent property
         for (key, _) in params {
-            logger.logUnknownParam(self, paramName: key as! String);
+            logger.logUnknownParam(key as! String);
         }
 
         return tuneEvent;
