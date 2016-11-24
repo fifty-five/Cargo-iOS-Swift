@@ -53,7 +53,6 @@ class CARTagHandler : NSObject, TAGFunctionCallTagHandler {
         logger.logReceivedFunction(tagName, parameters: parameters as! [String : Any]);
     }
 
-    
     /// Called in registerHandlers to validate a handler and check for its initialization.
     func validate(){
         valid = true;
