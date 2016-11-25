@@ -54,7 +54,7 @@ class Cargo: NSObject {
         self.container = tagContainer;
 
         // Logger
-        self.logger.level = self.tagManager.logger.logLevel();
+        self.logger.setLevel(self.tagManager.logger.logLevel());
         logger.carLog(kTAGLoggerLogLevelInfo, message: "Cargo initialization is done");
     }
 
@@ -80,7 +80,7 @@ class Cargo: NSObject {
                 logger.carLog(kTAGLoggerLogLevelInfo, message: "Function with key \(key) has been registered for \(handler.name)");
             }
             else {
-                logger.carLog(kTAGLoggerLogLevelWarning, message: "\(handler.name) seems to be invalid. Function with key \(key) hasn't been registered.");
+                logger.carLog(kTAGLoggerLogLevelError, message: "\(handler.name) seems to be invalid. Function with key \(key) hasn't been registered.");
             }
 
         }
