@@ -70,7 +70,7 @@ class CARFirebaseTagHandler: CARTagHandler {
                 self.tagEvent(parameters); //because tagscreen is considered as an event anf Firebase v3.5.2
                 break ;
             default:
-                noTagMatch(tagName: tagName);
+                logger.logUnknownFunctionTag(tagName);
         }
     }
 
@@ -88,7 +88,7 @@ class CARFirebaseTagHandler: CARTagHandler {
             logger.logParamSetWithSuccess(enableCollection, value: enabled as! Bool);
         }
         else{
-            logger.logMissingParam(enableCollection, methodName: "Firebase_initialize", handler: self);
+            logger.logMissingParam(enableCollection, methodName: "Firebase_initialize");
         }
     }
 
@@ -115,7 +115,7 @@ class CARFirebaseTagHandler: CARTagHandler {
             }
         }
         else {
-            logger.logMissingParam(USER_ID, methodName: "Firebase_identify", handler: self);
+            logger.logMissingParam(USER_ID, methodName: "Firebase_identify");
         }
     }
 
@@ -146,7 +146,7 @@ class CARFirebaseTagHandler: CARTagHandler {
             }
         }
         else{
-            logger.logMissingParam(EVENT_NAME, methodName: "Firebase_tagEvent", handler: self);
+            logger.logMissingParam(EVENT_NAME, methodName: "Firebase_tagEvent");
         }
     }
 

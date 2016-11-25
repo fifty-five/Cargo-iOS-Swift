@@ -82,12 +82,12 @@ class CARATInternetTagHandler: CARTagHandler {
                 self.identify(parameters: parameters);
                 break ;
             default:
-                noTagMatch(tagName: tagName);
+                logger.logUnknownFunctionTag(tagName);
             }
         }
         // If it wasn't initialized, logs that the framework needs to be initialized
         else {
-            logger.logUninitializedFramework(self);
+            logger.logUninitializedFramework();
         }
     }
 
@@ -105,19 +105,19 @@ class CARATInternetTagHandler: CARTagHandler {
 
         if let site = parameters[SITE], let log = parameters[LOG], let logSSL = parameters[LOG_SSL]{
             tracker.setSiteId(Int(site as! String)!) { (isSet) -> Void in
-                self.logger.logParamSetWithSuccess(self.SITE, value: site, handler: self);
+                self.logger.logParamSetWithSuccess(self.SITE, value: site);
             }
             tracker.setLog(log as! String) { (isSet) -> Void in
-                self.logger.logParamSetWithSuccess(self.LOG, value: log, handler: self);
+                self.logger.logParamSetWithSuccess(self.LOG, value: log);
             }
             tracker.setSecuredLog(logSSL as! String) { (isSet) -> Void in
-                self.logger.logParamSetWithSuccess(self.LOG_SSL, value: logSSL, handler: self);
+                self.logger.logParamSetWithSuccess(self.LOG_SSL, value: logSSL);
             }
             self.initialized = true;
         }
         else {
             logger.logMissingParam("\([SITE, LOG, LOG_SSL])",
-                methodName: AT_init, handler: self);
+                methodName: AT_init);
         }
     }
 
@@ -137,7 +137,7 @@ class CARATInternetTagHandler: CARTagHandler {
         }
         // set up the tracker (async) and logs through a callback method
         tracker.setConfig(params as! [String : String], override: override) { (isSet) -> Void in
-            self.logger.carLog(kTAGLoggerLogLevelInfo, handler: self,
+            self.logger.carLog(kTAGLoggerLogLevelInfo,
                                 message: "tracker reconfigured with \(params) and override set to \(override)");
         };
     }
@@ -170,7 +170,7 @@ class CARATInternetTagHandler: CARTagHandler {
             screen.sendView();
         }
         else {
-            logger.logMissingParam(SCREEN_NAME, methodName: "tagScreen", handler: self);
+            logger.logMissingParam(SCREEN_NAME, methodName: "tagScreen");
         }
     }
 
@@ -221,7 +221,7 @@ class CARATInternetTagHandler: CARTagHandler {
             }
         }
         else {
-            logger.logMissingParam("\([EVENT_NAME, EVENT_TYPE])", methodName: "tagEvent", handler: self);
+            logger.logMissingParam("\([EVENT_NAME, EVENT_TYPE])", methodName: "tagEvent");
         }
     }
 

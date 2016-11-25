@@ -61,11 +61,11 @@ class CARFacebookTagHandler: CARTagHandler {
                     self.purchase(parameters: parameters);
                     break ;
                 default:
-                    noTagMatch(tagName: tagName);
+                    logger.logUnknownFunctionTag(tagName);
             }
         }
         else {
-            logger.logUninitializedFramework(self);
+            logger.logUninitializedFramework();
         }
     }
 
@@ -82,7 +82,7 @@ class CARFacebookTagHandler: CARTagHandler {
             AppEventsLogger.loggingAppId = applicationId as? String;
             self.activateApp();
             self.initialized = true;
-            logger.logParamSetWithSuccess("applicationId", value: applicationId, handler: self);
+            logger.logParamSetWithSuccess("applicationId", value: applicationId);
         }
     }
 
@@ -92,7 +92,7 @@ class CARFacebookTagHandler: CARTagHandler {
     /// Needs to be called on each screen in order to measure sessions
     func activateApp(){
         AppEventsLogger.activate(UIApplication.shared);
-        logger.carLog(kTAGLoggerLogLevelInfo, handler: self, message: "Facebook activateApp sent.");
+        logger.carLog(kTAGLoggerLogLevelInfo, message: "Facebook activateApp sent.");
     }
 
     /// Send an event to facebook SDK. Calls differents methods depending on which parameters have been given
@@ -118,15 +118,15 @@ class CARFacebookTagHandler: CARTagHandler {
                     AppEventsLogger.log(eventName as!String,
                                         parameters: params as! AppEvent.ParametersDictionary,
                                         valueToSum: valueToSum as? Double);
-                    logger.logParamSetWithSuccess(EVENT_NAME, value: eventName, handler: self);
-                    logger.logParamSetWithSuccess("valueToSum", value: valueToSum, handler: self);
-                    logger.logParamSetWithSuccess("params", value: params, handler: self);
+                    logger.logParamSetWithSuccess(EVENT_NAME, value: eventName);
+                    logger.logParamSetWithSuccess("valueToSum", value: valueToSum);
+                    logger.logParamSetWithSuccess("params", value: params);
                 }
                 // in case there is an eventName and a valueToSum
                 else{
                     AppEventsLogger.log(eventName as! String, valueToSum: valueToSum as? Double);
-                    logger.logParamSetWithSuccess(EVENT_NAME, value: eventName, handler: self);
-                    logger.logParamSetWithSuccess("valueToSum", value: valueToSum, handler: self);
+                    logger.logParamSetWithSuccess(EVENT_NAME, value: eventName);
+                    logger.logParamSetWithSuccess("valueToSum", value: valueToSum);
                 }
             }
             else{
@@ -134,13 +134,13 @@ class CARFacebookTagHandler: CARTagHandler {
                 if(params.count>0){
                     AppEventsLogger.log(eventName as! String,
                                         parameters: params as! AppEvent.ParametersDictionary);
-                    logger.logParamSetWithSuccess(EVENT_NAME, value: eventName, handler: self);
-                    logger.logParamSetWithSuccess("params", value: params, handler: self);
+                    logger.logParamSetWithSuccess(EVENT_NAME, value: eventName);
+                    logger.logParamSetWithSuccess("params", value: params);
                 }
                 // in case there is just an eventName
                 else{
                     AppEventsLogger.log(eventName as! String);
-                    logger.logParamSetWithSuccess(EVENT_NAME, value: eventName, handler: self);
+                    logger.logParamSetWithSuccess(EVENT_NAME, value: eventName);
                 }
             }
         }
@@ -155,11 +155,11 @@ class CARFacebookTagHandler: CARTagHandler {
     func purchase(parameters: [AnyHashable: Any]){
         if let purchaseAmount = parameters["purchaseAmount"] as? Double, let currencyCode = parameters["currencyCode"] as? String {
             AppEventsLogger.log(.purchased(amount: purchaseAmount, currency: currencyCode));
-            logger.logParamSetWithSuccess("purchaseAmount", value: purchaseAmount, handler: self);
-            logger.logParamSetWithSuccess("currencyCode", value: currencyCode, handler: self);
+            logger.logParamSetWithSuccess("purchaseAmount", value: purchaseAmount);
+            logger.logParamSetWithSuccess("currencyCode", value: currencyCode);
         }
         else {
-            logger.logMissingParam("purchaseAmount AND/OR currencyCode", methodName: "purchase", handler: self);
+            logger.logMissingParam("purchaseAmount AND/OR currencyCode", methodName: "purchase");
         }
     }
 }
