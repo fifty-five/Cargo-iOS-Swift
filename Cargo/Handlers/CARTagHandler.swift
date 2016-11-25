@@ -40,7 +40,7 @@ class CARTagHandler : NSObject, TAGFunctionCallTagHandler {
         self.key = key;
         self.name = name;
         self.logger = CARLogger.init(aContext: "\(self.key)_handler");
-        self.logger.setLevel(self.cargo.logger.level);
+        self.logger.setLogLevel(self.cargo.logger.level);
     }
 
 /* *********************************** Methods declaration ************************************** */

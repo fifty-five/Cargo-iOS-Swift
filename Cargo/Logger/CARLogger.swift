@@ -17,6 +17,7 @@ class CARLogger: NSObject {
     var level:TAGLoggerLogLevelType;
 
     var superContext = "Cargo";
+
     /// The framework name
     var context:String;
 
@@ -70,9 +71,9 @@ class CARLogger: NSObject {
 
         if (refToSelf.levelEnabled(intentLevel)){
             let date = "\(formatter.string(from: Date()))";
-            let info = "\(superContext) [\(refToSelf.nameOfLevel(intentLevel))] - \(context)";
+            let info = "\(superContext) - \(context) [\(refToSelf.nameOfLevel(intentLevel))]";
 
-            print("\(date)\(info) :", message);
+            print("\(date)\(info):", message);
         }
     }
 
@@ -125,7 +126,6 @@ class CARLogger: NSObject {
     /// Logs when a tag doesn't match a method
     ///
     /// - Parameters:
-    ///   - handler: The handler it happens in
     ///   - tagName: The tag name which doesn't match
     func logUnknownFunctionTag(_ tagName: String) {
         carLog(kTAGLoggerLogLevelDebug,
@@ -138,7 +138,8 @@ class CARLogger: NSObject {
     ///   - paramName: The parameter which can't be cast
     ///   - type: The type the parameter was tried to be casted to.
     func logUncastableParam(_ paramName:String, type:String) {
-        carLog(kTAGLoggerLogLevelWarning, message: "param \(paramName) cannot be casted to \(type) ");
+        carLog(kTAGLoggerLogLevelError,
+               message: "Parameter \(paramName) cannot be casted to \(type) ");
     }
 
     /// Logs a warning about an unknown parameter.
@@ -152,6 +153,13 @@ class CARLogger: NSObject {
 
 /* *********************************** Utilities methods *********************************** */
 
+     func setLogLevel(_ intentLevel:TAGLoggerLogLevelType) {
+        self.level = intentLevel;
+        if (valueOf(intentLevel) == 0 && self.context == "Cargo") {
+            let message = "Verbose Mode Enabled. Do not release with this enabled.";
+            carLog(kTAGLoggerLogLevelInfo, message: message);
+        }
+    }
     
     /// Defines if a message has to be logged by comparing its log level to the log level the logger
     /// is using.
@@ -161,7 +169,6 @@ class CARLogger: NSObject {
     func levelEnabled(_ intentLevel:TAGLoggerLogLevelType) -> Bool {
         return ((level != kTAGLoggerLogLevelNone) && (valueOf(intentLevel) >= valueOf(level)));
     }
-
     
     /// Method used to give each logLevelType an int value in order to make comparison easier.
     ///

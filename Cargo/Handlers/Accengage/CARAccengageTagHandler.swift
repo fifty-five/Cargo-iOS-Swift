@@ -268,7 +268,7 @@ class CARAccengageTagHandler: CARTagHandler {
         }
         else {
             let message = "No parameters have been given for the method \(ACC_UPDATE_DEVICE_INFO)";
-            logger.carLog(kTAGLoggerLogLevelWarning, message);
+            logger.carLog(kTAGLoggerLogLevelWarning, message: message);
         }
     }
 
