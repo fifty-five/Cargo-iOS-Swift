@@ -16,11 +16,11 @@ class CARATInternetTagHandler: CARTagHandler {
 /* *********************************** Variables Declaration ************************************ */
 
     /** Constants used to define callbacks in the register and in the execute method */
-    let AT_init = "AT_init";
-    let AT_setConfig = "AT_setConfig";
-    let AT_tagScreen = "AT_tagScreen";
-    let AT_tagEvent = "AT_tagEvent";
-    let AT_identify = "AT_identify";
+    let AT_INIT = "AT_init";
+    let AT_SET_CONFIG = "AT_setConfig";
+    let AT_TAG_SCREEN = "AT_tagScreen";
+    let AT_TAG_EVENT = "AT_tagEvent";
+    let AT_IDENTIFY = "AT_identify";
 
     let SITE = "site";
     let LOG = "log";
@@ -33,7 +33,6 @@ class CARATInternetTagHandler: CARTagHandler {
 
     /** The tracker of the AT Internet SDK which sends the events */
     var tracker: Tracker;
-    var debug: Bool = false;
 
 
 /* ************************************ Handler core methods ************************************ */
@@ -46,11 +45,11 @@ class CARATInternetTagHandler: CARTagHandler {
         if (logger.valueOf(logger.level) <= 0) {
             self.tracker.enableDebugger = true;
         }
-        cargo.registerTagHandler(self, key: AT_init);
-        cargo.registerTagHandler(self, key: AT_setConfig);
-        cargo.registerTagHandler(self, key: AT_tagScreen);
-        cargo.registerTagHandler(self, key: AT_tagEvent);
-        cargo.registerTagHandler(self, key: AT_identify);
+        cargo.registerTagHandler(self, key: AT_INIT);
+        cargo.registerTagHandler(self, key: AT_SET_CONFIG);
+        cargo.registerTagHandler(self, key: AT_TAG_SCREEN);
+        cargo.registerTagHandler(self, key: AT_TAG_EVENT);
+        cargo.registerTagHandler(self, key: AT_IDENTIFY);
     }
 
     /// A callback method for the registered callbacks method name mentionned in the register method.
@@ -63,22 +62,22 @@ class CARATInternetTagHandler: CARTagHandler {
         super.execute(tagName, parameters: parameters);
 
         // At first, checks if we want to initialize
-        if (tagName == AT_init) {
+        if (tagName == AT_INIT) {
             self.initialize(parameters);
         }
         // Else if the handler is initialized, looks for the right method to call
         else if (initialized == true) {
             switch (tagName) {
-            case AT_setConfig:
+            case AT_SET_CONFIG:
                 self.setConfig(parameters: parameters);
                 break ;
-            case AT_tagScreen:
+            case AT_TAG_SCREEN:
                 self.tagScreen(parameters: parameters);
                 break ;
-            case AT_tagEvent:
+            case AT_TAG_EVENT:
                 self.tagEvent(parameters: parameters);
                 break ;
-            case AT_identify:
+            case AT_IDENTIFY:
                 self.identify(parameters: parameters);
                 break ;
             default:
@@ -117,7 +116,7 @@ class CARATInternetTagHandler: CARTagHandler {
         }
         else {
             logger.logMissingParam("\([SITE, LOG, LOG_SSL])",
-                methodName: AT_init);
+                methodName: AT_INIT);
         }
     }
 
@@ -170,7 +169,7 @@ class CARATInternetTagHandler: CARTagHandler {
             screen.sendView();
         }
         else {
-            logger.logMissingParam(SCREEN_NAME, methodName: "tagScreen");
+            logger.logMissingParam(SCREEN_NAME, methodName: AT_TAG_SCREEN);
         }
     }
 
@@ -221,7 +220,7 @@ class CARATInternetTagHandler: CARTagHandler {
             }
         }
         else {
-            logger.logMissingParam("\([EVENT_NAME, EVENT_TYPE])", methodName: "tagEvent");
+            logger.logMissingParam("\([EVENT_NAME, EVENT_TYPE])", methodName: AT_TAG_EVENT);
         }
     }
 
@@ -234,6 +233,9 @@ class CARATInternetTagHandler: CARTagHandler {
             tracker.setConfig(USER_ID, value: userId as! String, completionHandler: { (isSet) -> Void in
                 self.logger.logParamSetWithSuccess(USER_ID, value: userId as! String);
             });
+        }
+        else {
+            logger.logMissingParam(USER_ID, methodName: AT_IDENTIFY);
         }
     }
 
@@ -252,7 +254,7 @@ class CARATInternetTagHandler: CARTagHandler {
 
         if let level2 = parameters[LEVEL2] {
             screen.level2 = level2 as! Int;
-            logger.logParamSetWithSuccess(SCREEN_NAME, value: screen.name);
+            logger.logParamSetWithSuccess(LEVEL2, value: level2);
         }
         if let basket = parameters[BASKET] {
             screen.isBasketScreen = basket as! Bool;
@@ -288,7 +290,7 @@ class CARATInternetTagHandler: CARTagHandler {
 
         if let level2 = parameters[LEVEL2] {
             event.level2 = level2 as! Int;
-            logger.logParamSetWithSuccess(SCREEN_NAME, value: event.name);
+            logger.logParamSetWithSuccess(LEVEL2, value: level2);
         }
 
         if let chapter1 = parameters[CHAPTER1] {
