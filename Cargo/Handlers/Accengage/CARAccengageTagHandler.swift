@@ -101,7 +101,7 @@ class CARAccengageTagHandler: CARTagHandler {
             self.initialized = true;
             logger.logParamSetWithSuccess(PARTNER_ID, value: partnerId);
             logger.logParamSetWithSuccess(PRIVATE_KEY, value: privateKey);
-            logger.logParamSetWithSuccess("launchOptions", value: cargo.launchOptions);
+            logger.logParamSetWithSuccess("launchOptions", value: cargo.launchOptions as Any);
         }
         else {
             logger.logMissingParam("\([PARTNER_ID, PRIVATE_KEY])", methodName: ACC_INIT);
