@@ -82,7 +82,7 @@ class CARFacebookTagHandler: CARTagHandler {
         let APP_ID = "applicationId";
 
         if let applicationId = parameters[APP_ID]{
-            AppEventsLogger.loggingAppId = applicationId as! String;
+            AppEventsLogger.loggingAppId = applicationId as? String;
             self.activateApp();
             self.initialized = true;
             logger.logParamSetWithSuccess(APP_ID, value: applicationId);
@@ -115,23 +115,23 @@ class CARFacebookTagHandler: CARTagHandler {
         let VALUE_TO_SUM = "valueToSum";
 
         if let eventName = params[EVENT_NAME] {
-            params.removeValue(forKey: EVENT_NAME as! String);
+            params.removeValue(forKey: EVENT_NAME);
 
             if let valueToSum = params[VALUE_TO_SUM]{
-                params.removeValue(forKey: VALUE_TO_SUM as! String);
+                params.removeValue(forKey: VALUE_TO_SUM);
 
                 // in case there is an eventName, valueToSum and additional parameters
                 if(params.count > 0){
                     AppEventsLogger.log(eventName as!String,
                                         parameters: params as! AppEvent.ParametersDictionary,
-                                        valueToSum: valueToSum as! Double);
+                                        valueToSum: valueToSum as? Double);
                     logger.logParamSetWithSuccess(EVENT_NAME, value: eventName);
                     logger.logParamSetWithSuccess(VALUE_TO_SUM, value: valueToSum);
                     logger.logParamSetWithSuccess("params", value: params);
                 }
                 // in case there is an eventName and a valueToSum
                 else{
-                    AppEventsLogger.log(eventName as! String, valueToSum: valueToSum as! Double);
+                    AppEventsLogger.log(eventName as! String, valueToSum: valueToSum as? Double);
                     logger.logParamSetWithSuccess(EVENT_NAME, value: eventName);
                     logger.logParamSetWithSuccess(VALUE_TO_SUM, value: valueToSum);
                 }
