@@ -35,7 +35,7 @@ class CARFirebaseTagHandler: CARTagHandler {
     /// Register the callbacks to the container. After a dataLayer.push(),
     /// these will trigger the execute method of this handler.
     init() {
-        super.init(key: "Firebase", name: "Firebase");
+        super.init(key: "FIR", name: "Firebase");
 
         self.FirebaseAnalyticsClass = FIRAnalytics();
         self.FirebaseAnalyticsConf = FIRAnalyticsConfiguration();
