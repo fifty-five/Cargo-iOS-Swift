@@ -20,12 +20,12 @@ class CARFirebaseTagHandler: CARTagHandler {
     var FirebaseAnalyticsConf: FIRAnalyticsConfiguration!;
 
     /** Constants used to define callbacks in the register and in the execute method */
-    let Firebase_init = "Firebase_init";
-    let Firebase_identify = "Firebase_identify";
-    let Firebase_tagScreen = "Firebase_tagScreen";
-    let Firebase_tagEvent = "Firebase_tagEvent";
+    let FIR_INIT = "FIR_init";
+    let FIR_IDENTIFY = "FIR_identify";
+    let FIR_TAG_SCREEN = "FIR_tagScreen";
+    let FIR_TAG_EVENT = "FIR_tagEvent";
 
-    let enableCollection = "enableCollection";
+    let ENABLE_COLLECTION = "enableCollection";
 
 
 /* ********************************** Handler core methods ************************************** */
@@ -35,16 +35,16 @@ class CARFirebaseTagHandler: CARTagHandler {
     /// Register the callbacks to the container. After a dataLayer.push(),
     /// these will trigger the execute method of this handler.
     init() {
-        super.init(key: "Firebase", name: "Firebase");
+        super.init(key: "FIR", name: "Firebase");
 
         self.FirebaseAnalyticsClass = FIRAnalytics();
         self.FirebaseAnalyticsConf = FIRAnalyticsConfiguration();
         FIRApp.configure();
 
-        cargo.registerTagHandler(self, key: Firebase_init);
-        cargo.registerTagHandler(self, key: Firebase_identify);
-        cargo.registerTagHandler(self, key: Firebase_tagScreen);
-        cargo.registerTagHandler(self, key: Firebase_tagEvent);
+        cargo.registerTagHandler(self, key: FIR_INIT);
+        cargo.registerTagHandler(self, key: FIR_IDENTIFY);
+        cargo.registerTagHandler(self, key: FIR_TAG_SCREEN);
+        cargo.registerTagHandler(self, key: FIR_TAG_EVENT);
     }
 
     /// Callback from GTM container designed to execute a specific method
@@ -57,16 +57,16 @@ class CARFirebaseTagHandler: CARTagHandler {
         super.execute(tagName, parameters: parameters);
 
         switch (tagName) {
-            case Firebase_init:
+            case FIR_INIT:
                 self.initialize(parameters);
                 break ;
-            case Firebase_identify:
+            case FIR_IDENTIFY:
                 self.identify(parameters);
                 break ;
-            case Firebase_tagEvent:
+            case FIR_TAG_EVENT:
                 self.tagEvent(parameters);
                 break ;
-            case Firebase_tagScreen:
+            case FIR_TAG_SCREEN:
                 self.tagEvent(parameters); //because tagscreen is considered as an event anf Firebase v3.5.2
                 break ;
             default:
@@ -83,12 +83,19 @@ class CARFirebaseTagHandler: CARTagHandler {
     /// - Parameters:
     ///   - enableCollection: a boolean true/false for collection enabled/disabled
     func initialize(_ parameters: [AnyHashable: Any]) {
-        if let enabled = parameters[enableCollection]{
+        if let enabled = parameters[ENABLE_COLLECTION] {
             FirebaseAnalyticsConf.setAnalyticsCollectionEnabled(enabled as! Bool);
-            logger.logParamSetWithSuccess(enableCollection, value: enabled as! Bool);
+            logger.logParamSetWithSuccess(ENABLE_COLLECTION, value: enabled as! Bool);
+            if (enabled as! Bool == false) {
+                logger.carLog(kTAGLoggerLogLevelWarning,
+                              message: "The analytics collection has been disabled, " +
+                    "you won't be able to send anything to the Firebase console. " +
+                    "Call on the \(FIR_INIT) method with the \(ENABLE_COLLECTION) " +
+                    "parameter set to true to enable the collection again.");
+            }
         }
         else{
-            logger.logMissingParam(enableCollection, methodName: "Firebase_initialize");
+            logger.logMissingParam(ENABLE_COLLECTION, methodName: FIR_INIT);
         }
     }
 
@@ -108,14 +115,14 @@ class CARFirebaseTagHandler: CARTagHandler {
             logger.logParamSetWithSuccess(USER_ID, value: userID as! String);
             params.removeValue(forKey: USER_ID);
         }
-        else if (params.count > 0) {
+        if (params.count > 0) {
             for (key, value) in params {
                 FIRAnalytics.setUserPropertyString(value as? String, forName:key as! String);
-                logger.logParamSetWithSuccess((key as? String)!, value: (value as? String)!);
+                logger.logParamSetWithSuccess(key as! String, value: value as! String);
             }
         }
         else {
-            logger.logMissingParam(USER_ID, methodName: "Firebase_identify");
+            logger.logMissingParam(USER_ID, methodName: FIR_IDENTIFY);
         }
     }
 
@@ -138,15 +145,17 @@ class CARFirebaseTagHandler: CARTagHandler {
             if (params.count > 0) {
                 FIRAnalytics.logEvent(withName: eventName as! String,
                                       parameters: params as? [String : NSObject]);
-                logger.logParamSetWithSuccess(eventName as! String, value: params);
+                logger.logParamSetWithSuccess(EVENT_NAME, value: eventName as! String);
+                logger.logParamSetWithSuccess("params", value: params);
             }
             else {
                 FIRAnalytics.logEvent(withName: eventName as! String, parameters: nil);
-                logger.logParamSetWithSuccess(eventName as!String, value: parameters);
+                logger.logParamSetWithSuccess(EVENT_NAME, value: eventName as! String);
+                logger.logParamSetWithSuccess("params", value: "nil");
             }
         }
         else{
-            logger.logMissingParam(EVENT_NAME, methodName: "Firebase_tagEvent");
+            logger.logMissingParam(EVENT_NAME, methodName: FIR_TAG_EVENT);
         }
     }
 
