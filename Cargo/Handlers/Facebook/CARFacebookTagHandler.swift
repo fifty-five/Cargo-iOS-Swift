@@ -15,10 +15,11 @@ class CARFacebookTagHandler: CARTagHandler {
 /* *********************************** Variables Declaration ************************************ */
 
     /** Constants used to define callbacks in the register and in the execute method */
-    let FB_initialize = "FB_initialize";
-    let FB_activateApp = "FB_activateApp";
-    let FB_tagEvent = "FB_tagEvent";
-    let FB_purchase = "FB_purchase";
+    let FB_INIT = "FB_init";
+    let FB_ACTIVATE_APP = "FB_activateApp";
+    let FB_TAG_EVENT = "FB_tagEvent";
+    let FB_TAG_PURCHASE = "FB_tagPurchase";
+
 
 
 /* ********************************** Handler core methods ************************************** */
@@ -29,10 +30,10 @@ class CARFacebookTagHandler: CARTagHandler {
     init() {
         super.init(key: "FB", name: "Facebook");
         
-        cargo.registerTagHandler(self, key: FB_initialize);
-        cargo.registerTagHandler(self, key: FB_activateApp);
-        cargo.registerTagHandler(self, key: FB_tagEvent);
-        cargo.registerTagHandler(self, key: FB_purchase);
+        cargo.registerTagHandler(self, key: FB_INIT);
+        cargo.registerTagHandler(self, key: FB_ACTIVATE_APP);
+        cargo.registerTagHandler(self, key: FB_TAG_EVENT);
+        cargo.registerTagHandler(self, key: FB_TAG_PURCHASE);
     }
 
     /// Callback from GTM container designed to execute a specific method
@@ -44,20 +45,20 @@ class CARFacebookTagHandler: CARTagHandler {
     override func execute(_ tagName: String, parameters: [AnyHashable: Any]){
         super.execute(tagName, parameters: parameters);
 
-        if (tagName == FB_initialize) {
+        if (tagName == FB_INIT) {
             self.initialize(parameters: parameters);
             return ;
         }
         // check whether the SDK has been initialized before calling any method
         else if (self.initialized) {
             switch (tagName) {
-                case FB_activateApp:
+                case FB_ACTIVATE_APP:
                     self.activateApp();
                     break ;
-                case FB_tagEvent:
+                case FB_TAG_EVENT:
                     self.tagEvent(parameters: parameters);
                     break ;
-                case FB_purchase:
+                case FB_TAG_PURCHASE:
                     self.purchase(parameters: parameters);
                     break ;
                 default:
@@ -78,11 +79,16 @@ class CARFacebookTagHandler: CARTagHandler {
     /// - Parameters:
     ///   - applicationId: the ID facebook gives when you register your app
     func initialize(parameters: [AnyHashable: Any]){
-        if let applicationId = parameters["applicationId"]{
-            AppEventsLogger.loggingAppId = applicationId as? String;
+        let APP_ID = "applicationId";
+
+        if let applicationId = parameters[APP_ID]{
+            AppEventsLogger.loggingAppId = applicationId as! String;
             self.activateApp();
             self.initialized = true;
-            logger.logParamSetWithSuccess("applicationId", value: applicationId);
+            logger.logParamSetWithSuccess(APP_ID, value: applicationId);
+        }
+        else {
+            logger.logMissingParam(APP_ID, methodName: FB_INIT);
         }
     }
 
@@ -92,7 +98,7 @@ class CARFacebookTagHandler: CARTagHandler {
     /// Needs to be called on each screen in order to measure sessions
     func activateApp(){
         AppEventsLogger.activate(UIApplication.shared);
-        logger.carLog(kTAGLoggerLogLevelInfo, message: "Facebook activateApp sent.");
+        self.logger.carLog(kTAGLoggerLogLevelInfo, message: "Application activation hit sent.");
     }
 
     /// Send an event to facebook SDK. Calls differents methods depending on which parameters have been given
@@ -106,32 +112,33 @@ class CARFacebookTagHandler: CARTagHandler {
     ///   - parameters: other parameters you would like to link to the event
     func tagEvent(parameters: [AnyHashable: Any]){
         var params = parameters;
+        let VALUE_TO_SUM = "valueToSum";
 
         if let eventName = params[EVENT_NAME] {
-            params.removeValue(forKey: EVENT_NAME as NSObject);
+            params.removeValue(forKey: EVENT_NAME as! String);
 
-            if let valueToSum = params["valueToSum"]{
-                params.removeValue(forKey: "valueToSum" as NSObject);
+            if let valueToSum = params[VALUE_TO_SUM]{
+                params.removeValue(forKey: VALUE_TO_SUM as! String);
 
                 // in case there is an eventName, valueToSum and additional parameters
-                if(params.count>0){
+                if(params.count > 0){
                     AppEventsLogger.log(eventName as!String,
                                         parameters: params as! AppEvent.ParametersDictionary,
-                                        valueToSum: valueToSum as? Double);
+                                        valueToSum: valueToSum as! Double);
                     logger.logParamSetWithSuccess(EVENT_NAME, value: eventName);
-                    logger.logParamSetWithSuccess("valueToSum", value: valueToSum);
+                    logger.logParamSetWithSuccess(VALUE_TO_SUM, value: valueToSum);
                     logger.logParamSetWithSuccess("params", value: params);
                 }
                 // in case there is an eventName and a valueToSum
                 else{
-                    AppEventsLogger.log(eventName as! String, valueToSum: valueToSum as? Double);
+                    AppEventsLogger.log(eventName as! String, valueToSum: valueToSum as! Double);
                     logger.logParamSetWithSuccess(EVENT_NAME, value: eventName);
-                    logger.logParamSetWithSuccess("valueToSum", value: valueToSum);
+                    logger.logParamSetWithSuccess(VALUE_TO_SUM, value: valueToSum);
                 }
             }
             else{
                 // in case there is an eventName and additional parameters
-                if(params.count>0){
+                if(params.count > 0){
                     AppEventsLogger.log(eventName as! String,
                                         parameters: params as! AppEvent.ParametersDictionary);
                     logger.logParamSetWithSuccess(EVENT_NAME, value: eventName);
@@ -144,22 +151,26 @@ class CARFacebookTagHandler: CARTagHandler {
                 }
             }
         }
+        else {
+            logger.logMissingParam(EVENT_NAME, methodName: FB_TAG_EVENT);
+        }
     }
 
     /// Logs a purchase in your app. with purchaseAmount the money spent, and currencyCode the currency code.
     /// The currency specification is expected to be an ISO 4217 currency code.
     ///
     /// - Parameters:
-    ///   - purchaseAmount: the amount of the purchase, which is mandatory
-    ///   - currencyCode: the currency of the purchase, which is mandatory
+    ///   - transactionTotal: the amount of the purchase, which is mandatory
+    ///   - transactionCurrencyCode: the currency of the purchase, which is mandatory
     func purchase(parameters: [AnyHashable: Any]){
-        if let purchaseAmount = parameters["purchaseAmount"] as? Double, let currencyCode = parameters["currencyCode"] as? String {
+        if let purchaseAmount = parameters[TRANSACTION_TOTAL] as? Double,
+            let currencyCode = parameters[TRANSACTION_CURRENCY_CODE] as? String {
             AppEventsLogger.log(.purchased(amount: purchaseAmount, currency: currencyCode));
-            logger.logParamSetWithSuccess("purchaseAmount", value: purchaseAmount);
-            logger.logParamSetWithSuccess("currencyCode", value: currencyCode);
+            logger.logParamSetWithSuccess(TRANSACTION_TOTAL, value: purchaseAmount);
+            logger.logParamSetWithSuccess(TRANSACTION_CURRENCY_CODE, value: currencyCode);
         }
         else {
-            logger.logMissingParam("purchaseAmount AND/OR currencyCode", methodName: "purchase");
+            logger.logMissingParam("\([TRANSACTION_CURRENCY_CODE, TRANSACTION_TOTAL])", methodName: FB_TAG_PURCHASE);
         }
     }
 }

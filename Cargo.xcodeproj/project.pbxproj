@@ -96,9 +96,9 @@
 		808FAE201D5CD99F0075942C /* libTagManager.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTagManager.a; path = Pods/GoogleTagManager/Libraries/libTagManager.a; sourceTree = "<group>"; };
 		80A152991D75C23E0032FA91 /* CARTuneTagHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CARTuneTagHandler.swift; path = Cargo/Handlers/Tune/CARTuneTagHandler.swift; sourceTree = "<group>"; };
 		80E2B9A11D637E11005D6DB6 /* CARConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CARConstants.swift; path = Cargo/CARConstants.swift; sourceTree = "<group>"; };
-		80FE016C1D99615800D5682B /* Tracker.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Tracker.framework; path = "../../Library/Developer/Xcode/DerivedData/Cargo-bxsizdlxryfsndclkzrpbsgoipal/Build/Products/Debug-iphonesimulator/ATInternet-iOS-Swift-SDK/Tracker.framework"; sourceTree = "<group>"; };
 		80E9584B1DA55E96005C839B /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		80E9584D1DA56044005C839B /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
+		80FE016C1D99615800D5682B /* Tracker.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Tracker.framework; path = "../../Library/Developer/Xcode/DerivedData/Cargo-bxsizdlxryfsndclkzrpbsgoipal/Build/Products/Debug-iphonesimulator/ATInternet-iOS-Swift-SDK/Tracker.framework"; sourceTree = "<group>"; };
 		8375CF76CE684DDB537E4856 /* Pods_Cargo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Cargo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E94F7D34BB57009264E914D /* Pods-CargoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CargoTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CargoTests/Pods-CargoTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A75A63531F0AE4B9F41E5C61 /* Pods-CargoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CargoTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CargoTests/Pods-CargoTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -214,12 +214,12 @@
 			isa = PBXGroup;
 			children = (
 				0F12EA521D5A252300D776E6 /* CARTagHandler.swift */,
-				8050428E1D805E6D0045312B /* ATInternet */,
 				8001B0851DA5629F00645418 /* Accengage */,
+				8050428E1D805E6D0045312B /* ATInternet */,
+				0FC6FFF01D804A7F00FE864A /* Facebook */,
+				0F5CBB531D7EFF9100684C75 /* Firebase */,
 				808DF4301D648A8D00233DBD /* GoogleAnalytics */,
 				80A152961D75C1CC0032FA91 /* Tune */,
-				0F5CBB531D7EFF9100684C75 /* Firebase */,
-				0FC6FFF01D804A7F00FE864A /* Facebook */,
 			);
 			name = Handlers;
 			sourceTree = "<group>";
