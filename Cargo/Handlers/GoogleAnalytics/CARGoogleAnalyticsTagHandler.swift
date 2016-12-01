@@ -26,10 +26,8 @@ class CARGoogleAnalyticsTagHandler: CARTagHandler {
     let GA_TAG_SREEN = "GA_tagScreen";
     let GA_TAG_EVENT = "GA_tagEvent";
 
-    let TRACKING_ID = "trackingId";
     let TRACK_UNCAUGHT_EXCEPTIONS = "trackUncaughtExceptions";
     let ALLOW_IDFA_COLLECTION = "allowIdfaCollection";
-    let DISPATCH_INTERVAL = "dispatchInterval";
     let EVENT_ACTION = "eventAction";
     let EVENT_CATEGORY = "eventCategory";
     let EVENT_LABEL = "eventLabel";
@@ -123,6 +121,7 @@ class CARGoogleAnalyticsTagHandler: CARTagHandler {
         }
     }
 
+
 /* ************************************ SDK initialization ************************************** */
 
     /// The method you need to call first. Allow you to initialize Google Analytics SDK
@@ -131,19 +130,16 @@ class CARGoogleAnalyticsTagHandler: CARTagHandler {
     /// - Parameters:
     ///   - trackingId: your Universal Analytics ID
     func initialize(_ parameters: [AnyHashable: Any]) {
-        if let trackingId = parameters[TRACKING_ID] {
+        if let trackingId = parameters[APPLICATION_ID] {
             self.tracker = self.instance.tracker(withTrackingId: trackingId as! String);
             // the SDK is now initialized
             self.initialized = true;
-            logger.logParamSetWithSuccess(TRACKING_ID, value: trackingId);
+            logger.logParamSetWithSuccess(APPLICATION_ID, value: trackingId);
         }
         else {
-            logger.logMissingParam(TRACKING_ID, methodName: GA_INIT);
+            logger.logMissingParam(APPLICATION_ID, methodName: GA_INIT);
         }
     }
-
-
-/* ****************************************** Tracking ****************************************** */
 
     /// Called to set optional parameters
     ///
@@ -195,6 +191,9 @@ class CARGoogleAnalyticsTagHandler: CARTagHandler {
         self.instance.dispatchInterval = dispInterval;
         logger.logParamSetWithSuccess(DISPATCH_INTERVAL, value: dispInterval);
     }
+
+
+/* ****************************************** Tracking ****************************************** */
 
     /// Used to setup the userId when the user logs in
     ///

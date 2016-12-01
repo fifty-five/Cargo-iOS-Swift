@@ -79,16 +79,14 @@ class CARFacebookTagHandler: CARTagHandler {
     /// - Parameters:
     ///   - applicationId: the ID facebook gives when you register your app
     func initialize(parameters: [AnyHashable: Any]){
-        let APP_ID = "applicationId";
-
-        if let applicationId = parameters[APP_ID]{
+        if let applicationId = parameters[APPLICATION_ID]{
             AppEventsLogger.loggingAppId = applicationId as? String;
             self.activateApp();
             self.initialized = true;
-            logger.logParamSetWithSuccess(APP_ID, value: applicationId);
+            logger.logParamSetWithSuccess(APPLICATION_ID, value: applicationId);
         }
         else {
-            logger.logMissingParam(APP_ID, methodName: FB_INIT);
+            logger.logMissingParam(APPLICATION_ID, methodName: FB_INIT);
         }
     }
 

@@ -9,10 +9,11 @@
 import Foundation
 
 /* *********************************** tracker *********************************** */
+let APPLICATION_ID: String = "applicationId";
 let ENABLE_DEBUG: String = "enableDebug";
 let ENABLE_OPTOUT: String = "enableOptOut";
 let DISABLE_TRACKING: String = "disableTracking";
-let DISPATCH_PERIOD: String = "dispatchPeriod";
+let DISPATCH_INTERVAL: String = "dispatchInterval";
 let LEVEL2: String = "level2";
 let CUSTOM_DIM1: String = "customDim1";
 let CUSTOM_DIM2: String = "customDim2";
