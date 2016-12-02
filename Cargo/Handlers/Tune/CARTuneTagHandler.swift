@@ -122,7 +122,7 @@ class CARTuneTagHandler: CARTagHandler {
             logger.logParamSetWithSuccess(CONVERSION_KEY, value: conversionKey);
         }
         else {
-            logger.logMissingParam([ADVERTISER_ID, CONVERSION_KEY], methodName: TUN_INIT);
+            logger.logMissingParam("\([ADVERTISER_ID, CONVERSION_KEY])", methodName: TUN_INIT);
         }
     }
 
@@ -132,7 +132,7 @@ class CARTuneTagHandler: CARTagHandler {
     /// Attribution will not function without the measureSession call included.
     fileprivate func measureSession() {
         Tune.measureSession();
-        self.logger.carLog(kTAGLoggerLogLevelInfo, "Measure session hit has been sent.");
+        self.logger.carLog(kTAGLoggerLogLevelInfo, message:"Measure session hit has been sent.");
     }
 
     /// Used in order to identify the user as a unique visitor and to associate to a unique id
@@ -346,7 +346,7 @@ class CARTuneTagHandler: CARTagHandler {
         }
 
         // print logs for the parameters which don't match any TuneEvent property
-        for (key, _) in params {Cargo/Handlers/Tune/CARTuneTagHandler.swift
+        for (key, _) in params {
             logger.logUnknownParam(key as! String);
         }
 
