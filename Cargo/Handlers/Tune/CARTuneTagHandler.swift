@@ -19,7 +19,6 @@ class CARTuneTagHandler: CARTagHandler {
     let TUN_SESSION = "TUN_measureSession";
     let TUN_IDENTIFY = "TUN_identify";
     let TUN_TAG_EVENT = "TUN_tagEvent";
-    let TUN_TAG_SCREEN = "TUN_tagScreen";
 
     let ADVERTISER_ID = "advertiserId";
     let CONVERSION_KEY = "conversionKey";
@@ -34,14 +33,16 @@ class CARTuneTagHandler: CARTagHandler {
     let EVENT_RECEIPT = "eventReceipt";
     let EVENT_QUANTITY = "eventQuantity";
     let EVENT_TRANSACTION_STATE = "eventTransactionState";
-    
+
     /** the formatted name "eventRandomAttribute" is important here as the string is used in the
      eventBuilder method to call on TuneEvent methods. */
-    let EVENT_PROPERTIES: [String] = ["eventCurrencyCode", "eventRefId",
+    let EVENT_STRING_PROPERTIES: [String] = ["eventCurrencyCode", "eventRefId",
                                       "eventContentId", "eventContentType",
                                       "eventSearchString", "eventAttribute1",
                                       "eventAttribute2", "eventAttribute3",
                                       "eventAttribute4", "eventAttribute5"];
+
+    var EVENT_MIXED_PROPERTIES: [String];
 
 /* ************************************ Handler core methods ************************************ */
 
@@ -50,6 +51,10 @@ class CARTuneTagHandler: CARTagHandler {
     /// Register the callbacks to the container. After a dataLayer.push(),
     /// these will trigger the execute method of this handler.
     init() {
+        EVENT_MIXED_PROPERTIES = [EVENT_RATING, EVENT_DATE1, EVENT_DATE2,
+                                  EVENT_REVENUE, EVENT_ITEMS, EVENT_LEVEL,
+                                  EVENT_RECEIPT, EVENT_QUANTITY, EVENT_TRANSACTION_STATE];
+
         super.init(key: "TUN", name: "Tune");
 
         // enables Tune debug mode if the cargo logger is set to verbose, disables it otherwise
@@ -63,7 +68,6 @@ class CARTuneTagHandler: CARTagHandler {
         cargo.registerTagHandler(self, key: TUN_SESSION);
         cargo.registerTagHandler(self, key: TUN_IDENTIFY);
         cargo.registerTagHandler(self, key: TUN_TAG_EVENT);
-        cargo.registerTagHandler(self, key: TUN_TAG_SCREEN);
     }
 
     /// Callback from GTM container designed to execute a specific method
@@ -88,9 +92,6 @@ class CARTuneTagHandler: CARTagHandler {
                     self.identify(parameters);
                     break ;
                 case TUN_TAG_EVENT:
-                    self.tagEvent(parameters);
-                    break ;
-                case TUN_TAG_SCREEN:
                     self.tagEvent(parameters);
                     break ;
                 default:
@@ -189,14 +190,8 @@ class CARTuneTagHandler: CARTagHandler {
     /// After the creation of the event object, some attributes can be added through the eventBuilder
     /// method, using the map obtained from the gtm container.
     ///
-    ///
-    /// This method is also used to create and fire a screen view to the Tune Console
-    /// The mandatory parameters is screenName which is a necessity to build the tagScreen.
-    /// Actually, as no native tagScreen is given in the Tune SDK, we fire a custom event.
-    ///
     /// After the creation of the event object, some attributes can be added through the
     /// buildEvent:withParameters: method, using the NSDictionary obtained from the gtm container.
-    /// We recommend to use Attribute1/2 if you need more information about the screen.
     ///
     /// - Parameters:
     ///   - eventName (String) : the name of the event (mandatory, unless eventId is set)
@@ -229,15 +224,8 @@ class CARTuneTagHandler: CARTagHandler {
             params.removeValue(forKey: EVENT_NAME);
             logger.logParamSetWithSuccess(EVENT_NAME, value: eventName);
         }
-        // block for the screen creation part of this method.
-        // Creates a tune event, and remove the screenName value from the dictionary
-        else if let eventName = params[SCREEN_NAME] {
-            tuneEvent = TuneEvent.init(name: eventName as! String);
-            params.removeValue(forKey: SCREEN_NAME);
-            logger.logParamSetWithSuccess(SCREEN_NAME, value: eventName);
-        }
         else {
-            logger.logMissingParam("\(EVENT_NAME) or \(SCREEN_NAME)", methodName: "\(TUN_TAG_EVENT) or \(TUN_TAG_SCREEN)");
+            logger.logMissingParam(EVENT_NAME, methodName: TUN_TAG_EVENT);
             return ;
         }
 
@@ -269,70 +257,20 @@ class CARTuneTagHandler: CARTagHandler {
     ///   - tuneEvent: the event you want to custom
     ///   - parameters: the key/value list of the attributes you want to attach to your event
     /// - Returns: the custom event
-    fileprivate func buildEvent(_ tuneEvent: TuneEvent, parameters: [AnyHashable: Any]) -> TuneEvent {
-
+    fileprivate func buildEvent(_ event: TuneEvent, parameters: [AnyHashable: Any]) -> TuneEvent {
         var params = parameters;
+        var tuneEvent = event;
 
         // set different properties of the TuneEvent object,
         // if they exist in the parameters dictionary
-        if let eventRating = params[EVENT_RATING] {
-            tuneEvent.rating = eventRating as! CGFloat;
-            params.removeValue(forKey: EVENT_RATING);
-            logger.logParamSetWithSuccess(EVENT_RATING, value: tuneEvent.rating);
-        }
-        if let eventDate1 = params[EVENT_DATE1] {
-            tuneEvent.date1 = eventDate1 as! Date;
-            params.removeValue(forKey: EVENT_DATE1);
-            logger.logParamSetWithSuccess(EVENT_DATE1, value: tuneEvent.date1);
-
-            if let eventDate2 = params[EVENT_DATE2] {
-                tuneEvent.date2 = eventDate2 as! Date;
-                params.removeValue(forKey: EVENT_DATE2);
-                logger.logParamSetWithSuccess(EVENT_DATE2, value: tuneEvent.date2);
-            }
-        }
-        if let eventRevenue = params[EVENT_REVENUE] {
-            tuneEvent.revenue = eventRevenue as! CGFloat;
-            params.removeValue(forKey: EVENT_REVENUE);
-            logger.logParamSetWithSuccess(EVENT_REVENUE, value: tuneEvent.revenue);
-        }
-        if let eventItems = params[EVENT_ITEMS] {
-            tuneEvent.eventItems = eventItems as! [AnyObject];
-            params.removeValue(forKey: EVENT_ITEMS);
-            logger.logParamSetWithSuccess(EVENT_ITEMS, value: tuneEvent.eventItems);
-        }
-        if let eventLevel = params[EVENT_LEVEL] {
-            tuneEvent.level = eventLevel as! Int;
-            params.removeValue(forKey: EVENT_LEVEL);
-            logger.logParamSetWithSuccess(EVENT_LEVEL, value: tuneEvent.level);
-        }
-        if let eventTransaction = params[EVENT_TRANSACTION_STATE] {
-            tuneEvent.transactionState = eventTransaction as! Int;
-            params.removeValue(forKey: EVENT_TRANSACTION_STATE);
-            logger.logParamSetWithSuccess(EVENT_TRANSACTION_STATE, value: tuneEvent.transactionState);
-        }
-        if let eventReceipt = params[EVENT_RECEIPT] {
-            tuneEvent.receipt = eventReceipt as! Data;
-            params.removeValue(forKey: EVENT_RECEIPT);
-            logger.logParamSetWithSuccess(EVENT_RECEIPT, value: tuneEvent.receipt);
-        }
-        if let eventQuantity = params[EVENT_QUANTITY] {
-            let qty = eventQuantity as! Int;
-            if (qty >= 0) {
-                tuneEvent.quantity = UInt(qty);
-                logger.logParamSetWithSuccess(EVENT_QUANTITY, value: tuneEvent.quantity);
-            }
-            else {
-                tuneEvent.quantity = 0;
-                logger.carLog(kTAGLoggerLogLevelWarning, message: "\(EVENT_QUANTITY) value has been" +
-                    "set to 0 since the negative values are not accepted.");
-            }
-            params.removeValue(forKey: EVENT_QUANTITY);
+        tuneEvent = setMixedPropertiesToEvent(tuneEvent: tuneEvent, params: parameters);
+        for key: String in EVENT_MIXED_PROPERTIES {
+            params.removeValue(forKey: key);
         }
 
         // set all the String typed properties of TuneEvent,
         // if they exist in the parameters dictionary.
-        for property: String in EVENT_PROPERTIES {
+        for property: String in EVENT_STRING_PROPERTIES {
 
             if let value = params[property] {
                 var propertyName = (property as NSString).substring(from: 5);
@@ -353,6 +291,62 @@ class CARTuneTagHandler: CARTagHandler {
         return tuneEvent;
     }
 
+    
+    /// Sets all the properties of the TuneEvent object which are not String typed.
+    ///
+    /// - Parameters:
+    ///   - tuneEvent: The TuneEvent object you want to set properties to.
+    ///   - params: The list of parameters given through GTM callback.
+    /// - Returns: The TuneEvent object with its attributes set to the correct values.
+    fileprivate func setMixedPropertiesToEvent(tuneEvent: TuneEvent, params:[AnyHashable: Any]) -> (TuneEvent) {
+        if let eventRating = params[EVENT_RATING] {
+            tuneEvent.rating = eventRating as! CGFloat;
+            logger.logParamSetWithSuccess(EVENT_RATING, value: tuneEvent.rating);
+        }
+        if let eventDate1 = params[EVENT_DATE1] {
+            tuneEvent.date1 = eventDate1 as! Date;
+            logger.logParamSetWithSuccess(EVENT_DATE1, value: tuneEvent.date1);
+            
+            if let eventDate2 = params[EVENT_DATE2] {
+                tuneEvent.date2 = eventDate2 as! Date;
+                logger.logParamSetWithSuccess(EVENT_DATE2, value: tuneEvent.date2);
+            }
+        }
+        if let eventRevenue = params[EVENT_REVENUE] {
+            tuneEvent.revenue = eventRevenue as! CGFloat;
+            logger.logParamSetWithSuccess(EVENT_REVENUE, value: tuneEvent.revenue);
+        }
+        if let eventItems = params[EVENT_ITEMS] {
+            tuneEvent.eventItems = eventItems as! [AnyObject];
+            logger.logParamSetWithSuccess(EVENT_ITEMS, value: tuneEvent.eventItems);
+        }
+        if let eventLevel = params[EVENT_LEVEL] {
+            tuneEvent.level = eventLevel as! Int;
+            logger.logParamSetWithSuccess(EVENT_LEVEL, value: tuneEvent.level);
+        }
+        if let eventTransaction = params[EVENT_TRANSACTION_STATE] {
+            tuneEvent.transactionState = eventTransaction as! Int;
+            logger.logParamSetWithSuccess(EVENT_TRANSACTION_STATE, value: tuneEvent.transactionState);
+        }
+        if let eventReceipt = params[EVENT_RECEIPT] {
+            tuneEvent.receipt = eventReceipt as! Data;
+            logger.logParamSetWithSuccess(EVENT_RECEIPT, value: tuneEvent.receipt);
+        }
+        if let eventQuantity = params[EVENT_QUANTITY] {
+            let qty = eventQuantity as! Int;
+            if (qty >= 0) {
+                tuneEvent.quantity = UInt(qty);
+                logger.logParamSetWithSuccess(EVENT_QUANTITY, value: tuneEvent.quantity);
+            }
+            else {
+                tuneEvent.quantity = 0;
+                logger.carLog(kTAGLoggerLogLevelWarning, message: "\(EVENT_QUANTITY) value has been" +
+                    "set to 0 since the negative values are not accepted.");
+            }
+        }
+        return tuneEvent;
+    }
+    
     /// A simple method called by identify() to set the Tune gender through a secured way
     ///
     /// - Parameter gender: The gender given in the identify method. If the gender doesn't match any
