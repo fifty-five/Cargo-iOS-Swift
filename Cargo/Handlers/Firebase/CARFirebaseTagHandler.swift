@@ -22,7 +22,6 @@ class CARFirebaseTagHandler: CARTagHandler {
     /** Constants used to define callbacks in the register and in the execute method */
     let FIR_INIT = "FIR_init";
     let FIR_IDENTIFY = "FIR_identify";
-    let FIR_TAG_SCREEN = "FIR_tagScreen";
     let FIR_TAG_EVENT = "FIR_tagEvent";
 
     let ENABLE_COLLECTION = "enableCollection";
@@ -43,7 +42,6 @@ class CARFirebaseTagHandler: CARTagHandler {
 
         cargo.registerTagHandler(self, key: FIR_INIT);
         cargo.registerTagHandler(self, key: FIR_IDENTIFY);
-        cargo.registerTagHandler(self, key: FIR_TAG_SCREEN);
         cargo.registerTagHandler(self, key: FIR_TAG_EVENT);
     }
 
@@ -65,9 +63,6 @@ class CARFirebaseTagHandler: CARTagHandler {
                 break ;
             case FIR_TAG_EVENT:
                 self.tagEvent(parameters);
-                break ;
-            case FIR_TAG_SCREEN:
-                self.tagEvent(parameters); //because tagscreen is considered as an event anf Firebase v3.5.2
                 break ;
             default:
                 logger.logUnknownFunctionTag(tagName);
