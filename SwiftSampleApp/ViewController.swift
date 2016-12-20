@@ -31,6 +31,7 @@ class ViewController: UIViewController {
         let dataLayer = Cargo.sharedHelper.tagManager.dataLayer;
 
         dataLayer?.push(["event": "identify"]);
+        dataLayer?.push(["event": "setOptions"]);
     }
 
     @IBAction func pressedScreen(_ sender : AnyObject) {
@@ -45,4 +46,9 @@ class ViewController: UIViewController {
         dataLayer?.push(["event": "tagPurchase"]);
     }
 
+    @IBAction func setOptions(_ sender : AnyObject) {
+        let dataLayer = Cargo.sharedHelper.tagManager.dataLayer;
+
+        dataLayer?.push(["event": "setOptions"]);
+    }
 }
