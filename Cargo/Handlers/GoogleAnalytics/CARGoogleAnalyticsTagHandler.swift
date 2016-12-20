@@ -150,36 +150,36 @@ class CARGoogleAnalyticsTagHandler: CARTagHandler {
         var dispInterval: Double = 30;
 
         // overriding the value for parameter "trackUnCaughtException" and log its new value
-        if let tempOptOut = parameters[ENABLE_OPTOUT] as? Bool {
-            optOut = tempOptOut;
+        if let tempOptOut = parameters[ENABLE_OPTOUT] as? String {
+            optOut = toBool(tempOptOut) == nil ? optOut : toBool(tempOptOut)!;
         }
         self.instance.optOut = optOut;
         logger.logParamSetWithSuccess(ENABLE_OPTOUT, value: optOut);
 
         // overriding the value for parameter "trackUnCaughtException" and log its new value
-        if let tempDryRun = parameters[DISABLE_TRACKING] as? Bool {
-            dryRun = tempDryRun;
+        if let tempDryRun = parameters[DISABLE_TRACKING] as? String {
+            dryRun = toBool(tempDryRun) == nil ? dryRun : toBool(tempDryRun)!;
         }
         self.instance.dryRun = dryRun;
         logger.logParamSetWithSuccess(DISABLE_TRACKING, value: dryRun);
 
         // overriding the value for parameter "trackUnCaughtException" and log its new value
-        if let trackUnCaughtException = parameters[TRACK_UNCAUGHT_EXCEPTIONS] as? Bool {
-            trackException = trackUnCaughtException;
+        if let trackUnEx = parameters[TRACK_UNCAUGHT_EXCEPTIONS] as? String {
+            trackException = toBool(trackUnEx) == nil ? trackException : toBool(trackUnEx)!;
         }
         self.instance.trackUncaughtExceptions = trackException;
         logger.logParamSetWithSuccess(TRACK_UNCAUGHT_EXCEPTIONS, value: trackException);
 
         // overriding the value for parameter "allowIdfaCollection" and log its new value
-        if let allowIdfaCollection = parameters[ALLOW_IDFA_COLLECTION] as? Bool {
-            idfaCollection = allowIdfaCollection;
+        if let allowIdfaColl = parameters[ALLOW_IDFA_COLLECTION] as? String {
+            idfaCollection = toBool(allowIdfaColl) == nil ? idfaCollection : toBool(allowIdfaColl)!;
         }
         self.tracker.allowIDFACollection = idfaCollection;
         logger.logParamSetWithSuccess(ALLOW_IDFA_COLLECTION, value: idfaCollection);
 
         // overriding the value for parameter "dispatchInterval" and log its new value
-        if let dispatchInterval = parameters[DISPATCH_INTERVAL] as? TimeInterval {
-            dispInterval = dispatchInterval;
+        if let dispatchInterval = parameters[DISPATCH_INTERVAL] as? String {
+            dispInterval = Double(dispatchInterval)!;
         }
         self.instance.dispatchInterval = dispInterval;
         logger.logParamSetWithSuccess(DISPATCH_INTERVAL, value: dispInterval);
@@ -254,6 +254,20 @@ class CARGoogleAnalyticsTagHandler: CARTagHandler {
         }
         else {
             logger.logMissingParam("\([EVENT_ACTION, EVENT_CATEGORY])", methodName: GA_TAG_EVENT);
+        }
+    }
+
+
+/* ****************************************** Utility ******************************************* */
+
+    func toBool(_ string: String) -> Bool? {
+        switch string.uppercased() {
+            case "TRUE", "YES", "1":
+                return true;
+            case "FALSE", "NO", "0":
+                return false;
+            default:
+                return nil;
         }
     }
 
