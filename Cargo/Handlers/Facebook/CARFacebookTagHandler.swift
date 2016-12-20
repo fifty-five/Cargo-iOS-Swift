@@ -161,14 +161,19 @@ class CARFacebookTagHandler: CARTagHandler {
     ///   - transactionTotal: the amount of the purchase, which is mandatory
     ///   - transactionCurrencyCode: the currency of the purchase, which is mandatory
     func purchase(parameters: [AnyHashable: Any]){
-        if let purchaseAmount = parameters[TRANSACTION_TOTAL] as? Double,
-            let currencyCode = parameters[TRANSACTION_CURRENCY_CODE] as? String {
-            AppEventsLogger.log(.purchased(amount: purchaseAmount, currency: currencyCode));
-            logger.logParamSetWithSuccess(TRANSACTION_TOTAL, value: purchaseAmount);
-            logger.logParamSetWithSuccess(TRANSACTION_CURRENCY_CODE, value: currencyCode);
+        if let total = parameters[TRANSACTION_TOTAL] as? String {
+            let purchaseAmount: Double = Double(total)!;
+            if let currencyCode = parameters[TRANSACTION_CURRENCY_CODE] as? String {
+                AppEventsLogger.log(.purchased(amount: purchaseAmount, currency: currencyCode));
+                logger.logParamSetWithSuccess(TRANSACTION_TOTAL, value: purchaseAmount);
+                logger.logParamSetWithSuccess(TRANSACTION_CURRENCY_CODE, value: currencyCode);
+            }
+            else {
+                logger.logMissingParam(TRANSACTION_CURRENCY_CODE, methodName: FB_TAG_PURCHASE);
+            }
         }
         else {
-            logger.logMissingParam("\([TRANSACTION_CURRENCY_CODE, TRANSACTION_TOTAL])", methodName: FB_TAG_PURCHASE);
+            logger.logMissingParam(TRANSACTION_TOTAL, methodName: FB_TAG_PURCHASE);
         }
     }
 }
