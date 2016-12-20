@@ -42,8 +42,8 @@ class CARGoogleAnalyticsTagHandler: CARTagHandler {
     /// these will trigger the execute method of this handler.
     init() {
         super.init(key: "GA", name: "Google Analytics");
-        self.GA_configuration();
         self.instance = GAI.sharedInstance();
+        self.GA_setLog();
         self.tracker = self.instance.defaultTracker;
 
         cargo.registerTagHandler(self, key: GA_INIT);
@@ -90,34 +90,27 @@ class CARGoogleAnalyticsTagHandler: CARTagHandler {
     }
 
     /// Mandatory to use GA, configures the tracker from the plist file
-    func GA_configuration(){
-        // Configure tracker from GoogleService-Info.plist.
-        var configureError:NSError?;
-        GGLContext.sharedInstance().configureWithError(&configureError);
-        assert(configureError == nil, "Error configuring Google services: \(configureError)");
-        
-        // Optional: configure GAI options.
-        let gai = GAI.sharedInstance();
-        gai?.trackUncaughtExceptions = true;  // report uncaught exceptions
+    func GA_setLog(){
+
         // the log level of GA is decided from the log level of the Cargo logger
         switch (logger.level) {
             case kTAGLoggerLogLevelNone:
-                gai?.logger.logLevel = GAILogLevel.none;
+                self.instance.logger.logLevel = GAILogLevel.none;
                 break ;
             case kTAGLoggerLogLevelInfo:
-                gai?.logger.logLevel = GAILogLevel.info;
+                self.instance.logger.logLevel = GAILogLevel.info;
                 break ;
             case kTAGLoggerLogLevelWarning:
-                gai?.logger.logLevel = GAILogLevel.warning;
+                self.instance.logger.logLevel = GAILogLevel.warning;
                 break ;
             case kTAGLoggerLogLevelDebug:
-                gai?.logger.logLevel = GAILogLevel.warning;
+                self.instance.logger.logLevel = GAILogLevel.warning;
                 break ;
             case kTAGLoggerLogLevelVerbose:
-                gai?.logger.logLevel = GAILogLevel.verbose;
+                self.instance.logger.logLevel = GAILogLevel.verbose;
                 break ;
             default:
-                gai?.logger.logLevel = GAILogLevel.error;
+                self.instance.logger.logLevel = GAILogLevel.error;
         }
     }
 
