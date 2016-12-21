@@ -171,7 +171,7 @@ class CARTuneTagHandler: CARTagHandler {
             logger.logParamSetWithSuccess(USER_NAME, value: userName);
         }
         if let userAge = parameters[USER_AGE] {
-            Tune.setAge(userAge as! Int)
+            Tune.setAge(Int(userAge as! String)!)
             logger.logParamSetWithSuccess(USER_AGE, value: userAge);
         }
         if let userEmail = parameters[USER_EMAIL] {
@@ -300,40 +300,64 @@ class CARTuneTagHandler: CARTagHandler {
     /// - Returns: The TuneEvent object with its attributes set to the correct values.
     fileprivate func setMixedPropertiesToEvent(tuneEvent: TuneEvent, params:[AnyHashable: Any]) -> (TuneEvent) {
         if let eventRating = params[EVENT_RATING] {
-            tuneEvent.rating = eventRating as! CGFloat;
-            logger.logParamSetWithSuccess(EVENT_RATING, value: tuneEvent.rating);
+            if let n = NumberFormatter().number(from: eventRating as! String) {
+                let f = CGFloat(n)
+                tuneEvent.rating = f;
+                logger.logParamSetWithSuccess(EVENT_RATING, value: tuneEvent.rating);
+            }
+            else {
+                logger.logUncastableParam(EVENT_RATING, type: "CGFloat");
+            }
         }
         if let eventDate1 = params[EVENT_DATE1] {
-            tuneEvent.date1 = eventDate1 as! Date;
+            let date1 = NSDate(timeIntervalSince1970: Double(eventDate1 as! String)!);
+            tuneEvent.date1 = date1 as Date;
             logger.logParamSetWithSuccess(EVENT_DATE1, value: tuneEvent.date1);
             
             if let eventDate2 = params[EVENT_DATE2] {
-                tuneEvent.date2 = eventDate2 as! Date;
+                let date2 = NSDate(timeIntervalSince1970: Double(eventDate2 as! String)!);
+                tuneEvent.date2 = date2 as Date;
                 logger.logParamSetWithSuccess(EVENT_DATE2, value: tuneEvent.date2);
             }
         }
         if let eventRevenue = params[EVENT_REVENUE] {
-            tuneEvent.revenue = eventRevenue as! CGFloat;
-            logger.logParamSetWithSuccess(EVENT_REVENUE, value: tuneEvent.revenue);
+            if let n = NumberFormatter().number(from: eventRevenue as! String) {
+                let f = CGFloat(n)
+                tuneEvent.revenue = f;
+                logger.logParamSetWithSuccess(EVENT_REVENUE, value: tuneEvent.revenue);
+            }
+            else {
+                logger.logUncastableParam(EVENT_REVENUE, type: "CGFloat");
+            }
         }
         if let eventItems = params[EVENT_ITEMS] {
-            tuneEvent.eventItems = eventItems as! [AnyObject];
-            logger.logParamSetWithSuccess(EVENT_ITEMS, value: tuneEvent.eventItems);
+            if let tuneEventItems = self.getItems(flatJson: eventItems as! String) {
+                tuneEvent.eventItems = tuneEventItems;
+                logger.logParamSetWithSuccess(EVENT_ITEMS, value: tuneEvent.eventItems);
+            }
+            else {
+                logger.logUncastableParam(EVENT_ITEMS, type: "[TuneEventItem]");
+            }
         }
         if let eventLevel = params[EVENT_LEVEL] {
-            tuneEvent.level = eventLevel as! Int;
+            tuneEvent.level = Int(eventLevel as! String)!;
             logger.logParamSetWithSuccess(EVENT_LEVEL, value: tuneEvent.level);
         }
         if let eventTransaction = params[EVENT_TRANSACTION_STATE] {
-            tuneEvent.transactionState = eventTransaction as! Int;
+            tuneEvent.transactionState = Int(eventTransaction as! String)!;
             logger.logParamSetWithSuccess(EVENT_TRANSACTION_STATE, value: tuneEvent.transactionState);
         }
         if let eventReceipt = params[EVENT_RECEIPT] {
-            tuneEvent.receipt = eventReceipt as! Data;
-            logger.logParamSetWithSuccess(EVENT_RECEIPT, value: tuneEvent.receipt);
+            if let data = (eventReceipt as! String).data(using: .utf8) {
+                tuneEvent.receipt = data;
+                logger.logParamSetWithSuccess(EVENT_RECEIPT, value: tuneEvent.receipt);
+            }
+            else {
+                logger.logUncastableParam(EVENT_RECEIPT, type: "Data");
+            }
         }
         if let eventQuantity = params[EVENT_QUANTITY] {
-            let qty = eventQuantity as! Int;
+            let qty = Int(eventQuantity as! String)!;
             if (qty >= 0) {
                 tuneEvent.quantity = UInt(qty);
                 logger.logParamSetWithSuccess(EVENT_QUANTITY, value: tuneEvent.quantity);
@@ -365,6 +389,69 @@ class CARTuneTagHandler: CARTagHandler {
             Tune.setGender(TuneGender.unknown);
             self.logger.logParamSetWithSuccess(USER_GENDER, value: "UNKNOWN");
         }
+    }
+
+    
+    /// Retrieves an array of TuneEventItem from a simple String parameter.
+    /// Makes the String a json object, type it to an array of dictionaries<String, AnyHashable>,
+    /// then retrieves the correct values and set them into the correct object type.
+    ///
+    /// - Parameter flatJson: the String containing the json
+    /// - Returns: a TuneEventItem array
+    fileprivate func getItems(flatJson: String) -> ([TuneEventItem]?) {
+        var tuneItemArray: [TuneEventItem] = [];
+
+        // convert the String to Data type
+        if let jsonData = flatJson.data(using: .utf8) {
+            // retrieve the json from data
+            let json = try? JSONSerialization.jsonObject(with: jsonData);
+            // type the json format to an actual array of dictionaries
+            if let dictFromJSON = json as? [Dictionary<String, AnyHashable>] {
+                // iterates on dictionaries to create TuneEventItem objects which are added in an array
+                for item in dictFromJSON {
+                    if let name = item["name"],
+                        let unitPrice = item["unitPrice"],
+                        let quantity = item["quantity"], let revenue = item["revenue"] {
+
+                        let tuneItem = TuneEventItem(name: name as! String,
+                                                     unitPrice: revenue as! CGFloat,
+                                                     quantity: quantity as! UInt,
+                                                     revenue: unitPrice as! CGFloat);
+                        if let attr1 = item["attribute1"] {
+                            tuneItem?.attribute1 = attr1 as! String;
+                        }
+                        if let attr2 = item["attribute2"] {
+                            tuneItem?.attribute2 = attr2 as! String;
+                        }
+                        if let attr3 = item["attribute3"] {
+                            tuneItem?.attribute3 = attr3 as! String;
+                        }
+                        if let attr4 = item["attribute4"] {
+                            tuneItem?.attribute4 = attr4 as! String;
+                        }
+                        if let attr5 = item["attribut5"] {
+                            tuneItem?.attribute5 = attr5 as! String;
+                        }
+                        // adds the TuneEventItem to the array
+                        tuneItemArray.append(tuneItem!);
+                    }
+                    else {
+                        logger.logMissingParam("TuneCustomItem name", methodName: TUN_TAG_EVENT);
+                        logger.logUncastableParam(EVENT_ITEMS, type: "TuneEventItem");
+                    }
+                }
+                // returns the array
+                return tuneItemArray;
+            }
+            else {
+                logger.logUncastableParam("eventItems", type: "json");
+            }
+        }
+        else {
+            logger.logUncastableParam("eventItems", type: "Data");
+        }
+
+        return nil;
     }
 }
 
