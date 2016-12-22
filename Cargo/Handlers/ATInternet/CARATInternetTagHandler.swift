@@ -253,7 +253,7 @@ class CARATInternetTagHandler: CARTagHandler {
         let screen = screen;
 
         if let level2 = parameters[LEVEL2] {
-            screen.level2 = level2 as! Int;
+            screen.level2 = Int(level2 as! String)!;
             logger.logParamSetWithSuccess(LEVEL2, value: level2);
         }
         if let basket = parameters[BASKET] {
@@ -289,7 +289,7 @@ class CARATInternetTagHandler: CARTagHandler {
         let event = event;
 
         if let level2 = parameters[LEVEL2] {
-            event.level2 = level2 as! Int;
+            event.level2 = Int(level2 as! String)!;
             logger.logParamSetWithSuccess(LEVEL2, value: level2);
         }
 
