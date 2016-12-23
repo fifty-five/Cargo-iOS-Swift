@@ -129,18 +129,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, TAGContainerOpenerNotifie
         if let opts = launchOptions {
             cargoInstance.launchOptions = opts as [NSObject : AnyObject]?;
         }
-
+        
+        _ = CARATInternetTagHandler();
+        _ = CARFacebookTagHandler();
+        _ = CARFirebaseTagHandler();
         _ = CARGoogleAnalyticsTagHandler();
         _ = CARTuneTagHandler();
-        _ = CARFirebaseTagHandler();
-        _ = CARFacebookTagHandler();
-        _ = CARATInternetTagHandler();
-        _ = CARAccengageTagHandler();
         cargoInstance.registerHandlers();
 
         let dataLayer = cargoInstance.tagManager.dataLayer;
         dataLayer?.push(["event": "applicationStart"]);
-
     }
 
 }

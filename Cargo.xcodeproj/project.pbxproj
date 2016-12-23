@@ -20,7 +20,6 @@
 		0F5CBB521D7EFF8A00684C75 /* CARFirebaseTagHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5CBB511D7EFF8A00684C75 /* CARFirebaseTagHandler.swift */; };
 		0FC6FFEF1D8049E600FE864A /* CARFacebookTagHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6FFEE1D8049E600FE864A /* CARFacebookTagHandler.swift */; };
 		4A79EF737ECE60B17C4DDD5F /* Pods_Cargo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8375CF76CE684DDB537E4856 /* Pods_Cargo.framework */; };
-		8001B0871DA562D200645418 /* CARAccengageTagHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8001B0861DA562D200645418 /* CARAccengageTagHandler.swift */; };
 		802722331D757A8E00A52526 /* handlers.json in Resources */ = {isa = PBXBuildFile; fileRef = 802722321D757A8E00A52526 /* handlers.json */; };
 		805042931D8063C90045312B /* CARATInternetTagHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805042921D8063C90045312B /* CARATInternetTagHandler.swift */; };
 		8060A4911E0A85A400C3E98E /* TuneCustomItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8060A4901E0A85A400C3E98E /* TuneCustomItem.swift */; };
@@ -84,7 +83,6 @@
 		0FC6FFEE1D8049E600FE864A /* CARFacebookTagHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CARFacebookTagHandler.swift; path = Cargo/Handlers/Facebook/CARFacebookTagHandler.swift; sourceTree = "<group>"; };
 		237787A162AE243EAB87E41B /* Pods-Cargo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cargo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Cargo/Pods-Cargo.debug.xcconfig"; sourceTree = "<group>"; };
 		23EB0A122975528B94BE5CEC /* Pods-Cargo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cargo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Cargo/Pods-Cargo.release.xcconfig"; sourceTree = "<group>"; };
-		8001B0861DA562D200645418 /* CARAccengageTagHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CARAccengageTagHandler.swift; path = Cargo/Handlers/Accengage/CARAccengageTagHandler.swift; sourceTree = "<group>"; };
 		8024CCEC1D9D4B5600ABA307 /* Cargo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Cargo.entitlements; path = Cargo/Cargo.entitlements; sourceTree = "<group>"; };
 		802722321D757A8E00A52526 /* handlers.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = handlers.json; path = scripts/handlers.json; sourceTree = "<group>"; };
 		805042921D8063C90045312B /* CARATInternetTagHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CARATInternetTagHandler.swift; path = Cargo/Handlers/ATInternet/CARATInternetTagHandler.swift; sourceTree = "<group>"; };
@@ -216,7 +214,6 @@
 			isa = PBXGroup;
 			children = (
 				0F12EA521D5A252300D776E6 /* CARTagHandler.swift */,
-				8001B0851DA5629F00645418 /* Accengage */,
 				8050428E1D805E6D0045312B /* ATInternet */,
 				0FC6FFF01D804A7F00FE864A /* Facebook */,
 				0F5CBB531D7EFF9100684C75 /* Firebase */,
@@ -264,14 +261,6 @@
 				A75A63531F0AE4B9F41E5C61 /* Pods-CargoTests.release.xcconfig */,
 			);
 			name = Pods;
-			sourceTree = "<group>";
-		};
-		8001B0851DA5629F00645418 /* Accengage */ = {
-			isa = PBXGroup;
-			children = (
-				8001B0861DA562D200645418 /* CARAccengageTagHandler.swift */,
-			);
-			name = Accengage;
 			sourceTree = "<group>";
 		};
 		802722311D757A5E00A52526 /* Supporting Files */ = {
@@ -563,7 +552,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				0F12EA1D1D5A165F00D776E6 /* ViewController.swift in Sources */,
-				8001B0871DA562D200645418 /* CARAccengageTagHandler.swift in Sources */,
 				0F12EA231D5A165F00D776E6 /* SwiftSampleApp.xcdatamodeld in Sources */,
 				808DF4321D648AD900233DBD /* CARGoogleAnalyticsTagHandler.swift in Sources */,
 				80A1529A1D75C23E0032FA91 /* CARTuneTagHandler.swift in Sources */,
