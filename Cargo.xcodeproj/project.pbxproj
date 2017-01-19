@@ -17,18 +17,18 @@
 		0F12EA3E1D5A165F00D776E6 /* SwiftSampleAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F12EA3D1D5A165F00D776E6 /* SwiftSampleAppUITests.swift */; };
 		0F12EA511D5A1B7800D776E6 /* Cargo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F12EA501D5A1B7800D776E6 /* Cargo.swift */; };
 		0F12EA531D5A252400D776E6 /* CARTagHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F12EA521D5A252300D776E6 /* CARTagHandler.swift */; };
-		0F3D67901D8175AE007683D2 /* Facebook-info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0F3D678F1D8175AE007683D2 /* Facebook-info.plist */; };
 		0F5CBB521D7EFF8A00684C75 /* CARFirebaseTagHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5CBB511D7EFF8A00684C75 /* CARFirebaseTagHandler.swift */; };
-		0F5CBB551D7F00CD00684C75 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0F5CBB541D7F00CD00684C75 /* GoogleService-Info.plist */; };
 		0FC6FFEF1D8049E600FE864A /* CARFacebookTagHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6FFEE1D8049E600FE864A /* CARFacebookTagHandler.swift */; };
 		4A79EF737ECE60B17C4DDD5F /* Pods_Cargo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8375CF76CE684DDB537E4856 /* Pods_Cargo.framework */; };
-		8001B0871DA562D200645418 /* CARAccengageTagHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8001B0861DA562D200645418 /* CARAccengageTagHandler.swift */; };
 		802722331D757A8E00A52526 /* handlers.json in Resources */ = {isa = PBXBuildFile; fileRef = 802722321D757A8E00A52526 /* handlers.json */; };
+		805042931D8063C90045312B /* CARATInternetTagHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805042921D8063C90045312B /* CARATInternetTagHandler.swift */; };
 		8070536B1D5DC8E600A9FF26 /* CARLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8070536A1D5DC8E600A9FF26 /* CARLogger.swift */; };
 		808DF4321D648AD900233DBD /* CARGoogleAnalyticsTagHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808DF4311D648AD900233DBD /* CARGoogleAnalyticsTagHandler.swift */; };
 		80A1529A1D75C23E0032FA91 /* CARTuneTagHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A152991D75C23E0032FA91 /* CARTuneTagHandler.swift */; };
+		80B23CA61E0C11A7005DBE42 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 80B23CA51E0C11A7005DBE42 /* Default-568h@2x.png */; };
+		80B23CA81E0C26F8005DBE42 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 80B23CA71E0C26F8005DBE42 /* GoogleService-Info.plist */; };
+		80BF95CD1E31282000292DF5 /* CargoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BF95CC1E31282000292DF5 /* CargoItem.swift */; };
 		80E2B9A21D637E11005D6DB6 /* CARConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E2B9A11D637E11005D6DB6 /* CARConstants.swift */; };
-		80E9584C1DA55E96005C839B /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80E9584B1DA55E96005C839B /* UserNotifications.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		A56CF44186991BF0F5CAC01A /* Pods_CargoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A88FAEB9E268E0040B4E4D7E /* Pods_CargoTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -49,6 +49,19 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		80E6653D1D81A417008A0292 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		0F12EA171D5A165F00D776E6 /* Cargo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cargo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F12EA1A1D5A165F00D776E6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -66,23 +79,25 @@
 		0F12EA3F1D5A165F00D776E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0F12EA501D5A1B7800D776E6 /* Cargo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Cargo.swift; path = Cargo/Cargo.swift; sourceTree = "<group>"; };
 		0F12EA521D5A252300D776E6 /* CARTagHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CARTagHandler.swift; path = Cargo/Handlers/CARTagHandler.swift; sourceTree = "<group>"; };
-		0F3D678F1D8175AE007683D2 /* Facebook-info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Facebook-info.plist"; sourceTree = "<group>"; };
 		0F5CBB511D7EFF8A00684C75 /* CARFirebaseTagHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CARFirebaseTagHandler.swift; path = Cargo/Handlers/Firebase/CARFirebaseTagHandler.swift; sourceTree = "<group>"; };
-		0F5CBB541D7F00CD00684C75 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0FC6FFEE1D8049E600FE864A /* CARFacebookTagHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CARFacebookTagHandler.swift; path = Cargo/Handlers/Facebook/CARFacebookTagHandler.swift; sourceTree = "<group>"; };
 		237787A162AE243EAB87E41B /* Pods-Cargo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cargo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Cargo/Pods-Cargo.debug.xcconfig"; sourceTree = "<group>"; };
 		23EB0A122975528B94BE5CEC /* Pods-Cargo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cargo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Cargo/Pods-Cargo.release.xcconfig"; sourceTree = "<group>"; };
-		8001B0861DA562D200645418 /* CARAccengageTagHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CARAccengageTagHandler.swift; path = Cargo/Handlers/Accengage/CARAccengageTagHandler.swift; sourceTree = "<group>"; };
 		8024CCEC1D9D4B5600ABA307 /* Cargo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Cargo.entitlements; path = Cargo/Cargo.entitlements; sourceTree = "<group>"; };
 		802722321D757A8E00A52526 /* handlers.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = handlers.json; path = scripts/handlers.json; sourceTree = "<group>"; };
+		805042921D8063C90045312B /* CARATInternetTagHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CARATInternetTagHandler.swift; path = Cargo/Handlers/ATInternet/CARATInternetTagHandler.swift; sourceTree = "<group>"; };
 		80614C9B1D5B851D00BF46E7 /* BridgingHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BridgingHeader.h; sourceTree = "<group>"; };
 		8070536A1D5DC8E600A9FF26 /* CARLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CARLogger.swift; path = Cargo/Logger/CARLogger.swift; sourceTree = "<group>"; };
 		808DF4311D648AD900233DBD /* CARGoogleAnalyticsTagHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CARGoogleAnalyticsTagHandler.swift; path = Cargo/Handlers/GoogleAnalytics/CARGoogleAnalyticsTagHandler.swift; sourceTree = "<group>"; };
 		808FAE201D5CD99F0075942C /* libTagManager.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTagManager.a; path = Pods/GoogleTagManager/Libraries/libTagManager.a; sourceTree = "<group>"; };
 		80A152991D75C23E0032FA91 /* CARTuneTagHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CARTuneTagHandler.swift; path = Cargo/Handlers/Tune/CARTuneTagHandler.swift; sourceTree = "<group>"; };
+		80B23CA51E0C11A7005DBE42 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		80B23CA71E0C26F8005DBE42 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		80BF95CC1E31282000292DF5 /* CargoItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CargoItem.swift; path = Cargo/CargoItem.swift; sourceTree = "<group>"; };
 		80E2B9A11D637E11005D6DB6 /* CARConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CARConstants.swift; path = Cargo/CARConstants.swift; sourceTree = "<group>"; };
 		80E9584B1DA55E96005C839B /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		80E9584D1DA56044005C839B /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
+		80FE016C1D99615800D5682B /* Tracker.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Tracker.framework; path = "../../Library/Developer/Xcode/DerivedData/Cargo-bxsizdlxryfsndclkzrpbsgoipal/Build/Products/Debug-iphonesimulator/ATInternet-iOS-Swift-SDK/Tracker.framework"; sourceTree = "<group>"; };
 		8375CF76CE684DDB537E4856 /* Pods_Cargo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Cargo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E94F7D34BB57009264E914D /* Pods-CargoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CargoTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CargoTests/Pods-CargoTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A75A63531F0AE4B9F41E5C61 /* Pods-CargoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CargoTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CargoTests/Pods-CargoTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -94,7 +109,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				80E9584C1DA55E96005C839B /* UserNotifications.framework in Frameworks */,
 				4A79EF737ECE60B17C4DDD5F /* Pods_Cargo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -120,6 +134,8 @@
 		0F12EA0E1D5A165F00D776E6 = {
 			isa = PBXGroup;
 			children = (
+				80B23CA71E0C26F8005DBE42 /* GoogleService-Info.plist */,
+				80B23CA51E0C11A7005DBE42 /* Default-568h@2x.png */,
 				80614C9B1D5B851D00BF46E7 /* BridgingHeader.h */,
 				0F12EA191D5A165F00D776E6 /* SwiftSampleApp */,
 				0F12EA4C1D5A1A8900D776E6 /* Cargo */,
@@ -180,6 +196,7 @@
 				8024CCEC1D9D4B5600ABA307 /* Cargo.entitlements */,
 				0F12EA501D5A1B7800D776E6 /* Cargo.swift */,
 				80E2B9A11D637E11005D6DB6 /* CARConstants.swift */,
+				80BF95CC1E31282000292DF5 /* CargoItem.swift */,
 				807053691D5DC8BA00A9FF26 /* Logger */,
 				0F12EA541D5A252A00D776E6 /* Handlers */,
 				802722311D757A5E00A52526 /* Supporting Files */,
@@ -198,11 +215,11 @@
 			isa = PBXGroup;
 			children = (
 				0F12EA521D5A252300D776E6 /* CARTagHandler.swift */,
-				8001B0851DA5629F00645418 /* Accengage */,
+				8050428E1D805E6D0045312B /* ATInternet */,
+				0FC6FFF01D804A7F00FE864A /* Facebook */,
+				0F5CBB531D7EFF9100684C75 /* Firebase */,
 				808DF4301D648A8D00233DBD /* GoogleAnalytics */,
 				80A152961D75C1CC0032FA91 /* Tune */,
-				0F5CBB531D7EFF9100684C75 /* Firebase */,
-				0FC6FFF01D804A7F00FE864A /* Facebook */,
 			);
 			name = Handlers;
 			sourceTree = "<group>";
@@ -218,7 +235,6 @@
 		0FC6FFF01D804A7F00FE864A /* Facebook */ = {
 			isa = PBXGroup;
 			children = (
-				0F3D678F1D8175AE007683D2 /* Facebook-info.plist */,
 				0FC6FFEE1D8049E600FE864A /* CARFacebookTagHandler.swift */,
 			);
 			name = Facebook;
@@ -227,6 +243,7 @@
 		2413D38215D82028875B65E6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				80FE016C1D99615800D5682B /* Tracker.framework */,
 				80E9584D1DA56044005C839B /* UserNotificationsUI.framework */,
 				80E9584B1DA55E96005C839B /* UserNotifications.framework */,
 				808FAE201D5CD99F0075942C /* libTagManager.a */,
@@ -247,20 +264,20 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		8001B0851DA5629F00645418 /* Accengage */ = {
-			isa = PBXGroup;
-			children = (
-				8001B0861DA562D200645418 /* CARAccengageTagHandler.swift */,
-			);
-			name = Accengage;
-			sourceTree = "<group>";
-		};
 		802722311D757A5E00A52526 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
 				802722321D757A8E00A52526 /* handlers.json */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		8050428E1D805E6D0045312B /* ATInternet */ = {
+			isa = PBXGroup;
+			children = (
+				805042921D8063C90045312B /* CARATInternetTagHandler.swift */,
+			);
+			name = ATInternet;
 			sourceTree = "<group>";
 		};
 		807053691D5DC8BA00A9FF26 /* Logger */ = {
@@ -274,7 +291,6 @@
 		808DF4301D648A8D00233DBD /* GoogleAnalytics */ = {
 			isa = PBXGroup;
 			children = (
-				0F5CBB541D7F00CD00684C75 /* GoogleService-Info.plist */,
 				808DF4311D648AD900233DBD /* CARGoogleAnalyticsTagHandler.swift */,
 			);
 			name = GoogleAnalytics;
@@ -301,6 +317,7 @@
 				0F12EA151D5A165F00D776E6 /* Resources */,
 				8E5413B4C48F37595F17685C /* [CP] Embed Pods Frameworks */,
 				56E1BE186D0C2CF46C5310A3 /* [CP] Copy Pods Resources */,
+				80E6653D1D81A417008A0292 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -370,7 +387,7 @@
 								enabled = 1;
 							};
 							com.apple.Push = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
@@ -414,9 +431,9 @@
 				0F12EA281D5A165F00D776E6 /* LaunchScreen.storyboard in Resources */,
 				802722331D757A8E00A52526 /* handlers.json in Resources */,
 				0F12EA251D5A165F00D776E6 /* Assets.xcassets in Resources */,
+				80B23CA61E0C11A7005DBE42 /* Default-568h@2x.png in Resources */,
 				0F12EA201D5A165F00D776E6 /* Main.storyboard in Resources */,
-				0F3D67901D8175AE007683D2 /* Facebook-info.plist in Resources */,
-				0F5CBB551D7F00CD00684C75 /* GoogleService-Info.plist in Resources */,
+				80B23CA81E0C26F8005DBE42 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -535,12 +552,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				0F12EA1D1D5A165F00D776E6 /* ViewController.swift in Sources */,
-				8001B0871DA562D200645418 /* CARAccengageTagHandler.swift in Sources */,
 				0F12EA231D5A165F00D776E6 /* SwiftSampleApp.xcdatamodeld in Sources */,
 				808DF4321D648AD900233DBD /* CARGoogleAnalyticsTagHandler.swift in Sources */,
+				80BF95CD1E31282000292DF5 /* CargoItem.swift in Sources */,
 				80A1529A1D75C23E0032FA91 /* CARTuneTagHandler.swift in Sources */,
 				80E2B9A21D637E11005D6DB6 /* CARConstants.swift in Sources */,
 				0F5CBB521D7EFF8A00684C75 /* CARFirebaseTagHandler.swift in Sources */,
+				805042931D8063C90045312B /* CARATInternetTagHandler.swift in Sources */,
 				0F12EA511D5A1B7800D776E6 /* Cargo.swift in Sources */,
 				0FC6FFEF1D8049E600FE864A /* CARFacebookTagHandler.swift in Sources */,
 				0F12EA531D5A252400D776E6 /* CARTagHandler.swift in Sources */,
@@ -623,6 +641,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -672,6 +691,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -708,6 +728,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.fiftyfive.Cargo-Swift";
 				PRODUCT_NAME = Cargo;
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = BridgingHeader.h;
 				SWIFT_VERSION = 3.0;
 			};
@@ -729,6 +750,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.fiftyfive.Cargo-Swift";
 				PRODUCT_NAME = Cargo;
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = BridgingHeader.h;
 				SWIFT_VERSION = 3.0;
 			};

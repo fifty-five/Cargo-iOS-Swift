@@ -24,8 +24,10 @@ class CARTagHandler : NSObject, TAGFunctionCallTagHandler {
     /** Defines whether the sdk has been initialized */
     var initialized: Bool = false ;
 
-    /** The instance of Cargo, to access the logger among other attributes */
+    /** The instance of Cargo */
     let cargo = Cargo.sharedHelper;
+    /** Instance of the logger */
+    var logger: CARLogger;
 
 /* *************************************** Initializer ****************************************** */
 
@@ -37,6 +39,8 @@ class CARTagHandler : NSObject, TAGFunctionCallTagHandler {
     init(key:String, name:String){
         self.key = key;
         self.name = name;
+        self.logger = CARLogger.init(aContext: "\(self.key)_handler");
+        self.logger.setLogLevel(self.cargo.logger.level);
     }
 
 /* *********************************** Methods declaration ************************************** */
@@ -47,22 +51,9 @@ class CARTagHandler : NSObject, TAGFunctionCallTagHandler {
     ///   - tagName: the tag name of the callback method
     ///   - parameters: the parameters sent to the method through a dictionary
     func execute(_ tagName:String, parameters:[AnyHashable: Any]){
-        cargo.logger.carLog(kTAGLoggerLogLevelDebug,
-                            handler: self,
-                            message: "Function \(tagName) has been received with parameters \(parameters)");
-    }
-    
-    /// Logs when a tag doesn't match a method
-    ///
-    /// - Parameters:
-    ///   - handler: The handler it happens in
-    ///   - tagName: The tag name which doesn't match
-    func noTagMatch(_ handler: CARTagHandler, tagName: String) {
-        let infoMessage = "\(tagName) does not match any known tag";
-        cargo.logger.carLog(kTAGLoggerLogLevelInfo, handler: handler, message: infoMessage);
+        logger.logReceivedFunction(tagName, parameters: parameters as! [String : Any]);
     }
 
-    
     /// Called in registerHandlers to validate a handler and check for its initialization.
     func validate(){
         valid = true;

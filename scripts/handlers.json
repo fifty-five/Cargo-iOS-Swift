@@ -1,6 +1,15 @@
 {
   "handlers": [
     {
+      "name":"ATInternet",
+      "dependencies":[
+        {
+          "name": "ATInternet-Apple-SDK/Tracker",
+          "version": "~> 1.0.1"
+        }
+      ]
+    },
+    {
       "name":"GoogleAnalytics",
       "dependencies":[
         {
@@ -37,7 +46,7 @@
       ]
     },
     {
-      "name":"ATInternet",
+      "name":"Accengage",
       "dependencies":[
         {
           "name": "Accengage-iOS-SDK",
