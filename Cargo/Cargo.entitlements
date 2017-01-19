@@ -4,7 +4,7 @@
 <dict>
 	<key>keychain-access-groups</key>
 	<array>
-		<string>$(AppIdentifierPrefix)com.fiftyfive.App</string>
+		<string>$(AppIdentifierPrefix)com.fiftyfive.Cargo-Swift</string>
 	</array>
 </dict>
 </plist>

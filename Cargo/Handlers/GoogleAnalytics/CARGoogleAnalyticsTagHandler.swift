@@ -8,198 +8,266 @@
 
 import Foundation
 
+
+/// The class which handles interactions with the Google Analytics SDK.
 class CARGoogleAnalyticsTagHandler: CARTagHandler {
 
-/* ********************************* Variables Declaration ********************************* */
-
-    var tracker: GAITracker!;
+/* ************************************ Variables declaration *********************************** */
+    
+    /** Google analytics instance */
     var instance: GAI!;
+    /** The tracker of the Google Analytics SDK which send the events */
+    var tracker: GAITracker!;
+
+    /** Constants used to define callbacks in the register and in the execute method */
+    let GA_INIT = "GA_init";
+    let GA_SET = "GA_set";
+    let GA_IDENTIFY = "GA_identify";
+    let GA_TAG_SREEN = "GA_tagScreen";
+    let GA_TAG_EVENT = "GA_tagEvent";
+
+    let TRACK_UNCAUGHT_EXCEPTIONS = "trackUncaughtExceptions";
+    let ALLOW_IDFA_COLLECTION = "allowIdfaCollection";
+    let EVENT_ACTION = "eventAction";
+    let EVENT_CATEGORY = "eventCategory";
+    let EVENT_LABEL = "eventLabel";
+    let EVENT_VALUE = "eventValue";
 
 
-    let GA_init = "GA_init";
-    let GA_set = "GA_set";
-    let GA_setUserId = "GA_setUserId";
-    let GA_tagScreen = "GA_tagScreen";
-    let GA_tagEvent = "GA_tagEvent";
+/* ************************************ Handler core methods ************************************ */
 
-/* ************************************* Initializer *************************************** */
-
-    /**
-     *  Initialize the handler
-     */
+    /// Called to instantiate the handler with its key and name properties.
+    /// Also set up the GA instance and tracker attributes.
+    /// Register the callbacks to the container. After a dataLayer.push(),
+    /// these will trigger the execute method of this handler.
     init() {
         super.init(key: "GA", name: "Google Analytics");
-        self.GA_configuration();
         self.instance = GAI.sharedInstance();
+        self.GA_setLog();
         self.tracker = self.instance.defaultTracker;
 
-        cargo.registerTagHandler(self, key: GA_init);
-        cargo.registerTagHandler(self, key: GA_set);
-        cargo.registerTagHandler(self, key: GA_setUserId);
-        cargo.registerTagHandler(self, key: GA_tagScreen);
-        cargo.registerTagHandler(self, key: GA_tagEvent);
+        cargo.registerTagHandler(self, key: GA_INIT);
+        cargo.registerTagHandler(self, key: GA_SET);
+        cargo.registerTagHandler(self, key: GA_IDENTIFY);
+        cargo.registerTagHandler(self, key: GA_TAG_SREEN);
+        cargo.registerTagHandler(self, key: GA_TAG_EVENT);
     }
 
-    /**
-     *  Mandatory to use GA, configures the tracker from the plist file
-     */
-    func GA_configuration(){
-        // Configure tracker from GoogleService-Info.plist.
-        var configureError:NSError?;
-        GGLContext.sharedInstance().configureWithError(&configureError);
-        assert(configureError == nil, "Error configuring Google services: \(configureError)");
-
-        // Optional: configure GAI options.
-        let gai = GAI.sharedInstance();
-        gai?.trackUncaughtExceptions = true;  // report uncaught exceptions
-        switch (cargo.logger.level) {
-        case kTAGLoggerLogLevelNone:
-            gai?.logger.logLevel = GAILogLevel.none;
-            break ;
-        case kTAGLoggerLogLevelInfo:
-            gai?.logger.logLevel = GAILogLevel.info;
-            break ;
-        case kTAGLoggerLogLevelWarning:
-            gai?.logger.logLevel = GAILogLevel.warning;
-            break ;
-        case kTAGLoggerLogLevelDebug:
-            gai?.logger.logLevel = GAILogLevel.warning;
-            break ;
-        case kTAGLoggerLogLevelVerbose:
-            gai?.logger.logLevel = GAILogLevel.verbose;
-            break ;
-        default:
-            gai?.logger.logLevel = GAILogLevel.error;
-        }
-    }
-
-/* ******************************** Core handler methods *********************************** */
-
-    /**
-     *  Call back from GTM container to execute a specific action
-     *  after tag and parameters are received
-     *
-     *  @param tagName  The tag name
-     *  @param parameters   Dictionary of parameters
-     */
+    /// Callback from GTM container designed to execute a specific method
+    /// from its tag and the parameters received.
+    ///
+    /// - Parameters:
+    ///   - tagName: the tag name of the aimed method
+    ///   - parameters: Dictionary of parameters
     override func execute(_ tagName: String, parameters: [AnyHashable: Any]) {
         super.execute(tagName, parameters: parameters);
-
-        switch (tagName) {
-        case GA_init:
+        
+        if (tagName == GA_INIT) {
             self.initialize(parameters);
-            break ;
-        case GA_set:
-            self.set(parameters);
-            break ;
-        case GA_setUserId:
-            self.setUserId(parameters);
-            break ;
-        case GA_tagEvent:
-            self.tagEvent(parameters);
-            break ;
-        case GA_tagScreen:
-            self.tagScreen(parameters);
-            break ;
-        default:
-            noTagMatch(self, tagName: tagName);
         }
-    }
-
-    /**
-     *  Is called to set the tracking ID
-     *
-     *  @param parameters   Dictionary of parameters which should contain the tracking ID
-     */
-    func initialize(_ parameters: [AnyHashable: Any]) {
-        if let trackingId = parameters["trackingId"] {
-            self.tracker = self.instance.tracker(withTrackingId: trackingId as! String);
-            cargo.logger.carLog(kTAGLoggerLogLevelVerbose, handler: self, message: "tracking ID set to \(trackingId)");
+        // check whether the SDK has been initialized before calling any method
+        else if (self.initialized) {
+            switch (tagName) {
+                case GA_SET:
+                    self.set(parameters);
+                    break ;
+                case GA_IDENTIFY:
+                    self.identify(parameters);
+                    break ;
+                case GA_TAG_EVENT:
+                    self.tagEvent(parameters);
+                    break ;
+                case GA_TAG_SREEN:
+                    self.tagScreen(parameters);
+                    break ;
+                default:
+                    logger.logUnknownFunctionTag(tagName);
+            }
         }
         else {
-            cargo.logger.logMissingParam("trackingId", methodName: "GA_init", handler: self);
+            logger.logUninitializedFramework();
         }
     }
 
-    /**
-     *  Called to set optional parameters
-     *
-     *  @param parameters   Dictionary of parameters
-     */
+    /// Mandatory to use GA, configures the tracker from the plist file
+    func GA_setLog(){
+
+        // the log level of GA is decided from the log level of the Cargo logger
+        switch (logger.level) {
+            case kTAGLoggerLogLevelNone:
+                self.instance.logger.logLevel = GAILogLevel.none;
+                break ;
+            case kTAGLoggerLogLevelInfo:
+                self.instance.logger.logLevel = GAILogLevel.info;
+                break ;
+            case kTAGLoggerLogLevelWarning:
+                self.instance.logger.logLevel = GAILogLevel.warning;
+                break ;
+            case kTAGLoggerLogLevelDebug:
+                self.instance.logger.logLevel = GAILogLevel.warning;
+                break ;
+            case kTAGLoggerLogLevelVerbose:
+                self.instance.logger.logLevel = GAILogLevel.verbose;
+                break ;
+            default:
+                self.instance.logger.logLevel = GAILogLevel.error;
+        }
+    }
+
+
+/* ************************************ SDK initialization ************************************** */
+
+    /// The method you need to call first. Allow you to initialize Google Analytics SDK
+    /// Register the trackingId to the Google Analytics SDK.
+    ///
+    /// - Parameters:
+    ///   - trackingId: your Universal Analytics ID
+    func initialize(_ parameters: [AnyHashable: Any]) {
+        if let trackingId = parameters[APPLICATION_ID] {
+            self.tracker = self.instance.tracker(withTrackingId: trackingId as! String);
+            // the SDK is now initialized
+            self.initialized = true;
+            logger.logParamSetWithSuccess(APPLICATION_ID, value: trackingId);
+        }
+        else {
+            logger.logMissingParam(APPLICATION_ID, methodName: GA_INIT);
+        }
+    }
+
+    /// Called to set optional parameters
+    ///
+    /// - Parameters:
+    ///   - enableOptOut: boolean disabling the tracking in the entire app when set to true
+    ///   - disableTracking: When this is set to true, no tracking information will be sent.
+    ///   - trackUncaughtExceptions: boolean set to true by default
+    ///   - allowIdfaCollection: boolean set to true by default
+    ///   - dispatchInterval: Double set to 30 by default. Time interval before sending pending hits
     func set(_ parameters: [AnyHashable: Any]) {
+        var optOut = false;
+        var dryRun = false;
+        var trackException = true;
+        var idfaCollection = true;
+        var dispInterval: Double = 30;
 
-        if let trackUnCaughtException = parameters["trackUncaughtExceptions"] {
-            self.instance.trackUncaughtExceptions = trackUnCaughtException as! Bool;
-            cargo.logger.carLog(kTAGLoggerLogLevelVerbose, handler: self, message: "trackUnCaughtException set as \(trackUnCaughtException)");
+        // overriding the value for parameter "trackUnCaughtException" and log its new value
+        if let tempOptOut = parameters[ENABLE_OPTOUT] as? String {
+            optOut = toBool(tempOptOut) == nil ? optOut : toBool(tempOptOut)!;
         }
-        if let allowIdfaCollection = parameters["allowIdfaCollection"] {
-            self.tracker.allowIDFACollection = allowIdfaCollection as! Bool;
-            cargo.logger.carLog(kTAGLoggerLogLevelVerbose, handler: self, message: "allowIdfaCollection set as \(allowIdfaCollection)");
+        self.instance.optOut = optOut;
+        logger.logParamSetWithSuccess(ENABLE_OPTOUT, value: optOut);
+
+        // overriding the value for parameter "trackUnCaughtException" and log its new value
+        if let tempDryRun = parameters[DISABLE_TRACKING] as? String {
+            dryRun = toBool(tempDryRun) == nil ? dryRun : toBool(tempDryRun)!;
         }
-        if let dispatchInterval = parameters["dispatchInterval"] {
-            self.instance.dispatchInterval = dispatchInterval as! TimeInterval;
-            cargo.logger.carLog(kTAGLoggerLogLevelVerbose, handler: self, message: "dispatchInterval set as \(dispatchInterval)");
+        self.instance.dryRun = dryRun;
+        logger.logParamSetWithSuccess(DISABLE_TRACKING, value: dryRun);
+
+        // overriding the value for parameter "trackUnCaughtException" and log its new value
+        if let trackUnEx = parameters[TRACK_UNCAUGHT_EXCEPTIONS] as? String {
+            trackException = toBool(trackUnEx) == nil ? trackException : toBool(trackUnEx)!;
         }
+        self.instance.trackUncaughtExceptions = trackException;
+        logger.logParamSetWithSuccess(TRACK_UNCAUGHT_EXCEPTIONS, value: trackException);
+
+        // overriding the value for parameter "allowIdfaCollection" and log its new value
+        if let allowIdfaColl = parameters[ALLOW_IDFA_COLLECTION] as? String {
+            idfaCollection = toBool(allowIdfaColl) == nil ? idfaCollection : toBool(allowIdfaColl)!;
+        }
+        self.tracker.allowIDFACollection = idfaCollection;
+        logger.logParamSetWithSuccess(ALLOW_IDFA_COLLECTION, value: idfaCollection);
+
+        // overriding the value for parameter "dispatchInterval" and log its new value
+        if let dispatchInterval = parameters[DISPATCH_INTERVAL] as? String {
+            dispInterval = Double(dispatchInterval)!;
+        }
+        self.instance.dispatchInterval = dispInterval;
+        logger.logParamSetWithSuccess(DISPATCH_INTERVAL, value: dispInterval);
     }
 
-/* ********************************** Specific methods ************************************* */
 
-    /**
-     * Used to setup the userId when the user logs in
-     *
-     * @param parameters    dictionary of parameters
-     *                      * requires a userId parameter
-     */
-    func setUserId(_ parameters: [AnyHashable: Any]){
+/* ****************************************** Tracking ****************************************** */
+
+    /// Used to setup the userId when the user logs in
+    ///
+    /// - Parameters:
+    ///   - userId: the google user id
+    func identify(_ parameters: [AnyHashable: Any]){
 
         if let userID = parameters[USER_ID] {
             self.tracker.set(kGAIUserId, value: userID as! String);
+            logger.logParamSetWithSuccess(USER_ID, value: userID)
         }
         else {
-            cargo.logger.logMissingParam(USER_ID, methodName: "GA_setUserId", handler: self);
+            logger.logMissingParam(USER_ID, methodName: GA_IDENTIFY);
         }
     }
 
-    /**
-     *  Used to send a screen event to Google Analytics
-     *
-     *  @param parameters   Dictionary of parameters
-     *                      * requires a screenName value (String)
-     */
+    /// Used to build and send a screen event to Google Analytics.
+    /// Requires a screenName parameter.
+    ///
+    /// - Parameters:
+    ///   - screenName: the name of the screen you want to be reported
     func tagScreen(_ parameters: [AnyHashable: Any]) {
 
         if let screenName = parameters[SCREEN_NAME] {
+            // setup the screen name
             self.tracker.set(kGAIScreenName, value: screenName as! String);
+            // build the event
             let builder: NSObject = GAIDictionaryBuilder.createScreenView().build();
+            // send the screen event
             self.tracker.send(builder as! [NSObject : AnyObject]);
+            logger.logParamSetWithSuccess(SCREEN_NAME, value: screenName);
         }
         else {
-            cargo.logger.logMissingParam(SCREEN_NAME, methodName: "GA_tagScreen", handler: self);
+            logger.logMissingParam(SCREEN_NAME, methodName: GA_TAG_SREEN);
+        }
+    }
+    
+    /// Method used to create and fire an event to the Google Analytics interface
+    /// The mandatory parameters are eventCategory and eventAction.
+    /// eventLabel and eventValue are optional.
+    ///
+    /// - Parameters:
+    ///   - eventCategory: the category the event belongs to
+    ///   - eventAction: the type of event
+    ///   - eventLabel: a label for this event
+    ///   - eventValue: a value as NSNumber for this event
+    func tagEvent(_ parameters: [AnyHashable: Any]) {
+        if let category = parameters[EVENT_CATEGORY], let action = parameters[EVENT_ACTION] {
+            let label = parameters[EVENT_LABEL];
+            let value = parameters[EVENT_VALUE];
+
+            let builder: NSObject = GAIDictionaryBuilder.createEvent(withCategory: category as! String,
+                                                                     action: action as! String,
+                                                                     label: label as? String,
+                                                                     value: value as? NSNumber).build();
+            self.tracker.send(builder as! [NSObject : AnyObject]);
+            logger.logParamSetWithSuccess(EVENT_CATEGORY, value: category);
+            logger.logParamSetWithSuccess(EVENT_ACTION, value: action);
+            if (label != nil) {
+                logger.logParamSetWithSuccess(EVENT_LABEL, value: label!);
+            }
+            if (value != nil) {
+                logger.logParamSetWithSuccess(EVENT_VALUE, value: value!);
+            }
+        }
+        else {
+            logger.logMissingParam("\([EVENT_ACTION, EVENT_CATEGORY])", methodName: GA_TAG_EVENT);
         }
     }
 
-    /**
-     *  Used to send an event to Google Analytics
-     *
-     *  @param parameters   Dictionary of parameters
-     *                      * requires an eventCategory value (String)
-     *                      * requires an eventAction value (String)
-     *                      * optional value of label (String)
-     *                      * optional value of value (NSNumber)
-     */
-    func tagEvent(_ parameters: [AnyHashable: Any]) {
-        if let category = parameters["eventCategory"], let action = parameters["eventAction"] {
-            let label = parameters["eventLabel"];
-            let value = parameters["eventValue"];
 
-            let builder: NSObject = GAIDictionaryBuilder.createEvent(withCategory: category as! String, action: action as! String, label: label as? String, value: value as? NSNumber).build();
-            self.tracker.send(builder as! [NSObject : AnyObject]);
-        }
-        else if (parameters["eventCategory"] == nil) {
-            cargo.logger.logMissingParam("eventCategory", methodName: "GA_tagEvent", handler: self);
-        }
-        else {
-            cargo.logger.logMissingParam("eventAction", methodName: "GA_tagEvent", handler: self);
+/* ****************************************** Utility ******************************************* */
+
+    func toBool(_ string: String) -> Bool? {
+        switch string.uppercased() {
+            case "TRUE", "YES", "1":
+                return true;
+            case "FALSE", "NO", "0":
+                return false;
+            default:
+                return nil;
         }
     }
 

@@ -8,56 +8,53 @@
 
 import Foundation
 
+
+/// A class all the handlers inherit from. 
+/// Defines the mandatory methods which need to be implemented in any handler.
 class CARTagHandler : NSObject, TAGFunctionCallTagHandler {
 
-/* ********************************* Variables Declaration ********************************* */
+/* *********************************** Variables Declaration ************************************ */
 
+    /** A unique key associated to the handler */
     var key: String;
+    /** The name of the handler */
     var name: String;
-    var initialized: Bool = false ;
+    /** Defines whether the handler has been initialized */
     var valid: Bool = false;
+    /** Defines whether the sdk has been initialized */
+    var initialized: Bool = false ;
 
+    /** The instance of Cargo */
     let cargo = Cargo.sharedHelper;
+    /** Instance of the logger */
+    var logger: CARLogger;
 
-/* ************************************* Initializer *************************************** */
+/* *************************************** Initializer ****************************************** */
 
-    /**
-     *  Initialize the variables for the handler
-     *
-     *  @param key  The key for the handler
-     *  @param name The name of the handler
-     */
+    /// Initialize the key & name variables for the handler.
+    ///
+    /// - Parameters:
+    ///   - key: a unique key describing the handler
+    ///   - name: the name of the handler
     init(key:String, name:String){
         self.key = key;
         self.name = name;
+        self.logger = CARLogger.init(aContext: "\(self.key)_handler");
+        self.logger.setLogLevel(self.cargo.logger.level);
     }
 
-/* ********************************* Methods declaration *********************************** */
+/* *********************************** Methods declaration ************************************** */
 
-    /**
-     *  Called when an execute child method is called. Logs the call
-     *
-     *  @param tagName  The tag name
-     *  @param parameters   Dictionary of parameters
-     */
+    /// Called when a child "execute" method is called. Logs the method call and its parameters
+    ///
+    /// - Parameters:
+    ///   - tagName: the tag name of the callback method
+    ///   - parameters: the parameters sent to the method through a dictionary
     func execute(_ tagName:String, parameters:[AnyHashable: Any]){
-        cargo.logger.carLog(kTAGLoggerLogLevelDebug, handler: self, message: "Function \(tagName) has been received with parameters \(parameters)");
+        logger.logReceivedFunction(tagName, parameters: parameters as! [String : Any]);
     }
 
-    /**
-     *  Logs when a tag doesn't match a method
-     *
-     *  @param handler  The handler it happens in
-     *  @param tagName  The tag name which doesn't match
-     */
-    func noTagMatch(_ handler: CARTagHandler, tagName: String) {
-        let infoMessage = "\(tagName) does not match any known tag";
-        cargo.logger.carLog(kTAGLoggerLogLevelInfo, handler: handler, message: infoMessage);
-    }
-
-    /**
-     *  Called when the handler is valid
-     */
+    /// Called in registerHandlers to validate a handler and check for its initialization.
     func validate(){
         valid = true;
     }

@@ -9,146 +9,171 @@
 import Foundation
 import FacebookCore
 
-
+/// The class which handles interactions with the Accengage SDK.
 class CARFacebookTagHandler: CARTagHandler {
 
-/* ********************************* Variables Declaration ********************************* */
-    
-    let FB_initialize = "FB_initialize";
-    let FB_activateApp = "FB_activateApp";
-    let FB_tagEvent = "FB_tagEvent";
-    let FB_purchase = "FB_purchase";
+/* *********************************** Variables Declaration ************************************ */
+
+    /** Constants used to define callbacks in the register and in the execute method */
+    let FB_INIT = "FB_init";
+    let FB_ACTIVATE_APP = "FB_activateApp";
+    let FB_TAG_EVENT = "FB_tagEvent";
+    let FB_TAG_PURCHASE = "FB_tagPurchase";
 
 
-/* ************************************* Initializer *************************************** */
-    
-    /**
-     *  Initialize the handler
-     */
+
+/* ********************************** Handler core methods ************************************** */
+
+    /// Called to instantiate the handler with its key and name properties.
+    /// Register the callbacks to the container. After a dataLayer.push(),
+    /// these will trigger the execute method of this handler.
     init() {
         super.init(key: "FB", name: "Facebook");
         
-        cargo.registerTagHandler(self, key: FB_initialize);
-        cargo.registerTagHandler(self, key: FB_activateApp);
-        cargo.registerTagHandler(self, key: FB_tagEvent);
-        cargo.registerTagHandler(self, key: FB_purchase);
+        cargo.registerTagHandler(self, key: FB_INIT);
+        cargo.registerTagHandler(self, key: FB_ACTIVATE_APP);
+        cargo.registerTagHandler(self, key: FB_TAG_EVENT);
+        cargo.registerTagHandler(self, key: FB_TAG_PURCHASE);
     }
 
-
-/* ******************************** Core handler methods *********************************** */
-
-    /**
-     *  Call back from GTM container to execute a specific action
-     *  after tag and parameters are received
-     *
-     *  @param tagName  The tag name
-     *  @param parameters   Dictionary of parameters
-     */
+    /// Callback from GTM container designed to execute a specific method
+    /// from its tag and the parameters received.
+    ///
+    /// - Parameters:
+    ///   - tagName: the tag name of the aimed method
+    ///   - parameters: Dictionary of parameters
     override func execute(_ tagName: String, parameters: [AnyHashable: Any]){
         super.execute(tagName, parameters: parameters);
-        
-        switch (tagName) {
-        case FB_initialize:
+
+        if (tagName == FB_INIT) {
             self.initialize(parameters: parameters);
-            break ;
-        case FB_activateApp:
-            self.activateApp();
-            break ;
-        case FB_tagEvent:
-            self.tagEvent(parameters: parameters);
-            break ;
-        case FB_purchase:
-            self.purchase(parameters: parameters);
-            break ;
-        default:
-            noTagMatch(self, tagName: tagName);
+            return ;
+        }
+        // check whether the SDK has been initialized before calling any method
+        else if (self.initialized) {
+            switch (tagName) {
+                case FB_ACTIVATE_APP:
+                    self.activateApp();
+                    break ;
+                case FB_TAG_EVENT:
+                    self.tagEvent(parameters: parameters);
+                    break ;
+                case FB_TAG_PURCHASE:
+                    self.purchase(parameters: parameters);
+                    break ;
+                default:
+                    logger.logUnknownFunctionTag(tagName);
+            }
+        }
+        else {
+            logger.logUninitializedFramework();
         }
     }
 
-    /**
-     *  Initialize Facebook SDK with the Application id given by Facebook when Facebook app has benn created
-     */
+
+/* ************************************ SDK initialization ************************************** */
+
+    /// The method you need to call first. Allow you to initialize Facebook SDK
+    /// Register the application ID to the Facebook SDK.
+    ///
+    /// - Parameters:
+    ///   - applicationId: the ID facebook gives when you register your app
     func initialize(parameters: [AnyHashable: Any]){
-        if let applicationId = parameters["applicationId"]{
+        if let applicationId = parameters[APPLICATION_ID]{
             AppEventsLogger.loggingAppId = applicationId as? String;
-            cargo.logger.logParamSetWithSuccess("applicationId", value: applicationId, handler: self);
+            self.activateApp();
+            self.initialized = true;
+            logger.logParamSetWithSuccess(APPLICATION_ID, value: applicationId);
         }
-        self.activateApp()
+        else {
+            logger.logMissingParam(APPLICATION_ID, methodName: FB_INIT);
+        }
     }
 
-    /**
-     * Activate events logging
-     */
+
+/* ****************************************** Tracking ****************************************** */
+
+    /// Needs to be called on each screen in order to measure sessions
     func activateApp(){
         AppEventsLogger.activate(UIApplication.shared);
-        cargo.logger.carLog(kTAGLoggerLogLevelInfo, handler: self, message: "Facebook activateApp sent.");
+        self.logger.carLog(kTAGLoggerLogLevelInfo, message: "Application activation hit sent.");
     }
 
-
-/* ********************************** Specific methods ************************************* */
-
-    /**
-     *  Send an event to facebook SDK. Calls differents methods depending on which parameters have been given
-     *  Each events can be logged with a valueToSum and a set of parameters (up to 25 parameters).
-     *  When reported, all of the valueToSum properties will be summed together. It is an arbitrary number
-     *  that can represent any value (e.g., a price or a quantity).
-     *
-     *  @param valueToSum   The value to sum
-     *  @param parameters   Dictionary of parameters
-     *  Note that both the valueToSum and parameters arguments are optional.
-     */
+    /// Send an event to facebook SDK. Calls differents methods depending on which parameters have been given
+    ///  Each events can be logged with a valueToSum and a set of parameters (up to 25 parameters).
+    ///  When reported, all of the valueToSum properties will be summed together. It is an arbitrary number
+    ///  that can represent any value (e.g., a price or a quantity).
+    ///
+    /// - Parameters:
+    ///   - eventName: the name of the event, which is mandatory
+    ///   - valueToSum: the value to sum
+    ///   - parameters: other parameters you would like to link to the event
     func tagEvent(parameters: [AnyHashable: Any]){
         var params = parameters;
+        let VALUE_TO_SUM = "valueToSum";
 
         if let eventName = params[EVENT_NAME] {
-            params.removeValue(forKey: EVENT_NAME as NSObject);
+            params.removeValue(forKey: EVENT_NAME);
 
-            if let valueToSum = params["valueToSum"]{
-                params.removeValue(forKey: "valueToSum" as NSObject);
+            if let valueToSum = params[VALUE_TO_SUM]{
+                params.removeValue(forKey: VALUE_TO_SUM);
 
-                if(params.count>0){
-                    AppEventsLogger.log(eventName as!String, parameters: params as! AppEvent.ParametersDictionary, valueToSum: valueToSum as? Double);
-                    cargo.logger.logParamSetWithSuccess(EVENT_NAME, value: eventName, handler: self);
-                    cargo.logger.logParamSetWithSuccess("valueToSum", value: valueToSum, handler: self);
-                    cargo.logger.logParamSetWithSuccess("params", value: params, handler: self);
+                // in case there is an eventName, valueToSum and additional parameters
+                if(params.count > 0){
+                    AppEventsLogger.log(eventName as!String,
+                                        parameters: params as! AppEvent.ParametersDictionary,
+                                        valueToSum: valueToSum as? Double);
+                    logger.logParamSetWithSuccess(EVENT_NAME, value: eventName);
+                    logger.logParamSetWithSuccess(VALUE_TO_SUM, value: valueToSum);
+                    logger.logParamSetWithSuccess("params", value: params);
                 }
+                // in case there is an eventName and a valueToSum
                 else{
                     AppEventsLogger.log(eventName as! String, valueToSum: valueToSum as? Double);
-                    cargo.logger.logParamSetWithSuccess(EVENT_NAME, value: eventName, handler: self);
-                    cargo.logger.logParamSetWithSuccess("valueToSum", value: valueToSum, handler: self);
+                    logger.logParamSetWithSuccess(EVENT_NAME, value: eventName);
+                    logger.logParamSetWithSuccess(VALUE_TO_SUM, value: valueToSum);
                 }
             }
             else{
-                if(params.count>0){
-                    AppEventsLogger.log(eventName as! String, parameters: params as! AppEvent.ParametersDictionary);
-                    cargo.logger.logParamSetWithSuccess(EVENT_NAME, value: eventName, handler: self);
-                    cargo.logger.logParamSetWithSuccess("params", value: params, handler: self);
+                // in case there is an eventName and additional parameters
+                if(params.count > 0){
+                    AppEventsLogger.log(eventName as! String,
+                                        parameters: params as! AppEvent.ParametersDictionary);
+                    logger.logParamSetWithSuccess(EVENT_NAME, value: eventName);
+                    logger.logParamSetWithSuccess("params", value: params);
                 }
+                // in case there is just an eventName
                 else{
                     AppEventsLogger.log(eventName as! String);
-                    cargo.logger.logParamSetWithSuccess(EVENT_NAME, value: eventName, handler: self);
+                    logger.logParamSetWithSuccess(EVENT_NAME, value: eventName);
                 }
             }
         }
+        else {
+            logger.logMissingParam(EVENT_NAME, methodName: FB_TAG_EVENT);
+        }
     }
 
-    /*
-     *  Logs a purchase in your app. with purchaseAmount the money spent, and currencyCode the currency code.
-     *  The currency specification is expected to be an ISO 4217 currency code.
-     *
-     *  @param purchaseAmount  the amount of the purchase (mandatory)
-     *  @param currency code  the currency of the purchase (mandatory)
-     
-     *  @param parameters   Dictionary of parameters
-     */
+    /// Logs a purchase in your app. with purchaseAmount the money spent, and currencyCode the currency code.
+    /// The currency specification is expected to be an ISO 4217 currency code.
+    ///
+    /// - Parameters:
+    ///   - transactionTotal: the amount of the purchase, which is mandatory
+    ///   - transactionCurrencyCode: the currency of the purchase, which is mandatory
     func purchase(parameters: [AnyHashable: Any]){
-        if let purchaseAmount = parameters["purchaseAmount"] as? Double, let currencyCode = parameters["currencyCode"] as? String {
-            AppEventsLogger.log(.purchased(amount: purchaseAmount, currency: currencyCode));
-            cargo.logger.logParamSetWithSuccess("purchaseAmount", value: purchaseAmount, handler: self);
-            cargo.logger.logParamSetWithSuccess("currencyCode", value: currencyCode, handler: self);
+        if let total = parameters[TRANSACTION_TOTAL] as? String {
+            let purchaseAmount: Double = Double(total)!;
+            if let currencyCode = parameters[TRANSACTION_CURRENCY_CODE] as? String {
+                AppEventsLogger.log(.purchased(amount: purchaseAmount, currency: currencyCode));
+                logger.logParamSetWithSuccess(TRANSACTION_TOTAL, value: purchaseAmount);
+                logger.logParamSetWithSuccess(TRANSACTION_CURRENCY_CODE, value: currencyCode);
+            }
+            else {
+                logger.logMissingParam(TRANSACTION_CURRENCY_CODE, methodName: FB_TAG_PURCHASE);
+            }
         }
         else {
-            cargo.logger.logMissingParam("purchaseAmount AND/OR currencyCode", methodName: "purchase", handler: self);
+            logger.logMissingParam(TRANSACTION_TOTAL, methodName: FB_TAG_PURCHASE);
         }
     }
 }
