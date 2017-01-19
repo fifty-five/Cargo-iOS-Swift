@@ -300,8 +300,9 @@ class CARTuneTagHandler: CARTagHandler {
     /// - Returns: The TuneEvent object with its attributes set to the correct values.
     fileprivate func setMixedPropertiesToEvent(tuneEvent: TuneEvent, params:[AnyHashable: Any]) -> (TuneEvent) {
         if let eventRating = params[EVENT_RATING] {
-            if let n = NumberFormatter().number(from: eventRating as! String) {
-                let f = CGFloat(n)
+            if let tempRating = eventRating as? String {
+                let doubleRating: Double = Double(tempRating)!;
+                let f = CGFloat(doubleRating);
                 tuneEvent.rating = f;
                 logger.logParamSetWithSuccess(EVENT_RATING, value: tuneEvent.rating);
             }
@@ -321,8 +322,9 @@ class CARTuneTagHandler: CARTagHandler {
             }
         }
         if let eventRevenue = params[EVENT_REVENUE] {
-            if let n = NumberFormatter().number(from: eventRevenue as! String) {
-                let f = CGFloat(n)
+            if let tempRevenue = eventRevenue as? String {
+                let doubleRevenue: Double = Double(tempRevenue)!;
+                let f = CGFloat(doubleRevenue);
                 tuneEvent.revenue = f;
                 logger.logParamSetWithSuccess(EVENT_REVENUE, value: tuneEvent.revenue);
             }
