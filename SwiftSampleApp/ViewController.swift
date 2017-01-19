@@ -24,14 +24,14 @@ class ViewController: UIViewController {
     @IBAction func pressedEvent(_ sender : AnyObject) {
         let dataLayer = Cargo.sharedHelper.tagManager.dataLayer;
 
-        let eventItem1 = TuneCustomItem(name: "test1", unitPrice: 5.5, quantity: 10);
-        let eventItem2 = TuneCustomItem(name: "test2", unitPrice: 4.2, quantity: 10, revenue: 42);
+        let eventItem1 = CargoItem(name: "test1", unitPrice: 5.5, quantity: 10);
+        let eventItem2 = CargoItem(name: "test2", unitPrice: 4.2, quantity: 10, revenue: 42);
         eventItem2.attribute1 = "attr1";
         eventItem2.attribute3 = "attr2";
         let eventItems = [eventItem1, eventItem2];
 
         dataLayer?.push(["event": "tagEvent",
-                         "eventItems": TuneCustomItem.toGTM(itemArray: eventItems),
+                         "eventItems": CargoItem.toGTM(itemArray: eventItems),
                          "eventDate1": Date().timeIntervalSince1970]);
     }
 

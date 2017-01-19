@@ -1,5 +1,5 @@
 //
-//  TuneCustomItem.swift
+//  CargoItem.swift
 //  Cargo
 //
 //  Created by Julien Gil on 21/12/2016.
@@ -9,8 +9,8 @@
 import Foundation
 
 
-/// Create a TuneEventItem through this class in order to send TuneEventItem through Cargo
-class TuneCustomItem : NSObject {
+/// Create an Item object with this class in order to send item objects through Cargo
+class CargoItem : NSObject {
     
     /// name of the item
     var item: String!;
@@ -32,7 +32,7 @@ class TuneCustomItem : NSObject {
     var attribute5: String!;
 
     
-    /// Creates a TuneCustomItem, which will be changed into a TuneEventItem
+    /// Creates a CargoItem, which will be changed into an Item object for a specific SDK
     /// The revenue is automatically calculated with (quantity * unit price)
     ///
     /// - Parameters:
@@ -47,7 +47,7 @@ class TuneCustomItem : NSObject {
     }
 
     
-    /// Creates a TuneCustomItem, which will be changed into a TuneEventItem
+    /// Creates a CargoItem, which will be changed into an Item object for a specific SDK
     ///
     /// - Parameters:
     ///   - name: name of the item
@@ -86,16 +86,16 @@ class TuneCustomItem : NSObject {
     }
 
     
-    /// This class method has to be used before sending a TuneCustomItem array to the DataLayer
+    /// This class method has to be used before sending a CargoItem array to the DataLayer
     /// The array given as parameter is turned into a flat json String.
     ///
-    /// - Parameter itemArray: the array of TuneCustomItem attached to this event
+    /// - Parameter itemArray: the array of CargoItem attached to this event
     /// - Returns: a flat json, as a String, which will be turned back into an array by the handler.
-    class func toGTM(itemArray: [TuneCustomItem]) -> (String) {
+    class func toGTM(itemArray: [CargoItem]) -> (String) {
         var tempDictArray: [Dictionary<String, AnyHashable>] = [];
         var string: String!;
 
-        // turns the TuneCustomItem objects as dictionaries
+        // turns the CargoItem objects as dictionaries
         for item in itemArray {
             var dic : Dictionary<String, AnyHashable> = [ "name" : item.item!, "unitPrice" : item.unitPrice,
                 "quantity" : item.quantity, "revenue" : item.revenue];
@@ -125,7 +125,7 @@ class TuneCustomItem : NSObject {
         } catch {
             print(error.localizedDescription);
             Cargo.sharedHelper.logger.carLog(kTAGLoggerLogLevelError, message: "Unable to convert" +
-                " [TuneCustomItem] to Data type in class method TuneCustomItem.toGTM()");
+                " [CargoItem] to Data type in class method CargoItem.toGTM()");
         }
         return string!;
     }
