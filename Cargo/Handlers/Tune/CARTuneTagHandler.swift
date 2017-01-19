@@ -436,7 +436,7 @@ class CARTuneTagHandler: CARTagHandler {
                         tuneItemArray.append(tuneItem!);
                     }
                     else {
-                        logger.logMissingParam("TuneCustomItem name", methodName: TUN_TAG_EVENT);
+                        logger.logMissingParam("CargoItem name", methodName: TUN_TAG_EVENT);
                         logger.logUncastableParam(EVENT_ITEMS, type: "TuneEventItem");
                     }
                 }

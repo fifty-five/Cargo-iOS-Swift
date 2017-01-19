@@ -139,7 +139,7 @@ class CARLogger: NSObject {
     ///   - type: The type the parameter was tried to be casted to.
     func logUncastableParam(_ paramName:String, type:String) {
         carLog(kTAGLoggerLogLevelError,
-               message: "Parameter \(paramName) cannot be casted to \(type) ");
+               message: "Parameter '\(paramName)' cannot be casted to \(type) ");
     }
 
     /// Logs a warning about an unknown parameter.
