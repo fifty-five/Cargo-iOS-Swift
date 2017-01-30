@@ -11,7 +11,7 @@ import Foundation
 
 /// A class all the handlers inherit from. 
 /// Defines the mandatory methods which need to be implemented in any handler.
-class CARTagHandler : NSObject, TAGFunctionCallTagHandler {
+class CARTagHandler : NSObject {
 
 /* *********************************** Variables Declaration ************************************ */
 
