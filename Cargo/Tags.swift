@@ -9,15 +9,12 @@
 import Foundation
 import GoogleTagManager
 
-class Tags: NSObject, TAGCustomFunction {
-    
-    required override init() {
-        Cargo.sharedHelper.logger.carLog(.error, message: "OBOBOBOBOBOBOBOBOBOBOBOBOBOBOBOBOB");
-    }
+final class Tags: NSObject, TAGCustomFunction {
     
     func execute(withParameters parameters: [AnyHashable : Any]!) -> NSObject! {
         Cargo.sharedHelper.execute(parameters);
         Cargo.sharedHelper.logger.carLog(.error, message: "BABABAABABABBABABABABABBBAABAABABABBA");
         return nil;
     }
+
 }
