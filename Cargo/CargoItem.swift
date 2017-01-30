@@ -124,7 +124,7 @@ class CargoItem : NSObject {
             string = String(data: jsonData, encoding: String.Encoding.utf8);
         } catch {
             print(error.localizedDescription);
-            Cargo.sharedHelper.logger.carLog(.error, message: "Unable to convert" +
+            Cargo.getInstance().logger.carLog(.error, message: "Unable to convert" +
                 " [CargoItem] to Data type in class method CargoItem.toGTM()");
         }
         return string!;
