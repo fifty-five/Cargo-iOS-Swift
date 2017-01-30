@@ -59,7 +59,7 @@ class CARTuneTagHandler: CARTagHandler {
         super.init(key: "TUN", name: "Tune");
 
         // enables Tune debug mode if the cargo logger is set to verbose, disables it otherwise
-        if (cargo.logger.level.rawValue <= CARLogger.LogLevelType.debug.rawValue) {
+        if (self.logger.level.rawValue <= CARLogger.LogLevelType.debug.rawValue) {
             Tune.setDebugMode(true);
         } else {
             Tune.setDebugMode(false);

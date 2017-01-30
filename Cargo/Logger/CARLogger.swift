@@ -14,7 +14,7 @@ class CARLogger: NSObject {
 /* ********************************* Variables Declaration ********************************* */
 
     /// The logging level
-    var level:LogLevelType;
+    var level:LogLevelType!;
 
     /// The name of the application the logger is used for
     var superContext = "Cargo";
@@ -38,22 +38,23 @@ class CARLogger: NSObject {
     /// is used when a call on carLog is made before init.
     fileprivate override init() {
         self.context = "Cargo";
-        self.level = .verbose;
         self.formatter = DateFormatter();
         self.formatter.dateFormat = dateFormat;
         super.init();
+        refToSelf = self;
+        self.setLogLevel(.verbose);
     }
 
     /// Initialize the logger with the desired context
     ///
     /// - Parameter aContext: A string which represents the context for this logger instance
-    init(aContext:String) {
+    init(aContext:String, logLevel: LogLevelType) {
         self.context = aContext;
-        self.level = .verbose;
         self.formatter = DateFormatter();
         self.formatter.dateFormat = dateFormat;
         super.init();
         refToSelf = self;
+        self.setLogLevel(.verbose);
     }
     
     

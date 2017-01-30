@@ -42,7 +42,7 @@ class CARATInternetTagHandler: CARTagHandler {
     init() {
         self.tracker = ATInternet.sharedInstance.defaultTracker;
         super.init(key: "AT", name: "AT Internet");
-        if (logger.level.rawValue <= CARLogger.LogLevelType.debug.rawValue) {
+        if (self.logger.level.rawValue <= CARLogger.LogLevelType.debug.rawValue) {
             self.tracker.enableDebugger = true;
         }
     }

@@ -12,9 +12,7 @@ import GoogleTagManager
 final class Tags: NSObject, TAGCustomFunction {
     
     func execute(withParameters parameters: [AnyHashable : Any]!) -> NSObject! {
-        Cargo.sharedHelper.execute(parameters);
-        Cargo.sharedHelper.logger.carLog(.error, message: "BABABAABABABBABABABABABBBAABAABABABBA");
+        Cargo.getInstance().execute(parameters);
         return nil;
     }
-
 }

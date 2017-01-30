@@ -21,8 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FIRApp.configure();
         
-        let cargoInstance:Cargo = Cargo.sharedHelper;
-        cargoInstance.logger.setLogLevel(.verbose);
+        let cargoInstance:Cargo = Cargo(logLevel: .verbose);
         if let opts = launchOptions {
             cargoInstance.launchOptions = opts as [NSObject : AnyObject]?;
         }
