@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Tune
 
 
 /// The class which handles interactions with the Tune SDK.
@@ -58,16 +59,11 @@ class CARTuneTagHandler: CARTagHandler {
         super.init(key: "TUN", name: "Tune");
 
         // enables Tune debug mode if the cargo logger is set to verbose, disables it otherwise
-        if (cargo.tagManager.logger.logLevel() == kTAGLoggerLogLevelVerbose) {
+        if (cargo.logger.level.rawValue <= CARLogger.LogLevelType.debug.rawValue) {
             Tune.setDebugMode(true);
         } else {
             Tune.setDebugMode(false);
         }
-
-        cargo.registerTagHandler(self, key: TUN_INIT);
-        cargo.registerTagHandler(self, key: TUN_SESSION);
-        cargo.registerTagHandler(self, key: TUN_IDENTIFY);
-        cargo.registerTagHandler(self, key: TUN_TAG_EVENT);
     }
 
     /// Callback from GTM container designed to execute a specific method
@@ -133,7 +129,7 @@ class CARTuneTagHandler: CARTagHandler {
     /// Attribution will not function without the measureSession call included.
     fileprivate func measureSession() {
         Tune.measureSession();
-        self.logger.carLog(kTAGLoggerLogLevelInfo, message:"Measure session hit has been sent.");
+        self.logger.carLog(.info, message:"Measure session hit has been sent.");
     }
 
     /// Used in order to identify the user as a unique visitor and to associate to a unique id
@@ -239,8 +235,7 @@ class CARTuneTagHandler: CARTagHandler {
             Tune.measure(tuneEvent);
         }
         else {
-            logger.carLog(kTAGLoggerLogLevelError,
-                                message: "The Tune event is nil, the tag hasn't been sent.");
+            logger.carLog(.error, message: "The Tune event is nil, the tag hasn't been sent.");
         }
     }
 
@@ -366,7 +361,7 @@ class CARTuneTagHandler: CARTagHandler {
             }
             else {
                 tuneEvent.quantity = 0;
-                logger.carLog(kTAGLoggerLogLevelWarning, message: "\(EVENT_QUANTITY) value has been" +
+                logger.carLog(.warning, message: "\(EVENT_QUANTITY) value has been" +
                     "set to 0 since the negative values are not accepted.");
             }
         }

@@ -42,14 +42,9 @@ class CARATInternetTagHandler: CARTagHandler {
     init() {
         self.tracker = ATInternet.sharedInstance.defaultTracker;
         super.init(key: "AT", name: "AT Internet");
-        if (logger.valueOf(logger.level) <= 0) {
+        if (logger.level.rawValue <= CARLogger.LogLevelType.debug.rawValue) {
             self.tracker.enableDebugger = true;
         }
-        cargo.registerTagHandler(self, key: AT_INIT);
-        cargo.registerTagHandler(self, key: AT_SET_CONFIG);
-        cargo.registerTagHandler(self, key: AT_TAG_SCREEN);
-        cargo.registerTagHandler(self, key: AT_TAG_EVENT);
-        cargo.registerTagHandler(self, key: AT_IDENTIFY);
     }
 
     /// A callback method for the registered callbacks method name mentionned in the register method.
@@ -136,7 +131,7 @@ class CARATInternetTagHandler: CARTagHandler {
         }
         // set up the tracker (async) and logs through a callback method
         tracker.setConfig(params as! [String : String], override: override) { (isSet) -> Void in
-            self.logger.carLog(kTAGLoggerLogLevelInfo,
+            self.logger.carLog(.info,
                                 message: "tracker reconfigured with \(params) and override set to \(override)");
         };
     }
