@@ -14,78 +14,107 @@ class Cargo: NSObject {
 /* ********************************* Variables Declaration ********************************* */
 
     /** A constant that hold the Cargo instance, which allow to use it as a singleton */
-    static let sharedHelper = Cargo();
+    static var instance: Cargo!;
     /** The logger used to print logs in Cargo and its handlers */
     var logger: CARLogger!;
     /** A dictionary which registers a handler for a specific tag function call */
     var registeredTagHandlers = Dictionary<String, CARTagHandler>();
-    
-    /** The Google Tag Manager */
-    var tagManager:TAGManager!;
-    /** The container which contains tags, triggers and variables defined in the GTM interface */
-    var container:TAGContainer!;
+
+    /** Declaration of a String constant */
+    let HANDLER_METHOD = "handlerMethod";
+
     /** Dictionary used to copy and store the launch options from the AppDelegate */
     var launchOptions: [AnyHashable: Any]?;
 
 
 /* ************************************* Initializer *************************************** */
 
-    /// Initialization of Cargo and of the logger.
-    /// The method is private because Cargo has to be instantiate through the sharedHelper attribute.
+    /// Initialization of Cargo and its logger.
+    /// This constructor is called by default when calling getInstance without a previous
+    /// initialization. The logLevel is set to none by default.
     fileprivate override init() {
-        logger = CARLogger(aContext: "Cargo");
+        logger = CARLogger(aContext: "Cargo", logLevel: .none);
         super.init();
+    }
+
+    /// The constructor to call before getInstance method if a level of log is wanted.
+    ///
+    /// - Parameter logLevel: the desired level of log
+    init(logLevel:CARLogger.LogLevelType) {
+        logger = CARLogger(aContext: "Cargo", logLevel: logLevel);
+        super.init();
+        Cargo.instance = self;
+    }
+
+    /// A call on this method will return a fresh new instance of cargo if none have been 
+    /// created until now, or the previously created instance. If this call creates a new 
+    /// instance of Cargo, the level of log for this one will be 'none'. Refer to the
+    /// setLogLevel method if another log level is needed.
+    ///
+    /// - Returns: an instance of Cargo object.
+    static func getInstance() -> (Cargo) {
+        if (instance == nil) {
+            instance = Cargo();
+        }
+        return instance;
     }
 
 
 /* ********************************* Methods declaration *********************************** */
 
-    /// Setup the tagManager and the GTM container as properties of Cargo
-    /// Setup the log level of the Cargo logger from the level of the tagManager logger
-    /// This method has to be called right after retrieving the Cargo instance for the first time,
-    /// and before any other Cargo method.
+    /// Called by each handler in their constructors to register themselves into Cargo.
+    /// The handler is stored under its key attribute.
+    /// Also initialize the logger attribute for the handler with the same log level as Cargo.
     ///
     /// - Parameters:
-    ///   - tagManager: The tag manager instance
-    ///   - tagContainer: The GTM container instance
-    func initTagHandlerWithManager(_ tagManager:TAGManager, tagContainer:TAGContainer) {
-        // GTM
-        self.tagManager = tagManager;
-        self.container = tagContainer;
-
-        // Logger
-        self.logger.setLogLevel(self.tagManager.logger.logLevel());
-        logger.carLog(kTAGLoggerLogLevelInfo, message: "Cargo initialization is done");
+    ///   - tagHandler: the tag handler to register
+    func registerHandler(_ tagHandler: CARTagHandler) {
+        registeredTagHandlers[tagHandler.key] = tagHandler;
+        tagHandler.logger = CARLogger(aContext: "\(tagHandler.key)_handler",
+            logLevel: self.logger.level);
+        self.logger.carLog(.debug,
+                           message: "\(tagHandler.name) handler has been registered into Cargo");
     }
 
-    /// Called by each handler in their constructors to register their GTM functions callbacks.
-    /// A specific function key is linked to a specific handler.
+    /// Sets the level of log for Cargo and the registered handlers
     ///
-    /// - Parameters:
-    ///   - tagHandler: the tag handler registering for this callback
-    ///   - key: the name of the function which will be used in GTM interface
-    func registerTagHandler(_ tagHandler: CARTagHandler, key:String) {
-        registeredTagHandlers[key] = tagHandler;
-    }
-
-    /// For each key stored in the registeredTagHandlers Dictionary, calls on the key,
-    /// check if the handler was correctly initialized, then registers its GTM callback methods
-    /// to the container for this particular handler.
-    func registerHandlers(){
-        for (key, handler) in registeredTagHandlers {
-            handler.validate();
-
-            if (handler.valid){
-                self.container.register(handler, forTag: key);
-                logger.carLog(kTAGLoggerLogLevelInfo,
-                              message: "Function with key \(key) has been registered for \(handler.name) handler.");
-            }
-            else {
-                logger.carLog(kTAGLoggerLogLevelError,
-                              message: "\(handler.name) handler seems to be invalid. Function with key \(key) hasn't been registered.");
-            }
-
+    /// - Parameter level: the level of log which will be used.
+    func setLogLevel(level: CARLogger.LogLevelType) {
+        self.logger.setLogLevel(level);
+        for (_, handler) in registeredTagHandlers {
+            handler.logger.setLogLevel(level);
         }
     }
 
+    /// Method called from the Tags class, which one handles GTM callbacks.
+    /// Those are redirected to this method which read into the parameters to find the 
+    /// handler key and call the method of the appropriate handler.
+    ///
+    /// - Parameter parameters:
+    ///   - handlerMethod: the method aimed by this tag callback.
+    ///   - parameters: the rest of the dictionary containing the handler's method parameters.
+    func execute(_ parameters: [AnyHashable: Any]) {
+        var params = parameters;
+        if let handlerMethod = params[HANDLER_METHOD] as? String {
+            params.removeValue(forKey: HANDLER_METHOD);
+            let handlerKey = handlerMethod.components(separatedBy: "_")[0];
+            if (handlerKey.characters.count > 1 && handlerKey.characters.count < 4) {
+                if let handler = registeredTagHandlers[handlerKey] {
+                    handler.execute(handlerMethod, parameters: params);
+                }
+                else {
+                    logger.carLog(.warning,
+                                  message: "Unable to find any handler corresponding to the \(handlerKey) key.");
+                }
+            }
+            else {
+                logger.carLog(.warning,
+                              message: "The format of the handler's method name \(handlerMethod) seems to be incorrect.");
+            }
+        }
+        else {
+            logger.carLog(.warning,
+                          message: "Parameter '\(HANDLER_METHOD)' is required in method cargo.execute()");
+        }
+    }
 }
