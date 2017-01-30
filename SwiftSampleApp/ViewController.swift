@@ -12,7 +12,9 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
         // Do any additional setup after loading the view, typically from a nib.
+        FIRAnalytics.logEvent(withName: "applicationStart", parameters: nil);
     }
 
     override func didReceiveMemoryWarning() {
@@ -22,41 +24,24 @@ class ViewController: UIViewController {
 
 
     @IBAction func pressedEvent(_ sender : AnyObject) {
-        let dataLayer = Cargo.sharedHelper.tagManager.dataLayer;
 
-        let eventItem1 = CargoItem(name: "test1", unitPrice: 5.5, quantity: 10);
-        let eventItem2 = CargoItem(name: "test2", unitPrice: 4.2, quantity: 10, revenue: 42);
-        eventItem2.attribute1 = "attr1";
-        eventItem2.attribute3 = "attr2";
-        let eventItems = [eventItem1, eventItem2];
-
-        dataLayer?.push(["event": "tagEvent",
-                         "eventItems": CargoItem.toGTM(itemArray: eventItems),
-                         "eventDate1": Date().timeIntervalSince1970]);
+        FIRAnalytics.logEvent(withName: "tagEvent", parameters: nil);
     }
 
 
     @IBAction func pressedUser(_ sender : AnyObject) {
-        let dataLayer = Cargo.sharedHelper.tagManager.dataLayer;
-
-        dataLayer?.push(["event": "identify"]);
+        FIRAnalytics.logEvent(withName: "identify", parameters: nil);
     }
 
     @IBAction func pressedScreen(_ sender : AnyObject) {
-        let dataLayer = Cargo.sharedHelper.tagManager.dataLayer;
-
-        dataLayer?.push(["event": "tagScreen"]);
+        FIRAnalytics.logEvent(withName: "tagScreen", parameters: nil);
     }
 
     @IBAction func pressedPurchase(_ sender : AnyObject) {
-        let dataLayer = Cargo.sharedHelper.tagManager.dataLayer;
-        
-        dataLayer?.push(["event": "tagPurchase"]);
+        FIRAnalytics.logEvent(withName: "tagPurchase", parameters: nil);
     }
 
     @IBAction func setOptions(_ sender : AnyObject) {
-        let dataLayer = Cargo.sharedHelper.tagManager.dataLayer;
-
-        dataLayer?.push(["event": "setOptions"]);
+        FIRAnalytics.logEvent(withName: "setOptions", parameters: nil);
     }
 }
