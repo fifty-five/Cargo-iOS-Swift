@@ -9,7 +9,7 @@
 import Foundation
 
 
-class Cargo: NSObject {
+@objc class Cargo: NSObject {
     
 /* ********************************* Variables Declaration ********************************* */
 
@@ -52,7 +52,7 @@ class Cargo: NSObject {
     /// setLogLevel method if another log level is needed.
     ///
     /// - Returns: an instance of Cargo object.
-    static func getInstance() -> (Cargo) {
+    @objc static func getInstance() -> (Cargo) {
         if (instance == nil) {
             instance = Cargo();
         }
@@ -93,7 +93,7 @@ class Cargo: NSObject {
     /// - Parameter parameters:
     ///   - handlerMethod: the method aimed by this tag callback.
     ///   - parameters: the rest of the dictionary containing the handler's method parameters.
-    func execute(_ parameters: [AnyHashable: Any]) {
+    @objc func execute(_ parameters: [AnyHashable: Any]) {
         var params = parameters;
         if let handlerMethod = params[HANDLER_METHOD] as? String {
             params.removeValue(forKey: HANDLER_METHOD);

@@ -24,10 +24,10 @@
 		805C5D451E360B2500A9B61F /* container in Resources */ = {isa = PBXBuildFile; fileRef = 805C5D441E360B2500A9B61F /* container */; };
 		8070536B1D5DC8E600A9FF26 /* CARLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8070536A1D5DC8E600A9FF26 /* CARLogger.swift */; };
 		80A1529A1D75C23E0032FA91 /* CARTuneTagHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A152991D75C23E0032FA91 /* CARTuneTagHandler.swift */; };
+		80A724231E6DA9E000648FB7 /* Tags.m in Sources */ = {isa = PBXBuildFile; fileRef = 80A724211E6DA9E000648FB7 /* Tags.m */; };
 		80B23CA61E0C11A7005DBE42 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 80B23CA51E0C11A7005DBE42 /* Default-568h@2x.png */; };
 		80B23CA81E0C26F8005DBE42 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 80B23CA71E0C26F8005DBE42 /* GoogleService-Info.plist */; };
 		80BF95CD1E31282000292DF5 /* CargoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BF95CC1E31282000292DF5 /* CargoItem.swift */; };
-		80DDA2601E3F3DCA009FF998 /* Tags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80DDA25F1E3F3DCA009FF998 /* Tags.swift */; };
 		80E2B9A21D637E11005D6DB6 /* CARConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E2B9A11D637E11005D6DB6 /* CARConstants.swift */; };
 		A56CF44186991BF0F5CAC01A /* Pods_CargoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A88FAEB9E268E0040B4E4D7E /* Pods_CargoTests.framework */; };
 /* End PBXBuildFile section */
@@ -90,10 +90,11 @@
 		8070536A1D5DC8E600A9FF26 /* CARLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CARLogger.swift; path = Cargo/Logger/CARLogger.swift; sourceTree = "<group>"; };
 		808FAE201D5CD99F0075942C /* libTagManager.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTagManager.a; path = Pods/GoogleTagManager/Libraries/libTagManager.a; sourceTree = "<group>"; };
 		80A152991D75C23E0032FA91 /* CARTuneTagHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CARTuneTagHandler.swift; path = Cargo/Handlers/Tune/CARTuneTagHandler.swift; sourceTree = "<group>"; };
+		80A724211E6DA9E000648FB7 /* Tags.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Tags.m; path = Cargo/Tags/Tags.m; sourceTree = "<group>"; };
+		80A724221E6DA9E000648FB7 /* Tags.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Tags.h; path = Cargo/Tags/Tags.h; sourceTree = "<group>"; };
 		80B23CA51E0C11A7005DBE42 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		80B23CA71E0C26F8005DBE42 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		80BF95CC1E31282000292DF5 /* CargoItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CargoItem.swift; path = Cargo/CargoItem.swift; sourceTree = "<group>"; };
-		80DDA25F1E3F3DCA009FF998 /* Tags.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Tags.swift; path = Cargo/Tags.swift; sourceTree = "<group>"; };
 		80E2B9A11D637E11005D6DB6 /* CARConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CARConstants.swift; path = Cargo/CARConstants.swift; sourceTree = "<group>"; };
 		80E9584B1DA55E96005C839B /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		80E9584D1DA56044005C839B /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
@@ -194,11 +195,11 @@
 		0F12EA4C1D5A1A8900D776E6 /* Cargo */ = {
 			isa = PBXGroup;
 			children = (
-				80DDA25F1E3F3DCA009FF998 /* Tags.swift */,
 				8024CCEC1D9D4B5600ABA307 /* Cargo.entitlements */,
-				0F12EA501D5A1B7800D776E6 /* Cargo.swift */,
 				80E2B9A11D637E11005D6DB6 /* CARConstants.swift */,
+				0F12EA501D5A1B7800D776E6 /* Cargo.swift */,
 				80BF95CC1E31282000292DF5 /* CargoItem.swift */,
+				80A724201E6DA6B500648FB7 /* Tags */,
 				807053691D5DC8BA00A9FF26 /* Logger */,
 				0F12EA541D5A252A00D776E6 /* Handlers */,
 				802722311D757A5E00A52526 /* Supporting Files */,
@@ -286,6 +287,15 @@
 				80A152991D75C23E0032FA91 /* CARTuneTagHandler.swift */,
 			);
 			name = Tune;
+			sourceTree = "<group>";
+		};
+		80A724201E6DA6B500648FB7 /* Tags */ = {
+			isa = PBXGroup;
+			children = (
+				80A724211E6DA9E000648FB7 /* Tags.m */,
+				80A724221E6DA9E000648FB7 /* Tags.h */,
+			);
+			name = Tags;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -544,7 +554,7 @@
 				805042931D8063C90045312B /* CARATInternetTagHandler.swift in Sources */,
 				0F12EA511D5A1B7800D776E6 /* Cargo.swift in Sources */,
 				0FC6FFEF1D8049E600FE864A /* CARFacebookTagHandler.swift in Sources */,
-				80DDA2601E3F3DCA009FF998 /* Tags.swift in Sources */,
+				80A724231E6DA9E000648FB7 /* Tags.m in Sources */,
 				0F12EA531D5A252400D776E6 /* CARTagHandler.swift in Sources */,
 				8070536B1D5DC8E600A9FF26 /* CARLogger.swift in Sources */,
 				0F12EA1B1D5A165F00D776E6 /* AppDelegate.swift in Sources */,
