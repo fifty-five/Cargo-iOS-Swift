@@ -5,8 +5,6 @@ platform :ios, '8.0'
 # Uncomment this line if you're using Swift
 use_frameworks!
 
-source 'https://github.com/Accengage/CocoaPodsSpecs.git'
-source 'https://github.com/CocoaPods/Specs.git'
 
 def import_pods
   Build.all_pods.each do |p|
@@ -15,7 +13,7 @@ def import_pods
 end
 
 def import_gtm
-  send :pod, 'GoogleTagManager', '~> 3.15.1'
+  send :pod, 'GoogleTagManager', '~> 5.0.8'
 end
 
 target 'Cargo' do

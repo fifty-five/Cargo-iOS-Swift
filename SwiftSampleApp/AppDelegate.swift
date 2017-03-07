@@ -9,27 +9,26 @@
 import UIKit
 import CoreData
 import FBSDKCoreKit
-import UserNotifications
+import GoogleTagManager
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, TAGContainerOpenerNotifier {
+class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var launchOptions:[AnyHashable: Any]?
-
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        let GTM = TAGManager.instance()
-        GTM?.logger.setLogLevel(kTAGLoggerLogLevelVerbose)
+        FIRApp.configure();
         
-        TAGContainerOpener.openContainer(withId: "GTM-5GCVL2",
-            tagManager: GTM, openType: kTAGOpenTypePreferFresh,
-            timeout: nil,
-            notifier: self)
+        let cargoInstance:Cargo = Cargo(logLevel: .verbose);
+        if let opts = launchOptions {
+            cargoInstance.launchOptions = opts as [NSObject : AnyObject]?;
+        }
         
-        self.launchOptions = launchOptions;
+        _ = CARATInternetTagHandler();
+        _ = CARFacebookTagHandler();
+        _ = CARTuneTagHandler();
 
         return true
     }
@@ -119,26 +118,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, TAGContainerOpenerNotifie
                 abort()
             }
         }
-    }
-
-    func containerAvailable(_ container: TAGContainer!) {
-        container.refresh()
-
-        let cargoInstance:Cargo = Cargo.sharedHelper;
-        cargoInstance.initTagHandlerWithManager(TAGManager.instance(), tagContainer:container);
-        if let opts = launchOptions {
-            cargoInstance.launchOptions = opts as [NSObject : AnyObject]?;
-        }
-        
-        _ = CARATInternetTagHandler();
-        _ = CARFacebookTagHandler();
-        _ = CARFirebaseTagHandler();
-        _ = CARGoogleAnalyticsTagHandler();
-        _ = CARTuneTagHandler();
-        cargoInstance.registerHandlers();
-
-        let dataLayer = cargoInstance.tagManager.dataLayer;
-        dataLayer?.push(["event": "applicationStart"]);
     }
 
 }
