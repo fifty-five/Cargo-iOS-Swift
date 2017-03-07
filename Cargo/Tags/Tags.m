@@ -13,6 +13,7 @@
 
 - (NSObject*)executeWithParameters:(NSDictionary*)parameters {
     [[Cargo getInstance] execute:parameters];
+    [CargoItem notifyTagFired];
     return nil;
 }
 
