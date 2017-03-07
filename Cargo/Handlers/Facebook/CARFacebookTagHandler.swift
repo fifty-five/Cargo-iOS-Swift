@@ -167,8 +167,7 @@ class CARFacebookTagHandler: CARTagHandler {
     ///   - transactionTotal: the amount of the purchase, which is mandatory
     ///   - transactionCurrencyCode: the currency of the purchase, which is mandatory
     func purchase(parameters: [AnyHashable: Any]){
-        if let total = parameters[TRANSACTION_TOTAL] as? String {
-            let purchaseAmount: Double = Double(total)!;
+        if let purchaseAmount = parameters[TRANSACTION_TOTAL] as? Double {
             if let currencyCode = parameters[TRANSACTION_CURRENCY_CODE] as? String {
                 AppEventsLogger.log(.purchased(amount: purchaseAmount, currency: currencyCode));
                 logger.logParamSetWithSuccess(TRANSACTION_TOTAL, value: purchaseAmount);
