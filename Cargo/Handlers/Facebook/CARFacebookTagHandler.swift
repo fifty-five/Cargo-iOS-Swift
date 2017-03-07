@@ -30,7 +30,7 @@ class CARFacebookTagHandler: CARTagHandler {
     /// these will trigger the execute method of this handler.
     init() {
         super.init(key: "FB", name: "Facebook");
-        // enables Tune debug mode if the cargo logger is set to verbose, disables it otherwise
+        // enables Facebook debug mode if the cargo logger is set to debug, disables it otherwise
         if (self.logger.level.rawValue <= CARLogger.LogLevelType.debug.rawValue) {
             self.debug = true;
         } else {

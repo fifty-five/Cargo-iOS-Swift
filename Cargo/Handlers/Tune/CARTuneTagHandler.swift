@@ -385,6 +385,10 @@ class CARTuneTagHandler: CARTagHandler {
     }
 
     
+    /// Builds a TuneEventItem array from the CargoItem one.
+    /// This method is used by the buildEvent method.
+    ///
+    /// - Returns: a TuneEventItem array if the operation succeed, or nil if it failed.
     fileprivate func getItems() -> ([TuneEventItem]!) {
         var tuneItemArray: [TuneEventItem] = [];
 
@@ -419,7 +423,7 @@ class CARTuneTagHandler: CARTagHandler {
             return tuneItemArray;
         }
         else {
-            logger.logMissingParam("eventItems", methodName: "TUB_tagEvent");
+            logger.logMissingParam("eventItems", methodName: "TUN_tagEvent");
         }
         return nil;
     }

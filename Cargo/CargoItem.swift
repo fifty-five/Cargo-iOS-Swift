@@ -59,7 +59,7 @@ import Foundation
     /// A class method automatically called by the class itself whenever an attempt to update the
     /// itemsArray is made. If the boolean indicating that a tag has been received 
     /// since the last modification, the array is deleted.
-    private class func emptyListIfTagHasBeenFired() {
+    fileprivate class func emptyListIfTagHasBeenFired() {
         if (self.tagFiredSinceLastChange) {
             self.tagFiredSinceLastChange = false;
             self.itemsArray = nil;
@@ -83,7 +83,7 @@ import Foundation
         self.itemsArray = newItemsArray;
     }
 
-    /// A method called whenever a tag is received in the Tags class.
+    /// A method called whenever a tag is received in the Tags class. You should never use it.
     @objc class func notifyTagFired() {
         self.tagFiredSinceLastChange = true;
     }
