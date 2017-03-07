@@ -322,12 +322,14 @@ class CARTuneTagHandler: CARTagHandler {
             logger.logParamSetWithSuccess(EVENT_REVENUE, value: tuneEvent.revenue);
         }
         if let eventItems = params[EVENT_ITEMS] {
-            if let tuneEventItems = self.getItems(flatJson: eventItems as! String) {
-                tuneEvent.eventItems = tuneEventItems;
-                logger.logParamSetWithSuccess(EVENT_ITEMS, value: tuneEvent.eventItems);
-            }
-            else {
-                logger.logUncastableParam(EVENT_ITEMS, type: "[TuneEventItem]");
+            if (eventItems as! Bool) {
+                if let tuneEventItems = self.getItems() {
+                    tuneEvent.eventItems = tuneEventItems;
+                    logger.logParamSetWithSuccess(EVENT_ITEMS, value: tuneEvent.eventItems);
+                }
+                else {
+                    logger.logUncastableParam(EVENT_ITEMS, type: "[TuneEventItem]");
+                }
             }
         }
         if let eventLevel = params[EVENT_LEVEL] {
@@ -383,67 +385,45 @@ class CARTuneTagHandler: CARTagHandler {
     }
 
     
-    /// Retrieves an array of TuneEventItem from a simple String parameter.
-    /// Makes the String a json object, type it to an array of dictionaries<String, AnyHashable>,
-    /// then retrieves the correct values and set them into the correct object type.
-    ///
-    /// - Parameter flatJson: the String containing the json
-    /// - Returns: a TuneEventItem array
-    fileprivate func getItems(flatJson: String) -> ([TuneEventItem]?) {
+    fileprivate func getItems() -> ([TuneEventItem]!) {
         var tuneItemArray: [TuneEventItem] = [];
 
-        // convert the String to Data type
-        if let jsonData = flatJson.data(using: .utf8) {
-            // retrieve the json from data
-            let json = try? JSONSerialization.jsonObject(with: jsonData);
-            // type the json format to an actual array of dictionaries
-            if let dictFromJSON = json as? [Dictionary<String, AnyHashable>] {
-                // iterates on dictionaries to create TuneEventItem objects which are added in an array
-                for item in dictFromJSON {
-                    if let name = item["name"],
-                        let unitPrice = item["unitPrice"],
-                        let quantity = item["quantity"], let revenue = item["revenue"] {
+        if (CargoItem.getItemsArray().count != 0) {
+            let cargoItemsArray: [CargoItem] = CargoItem.getItemsArray();
+            for item in cargoItemsArray {
+                let tuneItem = TuneEventItem(name: item.name as String,
+                                             unitPrice: item.unitPrice,
+                                             quantity: item.quantity,
+                                             revenue: item.revenue);
 
-                        let tuneItem = TuneEventItem(name: name as! String,
-                                                     unitPrice: revenue as! CGFloat,
-                                                     quantity: quantity as! UInt,
-                                                     revenue: unitPrice as! CGFloat);
-                        if let attr1 = item["attribute1"] {
-                            tuneItem?.attribute1 = attr1 as! String;
-                        }
-                        if let attr2 = item["attribute2"] {
-                            tuneItem?.attribute2 = attr2 as! String;
-                        }
-                        if let attr3 = item["attribute3"] {
-                            tuneItem?.attribute3 = attr3 as! String;
-                        }
-                        if let attr4 = item["attribute4"] {
-                            tuneItem?.attribute4 = attr4 as! String;
-                        }
-                        if let attr5 = item["attribut5"] {
-                            tuneItem?.attribute5 = attr5 as! String;
-                        }
-                        // adds the TuneEventItem to the array
-                        tuneItemArray.append(tuneItem!);
-                    }
-                    else {
-                        logger.logMissingParam("CargoItem name", methodName: TUN_TAG_EVENT);
-                        logger.logUncastableParam(EVENT_ITEMS, type: "TuneEventItem");
-                    }
+                if let attr1 = item.attribute1 {
+                    tuneItem?.attribute1 = attr1;
                 }
-                // returns the array
-                return tuneItemArray;
+                if let attr2 = item.attribute2 {
+                    tuneItem?.attribute2 = attr2;
+                }
+                if let attr3 = item.attribute3 {
+                    tuneItem?.attribute3 = attr3;
+                }
+                if let attr4 = item.attribute4 {
+                    tuneItem?.attribute4 = attr4;
+                }
+                if let attr5 = item.attribute5 {
+                    tuneItem?.attribute5 = attr5;
+                }
+
+                // adds the TuneEventItem to the array
+                tuneItemArray.append(tuneItem!);
             }
-            else {
-                logger.logUncastableParam("eventItems", type: "json");
-            }
+            // returns the array
+            return tuneItemArray;
         }
         else {
-            logger.logUncastableParam("eventItems", type: "Data");
+            logger.logMissingParam("eventItems", methodName: "TUB_tagEvent");
         }
-
         return nil;
     }
+
 }
 
 
