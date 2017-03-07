@@ -316,16 +316,10 @@ class CARTuneTagHandler: CARTagHandler {
                 logger.logParamSetWithSuccess(EVENT_DATE2, value: tuneEvent.date2);
             }
         }
-        if let eventRevenue = params[EVENT_REVENUE] {
-            if let tempRevenue = eventRevenue as? String {
-                let doubleRevenue: Double = Double(tempRevenue)!;
-                let f = CGFloat(doubleRevenue);
-                tuneEvent.revenue = f;
-                logger.logParamSetWithSuccess(EVENT_REVENUE, value: tuneEvent.revenue);
-            }
-            else {
-                logger.logUncastableParam(EVENT_REVENUE, type: "CGFloat");
-            }
+        if let eventRevenue = params[EVENT_REVENUE] as? Double {
+            let fRevenue = CGFloat(eventRevenue);
+            tuneEvent.revenue = fRevenue;
+            logger.logParamSetWithSuccess(EVENT_REVENUE, value: tuneEvent.revenue);
         }
         if let eventItems = params[EVENT_ITEMS] {
             if let tuneEventItems = self.getItems(flatJson: eventItems as! String) {
