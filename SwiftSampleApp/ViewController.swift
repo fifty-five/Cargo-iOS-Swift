@@ -36,7 +36,16 @@ class ViewController: UIViewController {
 
 
     @IBAction func pressedUser(_ sender : AnyObject) {
-        FIRAnalytics.logEvent(withName: "identify", parameters: nil);
+        var parameters = [String: AnyHashable]();
+
+        if let username = self.userNameText.text {
+            parameters["userName"] = username;
+        }
+        if let userEmail = self.userEmailText.text {
+            parameters["userEmail"] = userEmail;
+        }
+
+        FIRAnalytics.logEvent(withName: "tagUser", parameters: parameters as [String : NSObject]?);
     }
 
     @IBAction func pressedScreen(_ sender : AnyObject) {
