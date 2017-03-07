@@ -12,7 +12,7 @@ import Foundation
 /// Create an Item object with this class in order to send item objects through Cargo
 @objc class CargoItem : NSObject {
 
-/* ********************************* Variables Declaration ********************************* */
+/* ************************************ Variables Declaration *********************************** */
 
     /// name of the item
     var name: String!;
@@ -39,7 +39,7 @@ import Foundation
     static var tagFiredSinceLastChange = false;
 
 
-/* ************************* Class methods managing the ItemsArray ************************* */
+/* **************************** Class methods managing the ItemsArray *************************** */
 
     /// This class method allow to link an item to the next event which will be fired.
     /// The object will be stored in an array until an event is received. 
@@ -89,7 +89,7 @@ import Foundation
     }
     
     
-/* *********************************** CargoItem methods *********************************** */
+/* ************************************** CargoItem methods ************************************* */
 
     /// Creates a CargoItem, which will be changed into an Item object for a specific SDK
     /// The revenue will be automatically calculated with (quantity * unit price) within Tune SDK

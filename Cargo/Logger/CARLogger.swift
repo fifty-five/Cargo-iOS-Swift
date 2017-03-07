@@ -11,7 +11,7 @@ import Foundation
 /// A class that provides a logger for Cargo
 class CARLogger: NSObject {
 
-/* ********************************* Variables Declaration ********************************* */
+/* ************************************ Variables Declaration *********************************** */
 
     /// The logging level
     var level:LogLevelType!;
@@ -32,7 +32,7 @@ class CARLogger: NSObject {
     let dateFormat = "yyyy-MM-dd HH:mm:ss.SSS ";
 
 
-/* ************************************* Initializers ************************************** */
+/* **************************************** Initializers **************************************** */
 
     /// Initialize the logger without a context
     /// is used when a call on carLog is made before init.
@@ -151,7 +151,7 @@ class CARLogger: NSObject {
 
 
 
-/* *********************************** Utilities methods *********************************** */
+/* ************************************** Utilities methods ************************************* */
 
     /// Enum for the level of log
     enum LogLevelType: Int {

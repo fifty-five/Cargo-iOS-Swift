@@ -11,7 +11,7 @@ import Foundation
 
 @objc class Cargo: NSObject {
     
-/* ********************************* Variables Declaration ********************************* */
+/* ************************************ Variables Declaration *********************************** */
 
     /** A constant that hold the Cargo instance, which allow to use it as a singleton */
     static var instance: Cargo!;
@@ -27,7 +27,7 @@ import Foundation
     var launchOptions: [AnyHashable: Any]?;
 
 
-/* ************************************* Initializer *************************************** */
+/* **************************************** Initializer ***************************************** */
 
     /// Initialization of Cargo and its logger.
     /// This constructor is called by default when calling getInstance without a previous
@@ -60,7 +60,7 @@ import Foundation
     }
 
 
-/* ********************************* Methods declaration *********************************** */
+/* ************************************ Methods declaration ************************************* */
 
     /// Called by each handler in their constructors to register themselves into Cargo.
     /// The handler is stored under its key attribute.
