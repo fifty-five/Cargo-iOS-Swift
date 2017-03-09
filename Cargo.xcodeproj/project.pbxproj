@@ -715,7 +715,7 @@
 			baseConfigurationReference = 237787A162AE243EAB87E41B /* Pods-Cargo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Cargo/Cargo.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Cargo/Core/Cargo.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 79FS8B67FE;
 				INFOPLIST_FILE = SwiftSampleApp/Info.plist;
@@ -737,7 +737,7 @@
 			baseConfigurationReference = 23EB0A122975528B94BE5CEC /* Pods-Cargo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Cargo/Cargo.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Cargo/Core/Cargo.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 79FS8B67FE;
 				INFOPLIST_FILE = SwiftSampleApp/Info.plist;
