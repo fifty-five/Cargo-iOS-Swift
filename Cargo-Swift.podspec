@@ -16,17 +16,18 @@ Pod::Spec.new do |s|
   s.homepage         = "https://github.com/fifty-five/Cargo-iOS-Swift"
   s.license          = 'MIT'
   s.author           = { "Julien" => "julien.gil@fifty-five.com" }
-  s.source           = { :git => "https://github.com/fifty-five/Cargo-iOS-Swift.git", :branch => "release/cocoapods" }
+  s.source           = { :git => "https://github.com/fifty-five/Cargo-iOS-Swift.git", :tag => "v#{s.version.to_s}" }
   s.documentation_url = 'https://github.com/fifty-five/Cargo-iOS-Swift/wiki'
   s.social_media_url = 'https://twitter.com/55FiftyFive55'
 
   s.platform     = :ios, '8.0'
   s.requires_arc = true
+
   s.subspec 'Core' do |ss|
     ss.source_files = "Cargo/Core/**/*.{m, h, swift}"
     ss.platform = :ios, '8.0'
     s.xcconfig = { 'GCC_PREPROCESSOR_DEFINITIONS' => "CARGO_VERSION=#{s.version}" }
-    s.dependency 'GoogleTagManager', '~> 5.0.8'
+    s.dependency 'GoogleTagManager', '~> 6.0.0'
   end
 
   Build.subspecs.each do |a|
