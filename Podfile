@@ -13,7 +13,7 @@ def import_pods
 end
 
 def import_gtm
-  send :pod, 'GoogleTagManager', '~> 6.0.0'
+  send :pod, 'GoogleTagManager', '~> 5.0.8'
 end
 
 target 'Cargo' do

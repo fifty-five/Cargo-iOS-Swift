@@ -22,12 +22,12 @@ Pod::Spec.new do |s|
 
   s.platform     = :ios, '8.0'
   s.requires_arc = true
-
+  
   s.subspec 'Core' do |ss|
     ss.source_files = "Cargo/Core/**/*.{m, h, swift}"
     ss.platform = :ios, '8.0'
     s.xcconfig = { 'GCC_PREPROCESSOR_DEFINITIONS' => "CARGO_VERSION=#{s.version}" }
-    s.dependency 'GoogleTagManager', '~> 6.0.0'
+    s.dependency 'GoogleTagManager', '~> 5.0.8'
   end
 
   Build.subspecs.each do |a|
@@ -36,7 +36,7 @@ Pod::Spec.new do |s|
 
       ss.platform = :ios, '8.0'
       ss.ios.source_files = "Cargo/Handlers/#{a.name}/*.swift"
-      ss.dependency 'Cargo/Core'
+      ss.dependency 'Cargo-Swift/Core'
 
       (a.dependencies || []).each do |d|
         if d.version
