@@ -1,5 +1,5 @@
 PODS:
-  - ATInternet-Apple-SDK/Tracker (1.0.6)
+  - ATInternet-Apple-SDK/Tracker (1.0.7)
   - Bolts (1.8.4):
     - Bolts/AppLinks (= 1.8.4)
     - Bolts/Tasks (= 1.8.4)
@@ -9,22 +9,17 @@ PODS:
   - FacebookCore (0.2.0):
     - Bolts (~> 1.8)
     - FBSDKCoreKit (~> 4.15)
-  - FBSDKCoreKit (4.18.0):
+  - FBSDKCoreKit (4.23.0):
     - Bolts (~> 1.7)
-  - FirebaseAnalytics (3.6.0):
-    - FirebaseCore (~> 3.4)
+  - FirebaseAnalytics (3.9.0):
+    - FirebaseCore (~> 3.6)
     - FirebaseInstanceID (~> 1.0)
-    - GoogleInterchangeUtilities (~> 1.2)
-    - GoogleSymbolUtilities (~> 1.1)
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
-  - FirebaseCore (3.4.7):
-    - GoogleInterchangeUtilities (~> 1.2)
-    - GoogleSymbolUtilities (~> 1.1)
+  - FirebaseCore (3.6.0):
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
-  - FirebaseInstanceID (1.0.8)
+  - FirebaseInstanceID (1.0.10):
+    - FirebaseCore (~> 3.6)
   - GoogleAnalytics (3.17.0)
-  - GoogleInterchangeUtilities (1.2.2):
-    - GoogleSymbolUtilities (~> 1.1)
   - GoogleSymbolUtilities (1.1.2)
   - GoogleTagManager (5.0.8):
     - FirebaseAnalytics (~> 3.0)
@@ -44,15 +39,14 @@ DEPENDENCIES:
   - Tune (~> 4.7.0)
 
 SPEC CHECKSUMS:
-  ATInternet-Apple-SDK: cd976569b0633dcc0dc7ec4ef28b98b1dede5586
+  ATInternet-Apple-SDK: c3062ede8b164b7f1df0c45d803941ca72b316d5
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   FacebookCore: 2cb3f0fbff218e9d3119cec84bae983b232412de
-  FBSDKCoreKit: 15fef8804a4629f98c6f4e55e81a76c9d725d85e
-  FirebaseAnalytics: 9c67af0ebeb8d2146c9b4ea2616439affa947b58
-  FirebaseCore: 46afaf2c2e0419ea7d3acfb08cf26a461a75fe85
-  FirebaseInstanceID: ba1e640935235e5fac39dfa816fe7660e72e1a8a
+  FBSDKCoreKit: d7829f5a69901cd7296105328e4c3c3fc7da6518
+  FirebaseAnalytics: e5fe8486efc01bec33f6bf82e2fa9fce4b124052
+  FirebaseCore: 9691ee2ade70c098d7cf92440f4303f16d83ca75
+  FirebaseInstanceID: b9eedd6846fb5e1f0f7279e1deaa7a7e4cf8392e
   GoogleAnalytics: f42cc53a87a51fe94334821868d9c8481ff47a7b
-  GoogleInterchangeUtilities: d5bc4d88d5b661ab72f9d70c58d02ca8c27ad1f7
   GoogleSymbolUtilities: 631ee17048aa5e9ab133470d768ea997a5ef9b96
   GoogleTagManager: 312a9a033d224e66ceaa42f35f4c7bf893211d79
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
@@ -61,4 +55,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 862ce49db1b0669faecdbd1999ebb63c3488a18d
 
-COCOAPODS: 1.2.0.beta.1
+COCOAPODS: 1.2.1

@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <GoogleTagManager/TAGCustomFunction.h>
+@import GoogleTagManager;
 
 @interface Tags : NSObject <TAGCustomFunction>
 
