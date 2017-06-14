@@ -10,15 +10,6 @@
       ]
     },
     {
-      "name":"GoogleAnalytics",
-      "dependencies":[
-        {
-          "name": "Google/Analytics",
-          "version": "~> 1.0.0"
-        }
-      ]
-    },
-    {
       "name":"Tune",
       "dependencies":[
         {
@@ -28,29 +19,11 @@
       ]
     },
     {
-      "name":"Firebase",
-      "dependencies":[
-        {
-          "name": "Firebase",
-          "version" : "~> 3.6.0"
-        }
-      ]
-    },
-    {
       "name":"Facebook",
       "dependencies":[
         {
           "name": "FacebookCore",
           "version" : "~> 0.2.0"
-        }
-      ]
-    },
-    {
-      "name":"Accengage",
-      "dependencies":[
-        {
-          "name": "Accengage-iOS-SDK",
-          "version" : "~> 5.6.0"
         }
       ]
     }

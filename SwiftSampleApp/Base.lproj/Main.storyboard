@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2657" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -21,51 +22,154 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FQc-nB-CwN">
-                                <rect key="frame" x="125" y="184" width="71" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="tagScreen"/>
-                                <connections>
-                                    <action selector="pressedScreen:" destination="BYZ-38-t0r" eventType="touchUpInside" id="uGa-ne-PfV"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S30-ze-Xib">
-                                <rect key="frame" x="130" y="84" width="61" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="tagEvent"/>
-                                <connections>
-                                    <action selector="pressedEvent:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rGW-IP-VJb"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UBc-TU-i3H">
-                                <rect key="frame" x="134" y="272" width="52" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="identify"/>
-                                <connections>
-                                    <action selector="pressedUser:" destination="BYZ-38-t0r" eventType="touchUpInside" id="iHn-Wy-N6O"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aoK-Hp-PNY">
-                                <rect key="frame" x="117" y="361" width="87" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="tagPurchase"/>
-                                <connections>
-                                    <action selector="pressedPurchase:" destination="BYZ-38-t0r" eventType="touchUpInside" id="P6m-PQ-qKB"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RaE-VP-Lwd">
-                                <rect key="frame" x="123" y="454" width="75" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="setOptions"/>
-                                <connections>
-                                    <action selector="setOptions:" destination="BYZ-38-t0r" eventType="touchUpInside" id="mOC-gR-eit"/>
-                                </connections>
-                            </button>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="luS-37-IaZ">
+                                <rect key="frame" x="40" y="68" width="240" height="433"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5D6-ef-jHJ">
+                                        <rect key="frame" x="41" y="27" width="158" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="On0-uf-jZ5">
+                                        <rect key="frame" x="41" y="65" width="158" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FkO-oq-efr">
+                                        <rect key="frame" x="92" y="103" width="57" height="30"/>
+                                        <state key="normal" title="tag user"/>
+                                        <connections>
+                                            <action selector="pressedUser:" destination="BYZ-38-t0r" eventType="touchUpInside" id="NDs-z0-ni3"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L4F-76-cCt">
+                                        <rect key="frame" x="88" y="172" width="65" height="30"/>
+                                        <state key="normal" title="tag event"/>
+                                        <connections>
+                                            <action selector="pressedEvent:" destination="BYZ-38-t0r" eventType="touchUpInside" id="626-V5-myX"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3n0-Zr-Wuu">
+                                        <rect key="frame" x="84" y="210" width="73" height="30"/>
+                                        <state key="normal" title="tag screen"/>
+                                        <connections>
+                                            <action selector="pressedScreen:" destination="BYZ-38-t0r" eventType="touchUpInside" id="KvF-x3-J5a"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="xBox One" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pbd-8e-9ym">
+                                        <rect key="frame" x="86" y="273" width="74" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Playstation 4" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zHY-vz-bSt">
+                                        <rect key="frame" x="86" y="307" width="99" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nintendo Switch" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="suz-Rl-27v">
+                                        <rect key="frame" x="86" y="342" width="126" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="0" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Q88-hI-Fb6">
+                                        <rect key="frame" x="28" y="268" width="42" height="30"/>
+                                        <nil key="textColor"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="BYZ-38-t0r" id="Put-zA-1wz"/>
+                                        </connections>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="0" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Y5I-EG-AEc">
+                                        <rect key="frame" x="28" y="302" width="42" height="30"/>
+                                        <nil key="textColor"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="BYZ-38-t0r" id="hO9-PZ-zYS"/>
+                                        </connections>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="0" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="h0L-nR-wAv">
+                                        <rect key="frame" x="28" y="337" width="42" height="30"/>
+                                        <nil key="textColor"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="BYZ-38-t0r" id="Bgz-aB-eK2"/>
+                                        </connections>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f4e-lY-RUR">
+                                        <rect key="frame" x="75" y="371" width="90" height="30"/>
+                                        <state key="normal" title="tag purchase"/>
+                                        <connections>
+                                            <action selector="pressedPurchase:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4N1-um-KBZ"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="5D6-ef-jHJ" firstAttribute="centerX" secondItem="FkO-oq-efr" secondAttribute="centerX" id="1Q4-yX-jRw"/>
+                                    <constraint firstItem="5D6-ef-jHJ" firstAttribute="centerX" secondItem="f4e-lY-RUR" secondAttribute="centerX" id="7aX-Cu-DSt"/>
+                                    <constraint firstItem="h0L-nR-wAv" firstAttribute="trailing" secondItem="Q88-hI-Fb6" secondAttribute="trailing" id="ANl-TY-Swv"/>
+                                    <constraint firstItem="f4e-lY-RUR" firstAttribute="top" secondItem="suz-Rl-27v" secondAttribute="bottom" constant="8" symbolic="YES" id="D1y-Dd-XiI"/>
+                                    <constraint firstAttribute="bottom" secondItem="f4e-lY-RUR" secondAttribute="bottom" constant="32" id="D6w-UG-v6H"/>
+                                    <constraint firstItem="5D6-ef-jHJ" firstAttribute="centerX" secondItem="L4F-76-cCt" secondAttribute="centerX" id="H8o-IR-5oZ"/>
+                                    <constraint firstItem="h0L-nR-wAv" firstAttribute="leading" secondItem="luS-37-IaZ" secondAttribute="leading" constant="28" id="I3d-r5-9L5"/>
+                                    <constraint firstItem="h0L-nR-wAv" firstAttribute="centerY" secondItem="suz-Rl-27v" secondAttribute="centerY" id="Kwc-NM-vxB"/>
+                                    <constraint firstItem="5D6-ef-jHJ" firstAttribute="leading" secondItem="On0-uf-jZ5" secondAttribute="leading" id="Lma-Jq-NDE"/>
+                                    <constraint firstItem="L4F-76-cCt" firstAttribute="top" secondItem="FkO-oq-efr" secondAttribute="bottom" constant="39" id="MQw-0G-FoU"/>
+                                    <constraint firstAttribute="trailing" secondItem="5D6-ef-jHJ" secondAttribute="trailing" constant="41" id="PWC-P1-8QG"/>
+                                    <constraint firstItem="5D6-ef-jHJ" firstAttribute="centerX" secondItem="3n0-Zr-Wuu" secondAttribute="centerX" id="T6V-vC-1vq"/>
+                                    <constraint firstItem="On0-uf-jZ5" firstAttribute="top" secondItem="5D6-ef-jHJ" secondAttribute="bottom" constant="8" symbolic="YES" id="UdZ-7A-Lt9"/>
+                                    <constraint firstItem="5D6-ef-jHJ" firstAttribute="top" secondItem="luS-37-IaZ" secondAttribute="top" constant="27" id="UjY-1v-Wh1"/>
+                                    <constraint firstItem="h0L-nR-wAv" firstAttribute="top" secondItem="Y5I-EG-AEc" secondAttribute="bottom" constant="5" id="Uzy-xu-MqD"/>
+                                    <constraint firstItem="suz-Rl-27v" firstAttribute="top" secondItem="zHY-vz-bSt" secondAttribute="bottom" constant="14" id="cj6-Ze-tqP"/>
+                                    <constraint firstItem="5D6-ef-jHJ" firstAttribute="leading" secondItem="luS-37-IaZ" secondAttribute="leading" constant="41" id="eKp-Da-7qY"/>
+                                    <constraint firstItem="Pbd-8e-9ym" firstAttribute="top" secondItem="3n0-Zr-Wuu" secondAttribute="bottom" constant="33" id="flY-gf-Dem"/>
+                                    <constraint firstItem="h0L-nR-wAv" firstAttribute="leading" secondItem="Q88-hI-Fb6" secondAttribute="leading" id="gtG-3V-KQi"/>
+                                    <constraint firstItem="Q88-hI-Fb6" firstAttribute="centerY" secondItem="Pbd-8e-9ym" secondAttribute="centerY" id="h9C-pK-GLL"/>
+                                    <constraint firstItem="FkO-oq-efr" firstAttribute="top" secondItem="On0-uf-jZ5" secondAttribute="bottom" constant="8" symbolic="YES" id="hn8-dN-wSD"/>
+                                    <constraint firstItem="suz-Rl-27v" firstAttribute="leading" secondItem="zHY-vz-bSt" secondAttribute="leading" id="ih4-T9-nhR"/>
+                                    <constraint firstItem="3n0-Zr-Wuu" firstAttribute="top" secondItem="L4F-76-cCt" secondAttribute="bottom" constant="8" symbolic="YES" id="n84-oa-7Ya"/>
+                                    <constraint firstItem="suz-Rl-27v" firstAttribute="leading" secondItem="h0L-nR-wAv" secondAttribute="trailing" constant="16" id="oRQ-2i-vMA"/>
+                                    <constraint firstAttribute="bottom" secondItem="5D6-ef-jHJ" secondAttribute="bottom" constant="376" id="sdF-L9-h24"/>
+                                    <constraint firstItem="h0L-nR-wAv" firstAttribute="trailing" secondItem="Y5I-EG-AEc" secondAttribute="trailing" id="sr1-lq-0ub"/>
+                                    <constraint firstAttribute="trailing" secondItem="suz-Rl-27v" secondAttribute="trailing" constant="28" id="sxx-gc-zIM"/>
+                                    <constraint firstItem="5D6-ef-jHJ" firstAttribute="trailing" secondItem="On0-uf-jZ5" secondAttribute="trailing" id="tRJ-ij-TqE"/>
+                                    <constraint firstItem="h0L-nR-wAv" firstAttribute="leading" secondItem="Y5I-EG-AEc" secondAttribute="leading" id="vM8-Zg-nIg"/>
+                                    <constraint firstItem="suz-Rl-27v" firstAttribute="leading" secondItem="Pbd-8e-9ym" secondAttribute="leading" id="yHl-ht-znb"/>
+                                    <constraint firstItem="5D6-ef-jHJ" firstAttribute="centerX" secondItem="luS-37-IaZ" secondAttribute="centerX" id="z7v-9c-MkS"/>
+                                </constraints>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="luS-37-IaZ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="KI5-Qy-JBa"/>
+                            <constraint firstItem="luS-37-IaZ" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="48" id="iqL-Px-dtK"/>
+                            <constraint firstItem="luS-37-IaZ" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="mwx-nv-Dbu"/>
+                            <constraint firstItem="luS-37-IaZ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="24" id="wew-iR-VLZ"/>
+                        </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="5QX-B1-RA4" appends="YES" id="vqA-ie-PbG"/>
+                        </connections>
                     </view>
+                    <connections>
+                        <outlet property="nintendoText" destination="h0L-nR-wAv" id="3mi-Ew-28w"/>
+                        <outlet property="playstationText" destination="Y5I-EG-AEc" id="85G-qb-ihH"/>
+                        <outlet property="scrollView" destination="luS-37-IaZ" id="xhT-7M-JWg"/>
+                        <outlet property="userEmailText" destination="On0-uf-jZ5" id="9GT-ee-tZy"/>
+                        <outlet property="userNameText" destination="5D6-ef-jHJ" id="s17-xa-YXc"/>
+                        <outlet property="xboxText" destination="Q88-hI-Fb6" id="s4b-RA-fGz"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="5QX-B1-RA4">
+                    <connections>
+                        <action selector="clickOnView:" destination="BYZ-38-t0r" id="pc2-9o-3pE"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
         </scene>
     </scenes>

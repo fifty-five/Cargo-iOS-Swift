@@ -20,6 +20,7 @@ class CARFacebookTagHandler: CARTagHandler {
     let FB_TAG_EVENT = "FB_tagEvent";
     let FB_TAG_PURCHASE = "FB_tagPurchase";
 
+    var debug: Bool = false;
 
 
 /* ********************************** Handler core methods ************************************** */
@@ -29,11 +30,12 @@ class CARFacebookTagHandler: CARTagHandler {
     /// these will trigger the execute method of this handler.
     init() {
         super.init(key: "FB", name: "Facebook");
-        
-        cargo.registerTagHandler(self, key: FB_INIT);
-        cargo.registerTagHandler(self, key: FB_ACTIVATE_APP);
-        cargo.registerTagHandler(self, key: FB_TAG_EVENT);
-        cargo.registerTagHandler(self, key: FB_TAG_PURCHASE);
+        // enables Facebook debug mode if the cargo logger is set to debug, disables it otherwise
+        if (self.logger.level.rawValue <= CARLogger.LogLevelType.debug.rawValue) {
+            self.debug = true;
+        } else {
+            self.debug = false;
+        }
     }
 
     /// Callback from GTM container designed to execute a specific method
@@ -84,6 +86,10 @@ class CARFacebookTagHandler: CARTagHandler {
             self.activateApp();
             self.initialized = true;
             logger.logParamSetWithSuccess(APPLICATION_ID, value: applicationId);
+
+            if (debug) {
+                SDKSettings.enableLoggingBehavior(.appEvents);
+            }
         }
         else {
             logger.logMissingParam(APPLICATION_ID, methodName: FB_INIT);
@@ -96,7 +102,7 @@ class CARFacebookTagHandler: CARTagHandler {
     /// Needs to be called on each screen in order to measure sessions
     func activateApp(){
         AppEventsLogger.activate(UIApplication.shared);
-        self.logger.carLog(kTAGLoggerLogLevelInfo, message: "Application activation hit sent.");
+        self.logger.carLog(.info, message: "Application activation hit sent.");
     }
 
     /// Send an event to facebook SDK. Calls differents methods depending on which parameters have been given
@@ -161,8 +167,7 @@ class CARFacebookTagHandler: CARTagHandler {
     ///   - transactionTotal: the amount of the purchase, which is mandatory
     ///   - transactionCurrencyCode: the currency of the purchase, which is mandatory
     func purchase(parameters: [AnyHashable: Any]){
-        if let total = parameters[TRANSACTION_TOTAL] as? String {
-            let purchaseAmount: Double = Double(total)!;
+        if let purchaseAmount = parameters[TRANSACTION_TOTAL] as? Double {
             if let currencyCode = parameters[TRANSACTION_CURRENCY_CODE] as? String {
                 AppEventsLogger.log(.purchased(amount: purchaseAmount, currency: currencyCode));
                 logger.logParamSetWithSuccess(TRANSACTION_TOTAL, value: purchaseAmount);

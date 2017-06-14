@@ -9,24 +9,7 @@
 #ifndef BridgingHeader_h
 #define BridgingHeader_h
 
-#import <GoogleTagManager/TAGManager.h>
-#import <GoogleTagManager/TAGContainer.h>
-#import <GoogleTagManager/TAGContainerOpener.h>
-#import <GoogleTagManager/TAGDataLayer.h>
-#import <GoogleTagManager/TAGLogger.h>
-
-#import <Google/Analytics.h>
-#import <GoogleAnalytics/GAI.h>
-#import <GoogleAnalytics/GAIFields.h>
-#import <GoogleAnalytics/GAITracker.h>
-#import <GoogleAnalytics/GAIDictionaryBuilder.h>
-#import <GoogleAnalytics/GAITrackedViewController.h>
-
 #import <FirebaseAnalytics/FIRAnalytics.h>
 #import <FirebaseAnalytics/FIRAnalyticsConfiguration.h>
-
-#import <Tune/Tune.h>
-
-#import <FBSDKCoreKit/FBSDKCoreKit.h>
 
 #endif /* BridgingHeader_h */

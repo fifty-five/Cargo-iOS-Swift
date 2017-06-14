@@ -11,7 +11,7 @@ import Foundation
 
 /// A class all the handlers inherit from. 
 /// Defines the mandatory methods which need to be implemented in any handler.
-class CARTagHandler : NSObject, TAGFunctionCallTagHandler {
+class CARTagHandler : NSObject {
 
 /* *********************************** Variables Declaration ************************************ */
 
@@ -24,10 +24,8 @@ class CARTagHandler : NSObject, TAGFunctionCallTagHandler {
     /** Defines whether the sdk has been initialized */
     var initialized: Bool = false ;
 
-    /** The instance of Cargo */
-    let cargo = Cargo.sharedHelper;
     /** Instance of the logger */
-    var logger: CARLogger;
+    var logger: CARLogger!;
 
 /* *************************************** Initializer ****************************************** */
 
@@ -39,8 +37,8 @@ class CARTagHandler : NSObject, TAGFunctionCallTagHandler {
     init(key:String, name:String){
         self.key = key;
         self.name = name;
-        self.logger = CARLogger.init(aContext: "\(self.key)_handler");
-        self.logger.setLogLevel(self.cargo.logger.level);
+        super.init();
+        Cargo.getInstance().registerHandler(self);
     }
 
 /* *********************************** Methods declaration ************************************** */

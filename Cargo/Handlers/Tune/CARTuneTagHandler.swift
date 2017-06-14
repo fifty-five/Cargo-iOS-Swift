@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Tune
 
 
 /// The class which handles interactions with the Tune SDK.
@@ -58,16 +59,11 @@ class CARTuneTagHandler: CARTagHandler {
         super.init(key: "TUN", name: "Tune");
 
         // enables Tune debug mode if the cargo logger is set to verbose, disables it otherwise
-        if (cargo.tagManager.logger.logLevel() == kTAGLoggerLogLevelVerbose) {
+        if (self.logger.level.rawValue <= CARLogger.LogLevelType.debug.rawValue) {
             Tune.setDebugMode(true);
         } else {
             Tune.setDebugMode(false);
         }
-
-        cargo.registerTagHandler(self, key: TUN_INIT);
-        cargo.registerTagHandler(self, key: TUN_SESSION);
-        cargo.registerTagHandler(self, key: TUN_IDENTIFY);
-        cargo.registerTagHandler(self, key: TUN_TAG_EVENT);
     }
 
     /// Callback from GTM container designed to execute a specific method
@@ -133,7 +129,7 @@ class CARTuneTagHandler: CARTagHandler {
     /// Attribution will not function without the measureSession call included.
     fileprivate func measureSession() {
         Tune.measureSession();
-        self.logger.carLog(kTAGLoggerLogLevelInfo, message:"Measure session hit has been sent.");
+        self.logger.carLog(.info, message:"Measure session hit has been sent.");
     }
 
     /// Used in order to identify the user as a unique visitor and to associate to a unique id
@@ -239,8 +235,7 @@ class CARTuneTagHandler: CARTagHandler {
             Tune.measure(tuneEvent);
         }
         else {
-            logger.carLog(kTAGLoggerLogLevelError,
-                                message: "The Tune event is nil, the tag hasn't been sent.");
+            logger.carLog(.error, message: "The Tune event is nil, the tag hasn't been sent.");
         }
     }
 
@@ -321,24 +316,20 @@ class CARTuneTagHandler: CARTagHandler {
                 logger.logParamSetWithSuccess(EVENT_DATE2, value: tuneEvent.date2);
             }
         }
-        if let eventRevenue = params[EVENT_REVENUE] {
-            if let tempRevenue = eventRevenue as? String {
-                let doubleRevenue: Double = Double(tempRevenue)!;
-                let f = CGFloat(doubleRevenue);
-                tuneEvent.revenue = f;
-                logger.logParamSetWithSuccess(EVENT_REVENUE, value: tuneEvent.revenue);
-            }
-            else {
-                logger.logUncastableParam(EVENT_REVENUE, type: "CGFloat");
-            }
+        if let eventRevenue = params[EVENT_REVENUE] as? Double {
+            let fRevenue = CGFloat(eventRevenue);
+            tuneEvent.revenue = fRevenue;
+            logger.logParamSetWithSuccess(EVENT_REVENUE, value: tuneEvent.revenue);
         }
         if let eventItems = params[EVENT_ITEMS] {
-            if let tuneEventItems = self.getItems(flatJson: eventItems as! String) {
-                tuneEvent.eventItems = tuneEventItems;
-                logger.logParamSetWithSuccess(EVENT_ITEMS, value: tuneEvent.eventItems);
-            }
-            else {
-                logger.logUncastableParam(EVENT_ITEMS, type: "[TuneEventItem]");
+            if (eventItems as! Bool) {
+                if let tuneEventItems = self.getItems() {
+                    tuneEvent.eventItems = tuneEventItems;
+                    logger.logParamSetWithSuccess(EVENT_ITEMS, value: tuneEvent.eventItems);
+                }
+                else {
+                    logger.logUncastableParam(EVENT_ITEMS, type: "[TuneEventItem]");
+                }
             }
         }
         if let eventLevel = params[EVENT_LEVEL] {
@@ -366,7 +357,7 @@ class CARTuneTagHandler: CARTagHandler {
             }
             else {
                 tuneEvent.quantity = 0;
-                logger.carLog(kTAGLoggerLogLevelWarning, message: "\(EVENT_QUANTITY) value has been" +
+                logger.carLog(.warning, message: "\(EVENT_QUANTITY) value has been" +
                     "set to 0 since the negative values are not accepted.");
             }
         }
@@ -394,67 +385,49 @@ class CARTuneTagHandler: CARTagHandler {
     }
 
     
-    /// Retrieves an array of TuneEventItem from a simple String parameter.
-    /// Makes the String a json object, type it to an array of dictionaries<String, AnyHashable>,
-    /// then retrieves the correct values and set them into the correct object type.
+    /// Builds a TuneEventItem array from the CargoItem one.
+    /// This method is used by the buildEvent method.
     ///
-    /// - Parameter flatJson: the String containing the json
-    /// - Returns: a TuneEventItem array
-    fileprivate func getItems(flatJson: String) -> ([TuneEventItem]?) {
+    /// - Returns: a TuneEventItem array if the operation succeed, or nil if it failed.
+    fileprivate func getItems() -> ([TuneEventItem]!) {
         var tuneItemArray: [TuneEventItem] = [];
 
-        // convert the String to Data type
-        if let jsonData = flatJson.data(using: .utf8) {
-            // retrieve the json from data
-            let json = try? JSONSerialization.jsonObject(with: jsonData);
-            // type the json format to an actual array of dictionaries
-            if let dictFromJSON = json as? [Dictionary<String, AnyHashable>] {
-                // iterates on dictionaries to create TuneEventItem objects which are added in an array
-                for item in dictFromJSON {
-                    if let name = item["name"],
-                        let unitPrice = item["unitPrice"],
-                        let quantity = item["quantity"], let revenue = item["revenue"] {
+        if (CargoItem.getItemsArray().count != 0) {
+            let cargoItemsArray: [CargoItem] = CargoItem.getItemsArray();
+            for item in cargoItemsArray {
+                let tuneItem = TuneEventItem(name: item.name as String,
+                                             unitPrice: item.unitPrice,
+                                             quantity: item.quantity,
+                                             revenue: item.revenue);
 
-                        let tuneItem = TuneEventItem(name: name as! String,
-                                                     unitPrice: revenue as! CGFloat,
-                                                     quantity: quantity as! UInt,
-                                                     revenue: unitPrice as! CGFloat);
-                        if let attr1 = item["attribute1"] {
-                            tuneItem?.attribute1 = attr1 as! String;
-                        }
-                        if let attr2 = item["attribute2"] {
-                            tuneItem?.attribute2 = attr2 as! String;
-                        }
-                        if let attr3 = item["attribute3"] {
-                            tuneItem?.attribute3 = attr3 as! String;
-                        }
-                        if let attr4 = item["attribute4"] {
-                            tuneItem?.attribute4 = attr4 as! String;
-                        }
-                        if let attr5 = item["attribut5"] {
-                            tuneItem?.attribute5 = attr5 as! String;
-                        }
-                        // adds the TuneEventItem to the array
-                        tuneItemArray.append(tuneItem!);
-                    }
-                    else {
-                        logger.logMissingParam("CargoItem name", methodName: TUN_TAG_EVENT);
-                        logger.logUncastableParam(EVENT_ITEMS, type: "TuneEventItem");
-                    }
+                if let attr1 = item.attribute1 {
+                    tuneItem?.attribute1 = attr1;
                 }
-                // returns the array
-                return tuneItemArray;
+                if let attr2 = item.attribute2 {
+                    tuneItem?.attribute2 = attr2;
+                }
+                if let attr3 = item.attribute3 {
+                    tuneItem?.attribute3 = attr3;
+                }
+                if let attr4 = item.attribute4 {
+                    tuneItem?.attribute4 = attr4;
+                }
+                if let attr5 = item.attribute5 {
+                    tuneItem?.attribute5 = attr5;
+                }
+
+                // adds the TuneEventItem to the array
+                tuneItemArray.append(tuneItem!);
             }
-            else {
-                logger.logUncastableParam("eventItems", type: "json");
-            }
+            // returns the array
+            return tuneItemArray;
         }
         else {
-            logger.logUncastableParam("eventItems", type: "Data");
+            logger.logMissingParam("eventItems", methodName: "TUN_tagEvent");
         }
-
         return nil;
     }
+
 }
 
 
