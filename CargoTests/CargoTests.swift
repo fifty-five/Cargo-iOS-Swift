@@ -1,15 +1,14 @@
 //
-//  SwiftSampleAppTests.swift
-//  SwiftSampleAppTests
+//  CargoTests.swift
+//  CargoTests
 //
-//  Created by Julien Gil on 24/08/16.
-//  Copyright © 2016 fifty-five All rights reserved.
+//  Created by Julien Gil on 03/08/2017.
+//  Copyright © 2017 François K. All rights reserved.
 //
 
 import XCTest
-@testable import SwiftSampleApp
 
-class SwiftSampleAppTests: XCTestCase {
+class CargoTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
