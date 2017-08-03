@@ -7,6 +7,7 @@
 //
 
 import XCTest
+@testable import Cargo
 
 class CARConstantsTests: XCTestCase {
     
@@ -20,16 +21,49 @@ class CARConstantsTests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testTracker() {
+        XCTAssertEqual(APPLICATION_ID, "applicationId");
+        XCTAssertEqual(ENABLE_DEBUG, "enableDebug");
+        XCTAssertEqual(ENABLE_OPTOUT, "enableOptOut");
+        XCTAssertEqual(DISABLE_TRACKING, "disableTracking");
+        XCTAssertEqual(DISPATCH_INTERVAL, "dispatchInterval");
+        XCTAssertEqual(LEVEL2, "level2");
+        XCTAssertEqual(CUSTOM_DIM1, "customDim1");
+        XCTAssertEqual(CUSTOM_DIM2, "customDim2");
     }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    func testScreen() {
+        XCTAssertEqual(SCREEN_NAME, "screenName");
+    }
+    
+    func testEvent() {
+        XCTAssertEqual(EVENT_NAME, "eventName");
+        XCTAssertEqual(EVENT_ID, "eventId");
+        XCTAssertEqual(EVENT_VALUE, "eventValue");
+        XCTAssertEqual(EVENT_TYPE, "eventType");
+    }
+    
+    func testUser() {
+        XCTAssertEqual(USER_ID, "userId");
+        XCTAssertEqual(USER_AGE, "userAge");
+        XCTAssertEqual(USER_EMAIL, "userEmail");
+        XCTAssertEqual(USER_NAME, "userName");
+        XCTAssertEqual(USER_GENDER, "userGender");
+        XCTAssertEqual(USER_GOOGLE_ID, "userGoogleId");
+        XCTAssertEqual(USER_TWITTER_ID, "userTwitterId");
+        XCTAssertEqual(USER_FACEBOOK_ID, "userFacebookId");
+    }
+    
+    func testTransaction() {
+        XCTAssertEqual(TRANSACTION_ID, "transactionId");
+        XCTAssertEqual(TRANSACTION_TOTAL, "transactionTotal");
+        XCTAssertEqual(TRANSACTION_CURRENCY_CODE, "transactionCurrencyCode");
+        XCTAssertEqual(TRANSACTION_PRODUCTS, "transactionProducts");
+        XCTAssertEqual(TRANSACTION_PRODUCT_NAME, "name");
+        XCTAssertEqual(TRANSACTION_PRODUCT_SKU, "sku");
+        XCTAssertEqual(TRANSACTION_PRODUCT_PRICE, "price");
+        XCTAssertEqual(TRANSACTION_PRODUCT_CATEGORY, "category");
+        XCTAssertEqual(TRANSACTION_PRODUCT_QUANTITY, "quantity");
     }
     
 }

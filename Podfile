@@ -19,9 +19,8 @@ end
 target 'Cargo' do
   import_gtm
   import_pods
-end
 
-target 'CargoTests' do
-  import_gtm
-  import_pods
+  target 'CargoTests' do
+    inherit! :search_paths
+  end
 end
