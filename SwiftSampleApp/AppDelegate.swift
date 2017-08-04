@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import FirebaseAnalytics
 import GoogleTagManager
 
 @UIApplicationMain

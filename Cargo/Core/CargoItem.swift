@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import UIKit
 
 /// Create an Item object with this class in order to send item objects through Cargo
 @objc class CargoItem : NSObject {
