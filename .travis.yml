@@ -10,7 +10,7 @@ before_install:
   - gem install xcpretty
 
 script:
-  - set -o pipefail && xcodebuild test 'ONLY_ACTIVE_ARCH=NO' 'ARCHS=arm64 armv7 armv7s i386 x86_64' 'GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES' 'GCC_GENERATE_TEST_COVERAGE_FILES=YES' -workspace Cargo.xcworkspace -scheme CargoTest -enableCodeCoverage YES -destination { platform:iOS Simulator, id:A538AE42-68FC-4C17-B955-41D4660F6001, OS:9.3, name:iPhone 5 } | xcpretty
+  - set -o pipefail && xcodebuild test 'ONLY_ACTIVE_ARCH=NO' 'ARCHS=arm64 armv7 armv7s i386 x86_64' 'GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES' 'GCC_GENERATE_TEST_COVERAGE_FILES=YES' -workspace Cargo.xcworkspace -scheme CargoTest -enableCodeCoverage YES -destination 'platform=iOS Simulator,name=iPhone 5,OS=9.3' -destination 'platform=iOS Simulator,name=iPhone 7 Plus,OS=10.2' | xcpretty
 
 after_success:
   - bash <(curl -s https://codecov.io/bash) -X xcodeplist
