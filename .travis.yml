@@ -4,7 +4,7 @@ xcode_workspace: Cargo.xcworkspace
 xcode_scheme: Cargo
 
 before_install:
-  - export IOS_SIMULATOR_UDID=`instruments -s devices | grep "iPhone 5 (9.3" | awk -F '[ ]' '{print $4}' | awk -F '[\[]' '{print $2}' | sed 's/.$//'
+  - export IOS_SIMULATOR_UDID=`instruments -s devices | grep "iPhone 5 (9.3" | awk -F '[ ]' '{print $4}' | awk -F '[\[]' '{print $2}' | sed 's/.$//'`
   - open -a "simulator" --args -CurrentDeviceUDID $IOS_SIMULATOR_UDID
   - pod update
   - gpg2 --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
