@@ -15,6 +15,7 @@
 		0F12EA281D5A165F00D776E6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F12EA261D5A165F00D776E6 /* LaunchScreen.storyboard */; };
 		0FC6FFEF1D8049E600FE864A /* CARFacebookTagHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6FFEE1D8049E600FE864A /* CARFacebookTagHandler.swift */; };
 		4A79EF737ECE60B17C4DDD5F /* Pods_Cargo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8375CF76CE684DDB537E4856 /* Pods_Cargo.framework */; };
+		80242BA01F4EFFB8004EE637 /* CargoItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80242B9F1F4EFFB8004EE637 /* CargoItemTests.swift */; };
 		805042931D8063C90045312B /* CARATInternetTagHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805042921D8063C90045312B /* CARATInternetTagHandler.swift */; };
 		805C5D451E360B2500A9B61F /* container in Resources */ = {isa = PBXBuildFile; fileRef = 805C5D441E360B2500A9B61F /* container */; };
 		80A1529A1D75C23E0032FA91 /* CARTuneTagHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A152991D75C23E0032FA91 /* CARTuneTagHandler.swift */; };
@@ -66,6 +67,7 @@
 		0FC6FFEE1D8049E600FE864A /* CARFacebookTagHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CARFacebookTagHandler.swift; path = Cargo/Handlers/Facebook/CARFacebookTagHandler.swift; sourceTree = "<group>"; };
 		237787A162AE243EAB87E41B /* Pods-Cargo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cargo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Cargo/Pods-Cargo.debug.xcconfig"; sourceTree = "<group>"; };
 		23EB0A122975528B94BE5CEC /* Pods-Cargo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cargo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Cargo/Pods-Cargo.release.xcconfig"; sourceTree = "<group>"; };
+		80242B9F1F4EFFB8004EE637 /* CargoItemTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CargoItemTests.swift; sourceTree = "<group>"; };
 		805042921D8063C90045312B /* CARATInternetTagHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CARATInternetTagHandler.swift; path = Cargo/Handlers/ATInternet/CARATInternetTagHandler.swift; sourceTree = "<group>"; };
 		805C5D441E360B2500A9B61F /* container */ = {isa = PBXFileReference; lastKnownFileType = folder; path = container; sourceTree = "<group>"; };
 		80614C9B1D5B851D00BF46E7 /* BridgingHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BridgingHeader.h; sourceTree = "<group>"; };
@@ -267,6 +269,7 @@
 				80BE16DD1F337C930003336B /* CargoTests.swift */,
 				80BE16DF1F337C930003336B /* Info.plist */,
 				80BE16E51F337E400003336B /* CARConstantsTests.swift */,
+				80242B9F1F4EFFB8004EE637 /* CargoItemTests.swift */,
 			);
 			path = CargoTests;
 			sourceTree = "<group>";
@@ -508,6 +511,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				80BE16E61F337E400003336B /* CARConstantsTests.swift in Sources */,
+				80242BA01F4EFFB8004EE637 /* CargoItemTests.swift in Sources */,
 				80BE16DE1F337C930003336B /* CargoTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
