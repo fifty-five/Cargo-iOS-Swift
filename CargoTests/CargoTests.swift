@@ -7,30 +7,48 @@
 //
 
 import XCTest
+@testable import Cargo
 
 class CargoTests: XCTestCase {
-    
+
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
+        Cargo.instance = nil;
     }
-    
+
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
-    
-    func testExample() {
+
+    func testInit() {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
-        XCTAssert(true);
+        let cargo = Cargo.init(logLevel: .none);
+        XCTAssertEqual(cargo, Cargo.getInstance());
+        XCTAssertEqual(cargo.logger.level, CARLogger.LogLevelType.none);
+        XCTAssertEqual(cargo.logger.context, "Cargo");
     }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+
+    func testGetInstance() {
+        XCTAssertTrue(Cargo.getInstance().logger.level == CARLogger.LogLevelType.none);
     }
-    
+
+    func testLogLevel() {
+        let cargo = Cargo.getInstance();
+        cargo.setLogLevel(level: CARLogger.LogLevelType.none);
+        XCTAssertEqual(cargo.logger.level, CARLogger.LogLevelType.none);
+        cargo.setLogLevel(level: CARLogger.LogLevelType.verbose);
+        XCTAssertEqual(cargo.logger.level, CARLogger.LogLevelType.verbose);
+        cargo.setLogLevel(level: CARLogger.LogLevelType.debug);
+        XCTAssertEqual(cargo.logger.level, CARLogger.LogLevelType.debug);
+        cargo.setLogLevel(level: CARLogger.LogLevelType.info);
+        XCTAssertEqual(cargo.logger.level, CARLogger.LogLevelType.info);
+        cargo.setLogLevel(level: CARLogger.LogLevelType.warning);
+        XCTAssertEqual(cargo.logger.level, CARLogger.LogLevelType.warning);
+        cargo.setLogLevel(level: CARLogger.LogLevelType.error);
+        XCTAssertEqual(cargo.logger.level, CARLogger.LogLevelType.error);
+    }
+
 }

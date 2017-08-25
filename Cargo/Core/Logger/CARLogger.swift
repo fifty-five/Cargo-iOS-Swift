@@ -54,7 +54,7 @@ class CARLogger: NSObject {
         self.formatter.dateFormat = dateFormat;
         super.init();
         refToSelf = self;
-        self.setLogLevel(.verbose);
+        self.setLogLevel(logLevel);
     }
     
     

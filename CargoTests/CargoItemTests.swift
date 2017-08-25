@@ -18,6 +18,7 @@ class CargoItemTests: XCTestCase {
     
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
+        CargoItem.notifyTagFired();
         super.tearDown()
     }
 
@@ -28,7 +29,6 @@ class CargoItemTests: XCTestCase {
         CargoItem.attachItemToEvent(item: CargoItem.init(name: "testItem4", unitPrice: 33, quantity: 10));
 
         XCTAssertEqual(CargoItem.getItemsArray().count, 4);
-        CargoItem.notifyTagFired();
     }
 
     func testVerifItemConstructor1() {
@@ -39,7 +39,6 @@ class CargoItemTests: XCTestCase {
         XCTAssertEqual(item.unitPrice, 42.55);
         XCTAssertEqual(item.quantity, 2);
         XCTAssertEqual(item.revenue, 85.10);
-        CargoItem.notifyTagFired();
     }
 
     func testVerifItemConstructor2() {
@@ -61,7 +60,6 @@ class CargoItemTests: XCTestCase {
         XCTAssertEqual(item.attribute3, "attribute 3");
         XCTAssertEqual(item.attribute4, "attribute 4");
         XCTAssertEqual(item.attribute5, "attribute 5");
-        CargoItem.notifyTagFired();
     }
 
     func testFlushItems() {
@@ -72,7 +70,6 @@ class CargoItemTests: XCTestCase {
 
         CargoItem.attachItemToEvent(item: CargoItem.init(name: "otherTestItem", unitPrice: 42.55, quantity: 2));
         XCTAssertEqual(CargoItem.getItemsArray()[0].name, "otherTestItem");
-        CargoItem.notifyTagFired();
     }
 
     func testSetNewArray() {
@@ -86,7 +83,6 @@ class CargoItemTests: XCTestCase {
         CargoItem.setNewItemsArray(newItemsArray: [CargoItem.init(name: "anotherItem", unitPrice: 42.55, quantity: 2), CargoItem.init(name: "Last Item", unitPrice: 42.55, quantity: 2)]);
 
         XCTAssertEqual(CargoItem.getItemsArray().count, 2);
-        CargoItem.notifyTagFired();
     }
 
 
