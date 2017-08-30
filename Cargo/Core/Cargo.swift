@@ -70,6 +70,7 @@ import Foundation
     ///   - tagHandler: the tag handler to register
     func registerHandler(_ tagHandler: CARTagHandler) {
         registeredTagHandlers[tagHandler.key] = tagHandler;
+        tagHandler.validate();
         tagHandler.logger = CARLogger(aContext: "\(tagHandler.key)_handler",
             logLevel: self.logger.level);
         self.logger.carLog(.debug,

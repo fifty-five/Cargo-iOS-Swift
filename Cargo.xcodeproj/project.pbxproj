@@ -18,6 +18,8 @@
 		80242BA01F4EFFB8004EE637 /* CargoItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80242B9F1F4EFFB8004EE637 /* CargoItemTests.swift */; };
 		805042931D8063C90045312B /* CARATInternetTagHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805042921D8063C90045312B /* CARATInternetTagHandler.swift */; };
 		805C5D451E360B2500A9B61F /* container in Resources */ = {isa = PBXBuildFile; fileRef = 805C5D441E360B2500A9B61F /* container */; };
+		8089BDA31F5709F400800742 /* CARTuneTagHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8089BDA21F5709F400800742 /* CARTuneTagHandlerTests.swift */; };
+		8089BDA61F571E0900800742 /* CARTuneMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8089BDA51F571E0900800742 /* CARTuneMock.swift */; };
 		80A1529A1D75C23E0032FA91 /* CARTuneTagHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A152991D75C23E0032FA91 /* CARTuneTagHandler.swift */; };
 		80A7243E1E700D8600648FB7 /* Cargo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A724361E700D8600648FB7 /* Cargo.swift */; };
 		80A7243F1E700D8600648FB7 /* CargoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A724371E700D8600648FB7 /* CargoItem.swift */; };
@@ -71,6 +73,8 @@
 		805042921D8063C90045312B /* CARATInternetTagHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CARATInternetTagHandler.swift; path = Cargo/Handlers/ATInternet/CARATInternetTagHandler.swift; sourceTree = "<group>"; };
 		805C5D441E360B2500A9B61F /* container */ = {isa = PBXFileReference; lastKnownFileType = folder; path = container; sourceTree = "<group>"; };
 		80614C9B1D5B851D00BF46E7 /* BridgingHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BridgingHeader.h; sourceTree = "<group>"; };
+		8089BDA21F5709F400800742 /* CARTuneTagHandlerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CARTuneTagHandlerTests.swift; sourceTree = "<group>"; };
+		8089BDA51F571E0900800742 /* CARTuneMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CARTuneMock.swift; sourceTree = "<group>"; };
 		808FAE201D5CD99F0075942C /* libTagManager.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTagManager.a; path = Pods/GoogleTagManager/Libraries/libTagManager.a; sourceTree = "<group>"; };
 		80A152991D75C23E0032FA91 /* CARTuneTagHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CARTuneTagHandler.swift; path = Cargo/Handlers/Tune/CARTuneTagHandler.swift; sourceTree = "<group>"; };
 		80A724361E700D8600648FB7 /* Cargo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Cargo.swift; path = Cargo/Core/Cargo.swift; sourceTree = "<group>"; };
@@ -161,6 +165,7 @@
 			children = (
 				80A724351E700D7000648FB7 /* Core */,
 				0F12EA541D5A252A00D776E6 /* Handlers */,
+				8089BDA41F571DED00800742 /* Mock */,
 			);
 			name = Cargo;
 			sourceTree = "<group>";
@@ -213,6 +218,14 @@
 				805042921D8063C90045312B /* CARATInternetTagHandler.swift */,
 			);
 			name = ATInternet;
+			sourceTree = "<group>";
+		};
+		8089BDA41F571DED00800742 /* Mock */ = {
+			isa = PBXGroup;
+			children = (
+				8089BDA51F571E0900800742 /* CARTuneMock.swift */,
+			);
+			name = Mock;
 			sourceTree = "<group>";
 		};
 		80A152961D75C1CC0032FA91 /* Tune */ = {
@@ -270,6 +283,7 @@
 				80BE16DF1F337C930003336B /* Info.plist */,
 				80BE16E51F337E400003336B /* CARConstantsTests.swift */,
 				80242B9F1F4EFFB8004EE637 /* CargoItemTests.swift */,
+				8089BDA21F5709F400800742 /* CARTuneTagHandlerTests.swift */,
 			);
 			path = CargoTests;
 			sourceTree = "<group>";
@@ -503,6 +517,7 @@
 				80A7243F1E700D8600648FB7 /* CargoItem.swift in Sources */,
 				0FC6FFEF1D8049E600FE864A /* CARFacebookTagHandler.swift in Sources */,
 				0F12EA1B1D5A165F00D776E6 /* AppDelegate.swift in Sources */,
+				8089BDA61F571E0900800742 /* CARTuneMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -512,6 +527,7 @@
 			files = (
 				80BE16E61F337E400003336B /* CARConstantsTests.swift in Sources */,
 				80242BA01F4EFFB8004EE637 /* CargoItemTests.swift in Sources */,
+				8089BDA31F5709F400800742 /* CARTuneTagHandlerTests.swift in Sources */,
 				80BE16DE1F337C930003336B /* CargoTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -569,6 +585,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -619,6 +636,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
 				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;

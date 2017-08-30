@@ -161,6 +161,8 @@ class CARLogger: NSObject {
         case warning = 3;
         case error = 4;
         case none = 5;
+
+        static let allValues = [verbose, debug, info, warning, error, none];
     }
 
     /// Setter for the log level
