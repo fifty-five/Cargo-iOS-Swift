@@ -9,7 +9,6 @@
 import Foundation
 import Tune
 
-
 /// The class which handles interactions with the Tune SDK.
 class CARTuneTagHandler: CARTagHandler {
 
@@ -127,7 +126,7 @@ class CARTuneTagHandler: CARTagHandler {
 
     /// Use it in AppDelegate in the method "applicationDidBecomeActive"
     /// Attribution will not function without the measureSession call included.
-    fileprivate func measureSession() {
+    internal func measureSession() {
         Tune.measureSession();
         self.logger.carLog(.info, message:"Measure session hit has been sent.");
     }
@@ -144,7 +143,7 @@ class CARTuneTagHandler: CARTagHandler {
     ///   - userName (String) : the username/name of your user
     ///   - userEmail (String) : the mail adress of your user
     ///   - userGender (String) : the gender of your user (MALE/FEMALE/UNKNOWN)
-    fileprivate func identify(_ parameters: [AnyHashable: Any]) {
+    internal func identify(_ parameters: [AnyHashable: Any]) {
 
         if let userId = parameters[USER_ID] {
             Tune.setUserId(userId as! String);
@@ -208,7 +207,7 @@ class CARTuneTagHandler: CARTagHandler {
     ///   - eventItems
     ///   - eventLevel
     ///   - eventReceipt
-    fileprivate func tagEvent(_ parameters: [AnyHashable: Any]) {
+    internal func tagEvent(_ parameters: [AnyHashable: Any]) {
 
         var tuneEvent: TuneEvent!;
         var params = parameters;
@@ -252,7 +251,7 @@ class CARTuneTagHandler: CARTagHandler {
     ///   - tuneEvent: the event you want to custom
     ///   - parameters: the key/value list of the attributes you want to attach to your event
     /// - Returns: the custom event
-    fileprivate func buildEvent(_ event: TuneEvent, parameters: [AnyHashable: Any]) -> TuneEvent {
+    internal func buildEvent(_ event: TuneEvent, parameters: [AnyHashable: Any]) -> TuneEvent {
         var params = parameters;
         var tuneEvent = event;
 
@@ -293,7 +292,7 @@ class CARTuneTagHandler: CARTagHandler {
     ///   - tuneEvent: The TuneEvent object you want to set properties to.
     ///   - params: The list of parameters given through GTM callback.
     /// - Returns: The TuneEvent object with its attributes set to the correct values.
-    fileprivate func setMixedPropertiesToEvent(tuneEvent: TuneEvent, params:[AnyHashable: Any]) -> (TuneEvent) {
+    internal func setMixedPropertiesToEvent(tuneEvent: TuneEvent, params:[AnyHashable: Any]) -> (TuneEvent) {
         if let eventRating = params[EVENT_RATING] {
             if let tempRating = eventRating as? String {
                 let doubleRating: Double = Double(tempRating)!;
@@ -368,7 +367,7 @@ class CARTuneTagHandler: CARTagHandler {
     ///
     /// - Parameter gender: The gender given in the identify method. If the gender doesn't match any
     ///                     Tune genders, sets the gender to UNKNOWN.
-    fileprivate func setGender(_ gender: String) {
+    internal func setGender(_ gender: String) {
         let upperGender = gender.uppercased();
         if (upperGender == "MALE") {
             Tune.setGender(TuneGender.male);
@@ -389,7 +388,7 @@ class CARTuneTagHandler: CARTagHandler {
     /// This method is used by the buildEvent method.
     ///
     /// - Returns: a TuneEventItem array if the operation succeed, or nil if it failed.
-    fileprivate func getItems() -> ([TuneEventItem]!) {
+    internal func getItems() -> ([TuneEventItem]!) {
         var tuneItemArray: [TuneEventItem] = [];
 
         if (CargoItem.getItemsArray().count != 0) {
@@ -429,5 +428,3 @@ class CARTuneTagHandler: CARTagHandler {
     }
 
 }
-
-
