@@ -8,7 +8,6 @@
 
 import XCTest
 @testable import Cargo
-import Tune
 
 class CARTuneTagHandlerTests: XCTestCase {
 
@@ -181,17 +180,17 @@ class CARTuneTagHandlerTests: XCTestCase {
         cargo.execute([HANDLER_METHOD:TUN_IDENTIFY,
                        USER_GENDER:"MALE"]);
         XCTAssertEqual(tuneHandler.setGengerCount, 1);
-        XCTAssertEqual(tuneHandler.lastTuneGender, TuneGender.male);
+        XCTAssertEqual(tuneHandler.lastTuneGender, CARTuneMock.GenderMock.male);
 
         cargo.execute([HANDLER_METHOD:TUN_IDENTIFY,
                        USER_GENDER:"lkfhsdf"]);
         XCTAssertEqual(tuneHandler.setGengerCount, 2);
-        XCTAssertEqual(tuneHandler.lastTuneGender, TuneGender.unknown);
+        XCTAssertEqual(tuneHandler.lastTuneGender, CARTuneMock.GenderMock.unknown);
 
         cargo.execute([HANDLER_METHOD:TUN_IDENTIFY,
                        USER_GENDER:"Female"]);
         XCTAssertEqual(tuneHandler.setGengerCount, 3);
-        XCTAssertEqual(tuneHandler.lastTuneGender, TuneGender.female);
+        XCTAssertEqual(tuneHandler.lastTuneGender, CARTuneMock.GenderMock.female);
     }
 
 }

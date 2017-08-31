@@ -11,6 +11,8 @@ import Tune
 
 class CARTuneMock: CARTuneTagHandler {
 
+    static let GenderMock = TuneGender.self;
+
     var constructorCount = 0;
     var constructorDebugLastArg: Bool?;
 

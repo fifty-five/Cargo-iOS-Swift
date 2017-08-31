@@ -8,7 +8,6 @@
 
 import XCTest
 @testable import Cargo
-import Tune
 
 class CargoTests: XCTestCase {
 
