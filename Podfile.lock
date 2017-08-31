@@ -9,7 +9,7 @@ PODS:
   - FacebookCore (0.2.0):
     - Bolts (~> 1.8)
     - FBSDKCoreKit (~> 4.15)
-  - FBSDKCoreKit (4.23.0):
+  - FBSDKCoreKit (4.26.0):
     - Bolts (~> 1.7)
   - FirebaseAnalytics (3.9.0):
     - FirebaseCore (~> 3.6)
@@ -42,7 +42,7 @@ SPEC CHECKSUMS:
   ATInternet-Apple-SDK: c3062ede8b164b7f1df0c45d803941ca72b316d5
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   FacebookCore: 2cb3f0fbff218e9d3119cec84bae983b232412de
-  FBSDKCoreKit: d7829f5a69901cd7296105328e4c3c3fc7da6518
+  FBSDKCoreKit: c8b8582311ec11b145451d8b9717dc6cc2ae5a76
   FirebaseAnalytics: e5fe8486efc01bec33f6bf82e2fa9fce4b124052
   FirebaseCore: 9691ee2ade70c098d7cf92440f4303f16d83ca75
   FirebaseInstanceID: b9eedd6846fb5e1f0f7279e1deaa7a7e4cf8392e
