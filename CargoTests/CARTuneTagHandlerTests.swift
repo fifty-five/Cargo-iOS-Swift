@@ -48,7 +48,7 @@ class CARTuneTagHandlerTests: XCTestCase {
         let tuneHandler = CARTuneMock();
 
         XCTAssertFalse(tuneHandler.initialized);
-        XCTAssertFalse(tuneHandler.constructorDebugLastArg);
+        XCTAssertFalse(tuneHandler.constructorDebugLastArg!);
         XCTAssertEqual(tuneHandler.constructorCount, 1);
     }
 
@@ -57,7 +57,7 @@ class CARTuneTagHandlerTests: XCTestCase {
         let tuneHandler = CARTuneMock();
 
         XCTAssertFalse(tuneHandler.initialized);
-        XCTAssertTrue(tuneHandler.constructorDebugLastArg);
+        XCTAssertTrue(tuneHandler.constructorDebugLastArg!);
         XCTAssertEqual(tuneHandler.constructorCount, 1);
     }
 
