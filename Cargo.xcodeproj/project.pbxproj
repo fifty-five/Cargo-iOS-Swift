@@ -20,6 +20,8 @@
 		805C5D451E360B2500A9B61F /* container in Resources */ = {isa = PBXBuildFile; fileRef = 805C5D441E360B2500A9B61F /* container */; };
 		8089BDA31F5709F400800742 /* CARTuneTagHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8089BDA21F5709F400800742 /* CARTuneTagHandlerTests.swift */; };
 		8089BDA61F571E0900800742 /* CARTuneMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8089BDA51F571E0900800742 /* CARTuneMock.swift */; };
+		8089BDAA1F58435800800742 /* CARFacebookMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8089BDA91F58435800800742 /* CARFacebookMock.swift */; };
+		8089BDAF1F5844D900800742 /* CARFacebookTagHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8089BDAE1F5844D900800742 /* CARFacebookTagHandlerTests.swift */; };
 		80A1529A1D75C23E0032FA91 /* CARTuneTagHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A152991D75C23E0032FA91 /* CARTuneTagHandler.swift */; };
 		80A7243E1E700D8600648FB7 /* Cargo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A724361E700D8600648FB7 /* Cargo.swift */; };
 		80A7243F1E700D8600648FB7 /* CargoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A724371E700D8600648FB7 /* CargoItem.swift */; };
@@ -75,6 +77,8 @@
 		80614C9B1D5B851D00BF46E7 /* BridgingHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BridgingHeader.h; sourceTree = "<group>"; };
 		8089BDA21F5709F400800742 /* CARTuneTagHandlerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CARTuneTagHandlerTests.swift; sourceTree = "<group>"; };
 		8089BDA51F571E0900800742 /* CARTuneMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CARTuneMock.swift; sourceTree = "<group>"; };
+		8089BDA91F58435800800742 /* CARFacebookMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CARFacebookMock.swift; sourceTree = "<group>"; };
+		8089BDAE1F5844D900800742 /* CARFacebookTagHandlerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CARFacebookTagHandlerTests.swift; sourceTree = "<group>"; };
 		808FAE201D5CD99F0075942C /* libTagManager.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTagManager.a; path = Pods/GoogleTagManager/Libraries/libTagManager.a; sourceTree = "<group>"; };
 		80A152991D75C23E0032FA91 /* CARTuneTagHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CARTuneTagHandler.swift; path = Cargo/Handlers/Tune/CARTuneTagHandler.swift; sourceTree = "<group>"; };
 		80A724361E700D8600648FB7 /* Cargo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Cargo.swift; path = Cargo/Core/Cargo.swift; sourceTree = "<group>"; };
@@ -223,9 +227,29 @@
 		8089BDA41F571DED00800742 /* Mock */ = {
 			isa = PBXGroup;
 			children = (
+				8089BDA91F58435800800742 /* CARFacebookMock.swift */,
 				8089BDA51F571E0900800742 /* CARTuneMock.swift */,
 			);
 			name = Mock;
+			sourceTree = "<group>";
+		};
+		8089BDAC1F5843B200800742 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				80BE16DD1F337C930003336B /* CargoTests.swift */,
+				80BE16E51F337E400003336B /* CARConstantsTests.swift */,
+				80242B9F1F4EFFB8004EE637 /* CargoItemTests.swift */,
+			);
+			name = Core;
+			sourceTree = "<group>";
+		};
+		8089BDAD1F5843BD00800742 /* Handlers */ = {
+			isa = PBXGroup;
+			children = (
+				8089BDA21F5709F400800742 /* CARTuneTagHandlerTests.swift */,
+				8089BDAE1F5844D900800742 /* CARFacebookTagHandlerTests.swift */,
+			);
+			name = Handlers;
 			sourceTree = "<group>";
 		};
 		80A152961D75C1CC0032FA91 /* Tune */ = {
@@ -279,11 +303,9 @@
 		80BE16DC1F337C930003336B /* CargoTests */ = {
 			isa = PBXGroup;
 			children = (
-				80BE16DD1F337C930003336B /* CargoTests.swift */,
 				80BE16DF1F337C930003336B /* Info.plist */,
-				80BE16E51F337E400003336B /* CARConstantsTests.swift */,
-				80242B9F1F4EFFB8004EE637 /* CargoItemTests.swift */,
-				8089BDA21F5709F400800742 /* CARTuneTagHandlerTests.swift */,
+				8089BDAC1F5843B200800742 /* Core */,
+				8089BDAD1F5843BD00800742 /* Handlers */,
 			);
 			path = CargoTests;
 			sourceTree = "<group>";
@@ -509,6 +531,7 @@
 				0F12EA231D5A165F00D776E6 /* SwiftSampleApp.xcdatamodeld in Sources */,
 				80A1529A1D75C23E0032FA91 /* CARTuneTagHandler.swift in Sources */,
 				80A724401E700D8600648FB7 /* CARTagHandler.swift in Sources */,
+				8089BDAA1F58435800800742 /* CARFacebookMock.swift in Sources */,
 				805042931D8063C90045312B /* CARATInternetTagHandler.swift in Sources */,
 				80A724421E700D8600648FB7 /* Tags.m in Sources */,
 				80A7243E1E700D8600648FB7 /* Cargo.swift in Sources */,
@@ -529,6 +552,7 @@
 				80242BA01F4EFFB8004EE637 /* CargoItemTests.swift in Sources */,
 				8089BDA31F5709F400800742 /* CARTuneTagHandlerTests.swift in Sources */,
 				80BE16DE1F337C930003336B /* CargoTests.swift in Sources */,
+				8089BDAF1F5844D900800742 /* CARFacebookTagHandlerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
