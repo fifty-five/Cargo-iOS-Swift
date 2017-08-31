@@ -72,7 +72,6 @@ class CARTuneMock: CARTuneTagHandler {
             case TUN_TAG_EVENT:
                 break ;
             default:
-                logger.logUnknownFunctionTag(tagName);
                 executeUnknownFunctionCount += 1;
             }
         }

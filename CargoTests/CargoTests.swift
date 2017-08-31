@@ -47,7 +47,7 @@ class CargoTests: XCTestCase {
         XCTAssertTrue(Cargo.getInstance().logger.level == CARLogger.LogLevelType.none);
     }
 
-    func testSetLogLevel_withAllLogLevel() {
+    func testSetLogLevel_setOnHandlersToo_withAllLogLevel() {
         let cargo = Cargo.getInstance();
         let tuneHandler = CARTuneTagHandler();
 

@@ -47,8 +47,8 @@ class CARTuneTagHandlerTests: XCTestCase {
         _ = Cargo.getInstance();
         let tuneHandler = CARTuneMock();
 
-        XCTAssertEqual(tuneHandler.initialized, false);
-        XCTAssertEqual(tuneHandler.constructorDebugLastArg, false);
+        XCTAssertFalse(tuneHandler.initialized);
+        XCTAssertFalse(tuneHandler.constructorDebugLastArg);
         XCTAssertEqual(tuneHandler.constructorCount, 1);
     }
 
@@ -56,8 +56,8 @@ class CARTuneTagHandlerTests: XCTestCase {
         _ = Cargo.init(logLevel: .verbose);
         let tuneHandler = CARTuneMock();
 
-        XCTAssertEqual(tuneHandler.initialized, false);
-        XCTAssertEqual(tuneHandler.constructorDebugLastArg, true);
+        XCTAssertFalse(tuneHandler.initialized);
+        XCTAssertTrue(tuneHandler.constructorDebugLastArg);
         XCTAssertEqual(tuneHandler.constructorCount, 1);
     }
 
@@ -65,8 +65,8 @@ class CARTuneTagHandlerTests: XCTestCase {
         _ = Cargo.getInstance();
         let tuneHandler = CARTuneMock();
 
-        XCTAssertEqual(tuneHandler.valid, true);
-        XCTAssertEqual(tuneHandler.initialized, false);
+        XCTAssertTrue(tuneHandler.valid);
+        XCTAssertFalse(tuneHandler.initialized);
     }
 
     func testExecute_ifCorrectInitTriggersInitializedBool() {
@@ -77,7 +77,7 @@ class CARTuneTagHandlerTests: XCTestCase {
                        ADVERTISER_ID:advertiser,
                        CONVERSION_KEY:conversionKey]);
 
-        XCTAssertEqual(tuneHandler.initialized, true);
+        XCTAssertTrue(tuneHandler.initialized);
         XCTAssertEqual(tuneHandler.lastAdvertiserId, advertiser);
         XCTAssertEqual(tuneHandler.lastConversionKey, conversionKey);
         XCTAssertEqual(tuneHandler.initializeCount, 1);
@@ -91,7 +91,7 @@ class CARTuneTagHandlerTests: XCTestCase {
         cargo.execute([HANDLER_METHOD:TUN_INIT,
                        ADVERTISER_ID:advertiser]);
 
-        XCTAssertEqual(tuneHandler.initialized, false);
+        XCTAssertFalse(tuneHandler.initialized);
         XCTAssertEqual(tuneHandler.lastAdvertiserId, nil);
         XCTAssertEqual(tuneHandler.lastConversionKey, nil);
         XCTAssertEqual(tuneHandler.initializeCount, 1);
