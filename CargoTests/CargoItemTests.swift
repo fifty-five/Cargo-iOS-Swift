@@ -28,12 +28,12 @@ class CargoItemTests: XCTestCase {
         CargoItem.attachItemToEvent(item: CargoItem.init(name: "testItem3", unitPrice: 100, quantity: 8));
         CargoItem.attachItemToEvent(item: CargoItem.init(name: "testItem4", unitPrice: 33, quantity: 10));
 
-        XCTAssertEqual(CargoItem.getItemsArray().count, 4);
+        XCTAssertEqual(CargoItem.getItemsArray()?.count, 4);
     }
 
     func testVerifItemConstructor1() {
         CargoItem.attachItemToEvent(item: CargoItem.init(name: "testItem", unitPrice: 42.55, quantity: 2));
-        let item = CargoItem.getItemsArray()[0];
+        let item = CargoItem.getItemsArray()![0];
 
         XCTAssertEqual(item.name, "testItem");
         XCTAssertEqual(item.unitPrice, 42.55);
@@ -49,7 +49,7 @@ class CargoItemTests: XCTestCase {
         cargoItem.attribute4 = "attribute 4";
         cargoItem.attribute5 = "attribute 5";
         CargoItem.attachItemToEvent(item: cargoItem);
-        let item = CargoItem.getItemsArray()[0];
+        let item = CargoItem.getItemsArray()![0];
 
         XCTAssertEqual(item.name, "testItem");
         XCTAssertEqual(item.unitPrice, 42.55);
@@ -65,11 +65,11 @@ class CargoItemTests: XCTestCase {
     func testFlushItems() {
         CargoItem.attachItemToEvent(item: CargoItem.init(name: "testItem", unitPrice: 42.55, quantity: 2));
 
-        XCTAssertEqual(CargoItem.getItemsArray()[0].name, "testItem");
+        XCTAssertEqual(CargoItem.getItemsArray()?[0].name, "testItem");
         CargoItem.notifyTagFired();
 
         CargoItem.attachItemToEvent(item: CargoItem.init(name: "otherTestItem", unitPrice: 42.55, quantity: 2));
-        XCTAssertEqual(CargoItem.getItemsArray()[0].name, "otherTestItem");
+        XCTAssertEqual(CargoItem.getItemsArray()?[0].name, "otherTestItem");
     }
 
     func testSetNewArray() {
@@ -78,11 +78,11 @@ class CargoItemTests: XCTestCase {
         CargoItem.attachItemToEvent(item: CargoItem.init(name: "testItem3", unitPrice: 100, quantity: 8));
         CargoItem.attachItemToEvent(item: CargoItem.init(name: "testItem4", unitPrice: 33, quantity: 10));
 
-        XCTAssertEqual(CargoItem.getItemsArray().count, 4);
+        XCTAssertEqual(CargoItem.getItemsArray()?.count, 4);
 
         CargoItem.setNewItemsArray(newItemsArray: [CargoItem.init(name: "anotherItem", unitPrice: 42.55, quantity: 2), CargoItem.init(name: "Last Item", unitPrice: 42.55, quantity: 2)]);
 
-        XCTAssertEqual(CargoItem.getItemsArray().count, 2);
+        XCTAssertEqual(CargoItem.getItemsArray()?.count, 2);
     }
 
 

@@ -315,10 +315,16 @@ class CARTuneTagHandler: CARTagHandler {
                 logger.logParamSetWithSuccess(EVENT_DATE2, value: tuneEvent.date2);
             }
         }
-        if let eventRevenue = params[EVENT_REVENUE] as? Double {
-            let fRevenue = CGFloat(eventRevenue);
-            tuneEvent.revenue = fRevenue;
-            logger.logParamSetWithSuccess(EVENT_REVENUE, value: tuneEvent.revenue);
+        if let eventRevenue = params[EVENT_REVENUE] {
+            if let tempRevenue = eventRevenue as? String {
+                let doubleRevenue: Double = Double(tempRevenue)!;
+                let fRevenue = CGFloat(doubleRevenue);
+                tuneEvent.revenue = fRevenue;
+                logger.logParamSetWithSuccess(EVENT_REVENUE, value: tuneEvent.revenue);
+            }
+            else {
+                logger.logUncastableParam(EVENT_REVENUE, type: "CGFloat");
+            }
         }
         if let eventItems = params[EVENT_ITEMS] {
             if (eventItems as! Bool) {
@@ -391,8 +397,8 @@ class CARTuneTagHandler: CARTagHandler {
     internal func getItems() -> ([TuneEventItem]!) {
         var tuneItemArray: [TuneEventItem] = [];
 
-        if (CargoItem.getItemsArray().count != 0) {
-            let cargoItemsArray: [CargoItem] = CargoItem.getItemsArray();
+        if (CargoItem.getItemsArray() != nil && CargoItem.getItemsArray()?.count != 0) {
+            let cargoItemsArray: [CargoItem] = CargoItem.getItemsArray()!;
             for item in cargoItemsArray {
                 let tuneItem = TuneEventItem(name: item.name as String,
                                              unitPrice: item.unitPrice,

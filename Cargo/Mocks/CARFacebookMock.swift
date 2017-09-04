@@ -89,7 +89,6 @@ class CARFacebookMock: CARFacebookTagHandler {
     var lastCountOfParams = 0;
 
     override func tagEvent(parameters: [AnyHashable: Any]){
-        super.tagEvent(parameters: parameters);
         var params = parameters;
         let VALUE_TO_SUM = "valueToSum";
         tagEventCount += 1;

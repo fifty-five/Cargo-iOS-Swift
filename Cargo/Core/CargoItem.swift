@@ -70,8 +70,9 @@ import UIKit
     /// May be used to modify some objects before setting a new Array with the 'setItemsArray' method.
     ///
     /// @return an NSMutableArray of CargoItem objects.
-    class func getItemsArray() -> ([CargoItem]) {
-        return self.itemsArray!;
+    class func getItemsArray() -> ([CargoItem]?) {
+        self.emptyListIfTagHasBeenFired();
+        return self.itemsArray;
     }
     
 

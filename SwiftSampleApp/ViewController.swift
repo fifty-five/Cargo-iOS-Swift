@@ -80,7 +80,7 @@ class ViewController: UIViewController {
             }
         }
         parameters["totalRevenue"] = revenue;
-        if (CargoItem.getItemsArray().count != 0) {
+        if (CargoItem.getItemsArray()?.count != 0) {
             parameters["eventItems"] = true;
         }
         FIRAnalytics.logEvent(withName: "tagPurchase", parameters: parameters as [String : NSObject]?);
