@@ -15,6 +15,7 @@
 		0F12EA281D5A165F00D776E6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F12EA261D5A165F00D776E6 /* LaunchScreen.storyboard */; };
 		0FC6FFEF1D8049E600FE864A /* CARFacebookTagHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6FFEE1D8049E600FE864A /* CARFacebookTagHandler.swift */; };
 		4A79EF737ECE60B17C4DDD5F /* Pods_Cargo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8375CF76CE684DDB537E4856 /* Pods_Cargo.framework */; };
+		8014681F1F5D48AE005AED63 /* Tune.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8014681E1F5D48AE005AED63 /* Tune.framework */; };
 		80242BA01F4EFFB8004EE637 /* CargoItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80242B9F1F4EFFB8004EE637 /* CargoItemTests.swift */; };
 		805042931D8063C90045312B /* CARATInternetTagHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805042921D8063C90045312B /* CARATInternetTagHandler.swift */; };
 		805C5D451E360B2500A9B61F /* container in Resources */ = {isa = PBXBuildFile; fileRef = 805C5D441E360B2500A9B61F /* container */; };
@@ -22,6 +23,8 @@
 		8089BDA61F571E0900800742 /* CARTuneMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8089BDA51F571E0900800742 /* CARTuneMock.swift */; };
 		8089BDAA1F58435800800742 /* CARFacebookMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8089BDA91F58435800800742 /* CARFacebookMock.swift */; };
 		8089BDAF1F5844D900800742 /* CARFacebookTagHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8089BDAE1F5844D900800742 /* CARFacebookTagHandlerTests.swift */; };
+		8089BDB11F586EF200800742 /* CARATInternetTagHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8089BDB01F586EF200800742 /* CARATInternetTagHandlerTests.swift */; };
+		8089BDB31F586F1300800742 /* CARATMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8089BDB21F586F1300800742 /* CARATMock.swift */; };
 		80A1529A1D75C23E0032FA91 /* CARTuneTagHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A152991D75C23E0032FA91 /* CARTuneTagHandler.swift */; };
 		80A7243E1E700D8600648FB7 /* Cargo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A724361E700D8600648FB7 /* Cargo.swift */; };
 		80A7243F1E700D8600648FB7 /* CargoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A724371E700D8600648FB7 /* CargoItem.swift */; };
@@ -71,6 +74,7 @@
 		0FC6FFEE1D8049E600FE864A /* CARFacebookTagHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CARFacebookTagHandler.swift; path = Cargo/Handlers/Facebook/CARFacebookTagHandler.swift; sourceTree = "<group>"; };
 		237787A162AE243EAB87E41B /* Pods-Cargo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cargo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Cargo/Pods-Cargo.debug.xcconfig"; sourceTree = "<group>"; };
 		23EB0A122975528B94BE5CEC /* Pods-Cargo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cargo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Cargo/Pods-Cargo.release.xcconfig"; sourceTree = "<group>"; };
+		8014681E1F5D48AE005AED63 /* Tune.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Tune.framework; path = Pods/Tune/Tune.framework; sourceTree = "<group>"; };
 		80242B9F1F4EFFB8004EE637 /* CargoItemTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CargoItemTests.swift; sourceTree = "<group>"; };
 		805042921D8063C90045312B /* CARATInternetTagHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CARATInternetTagHandler.swift; path = Cargo/Handlers/ATInternet/CARATInternetTagHandler.swift; sourceTree = "<group>"; };
 		805C5D441E360B2500A9B61F /* container */ = {isa = PBXFileReference; lastKnownFileType = folder; path = container; sourceTree = "<group>"; };
@@ -79,6 +83,8 @@
 		8089BDA51F571E0900800742 /* CARTuneMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CARTuneMock.swift; sourceTree = "<group>"; };
 		8089BDA91F58435800800742 /* CARFacebookMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CARFacebookMock.swift; sourceTree = "<group>"; };
 		8089BDAE1F5844D900800742 /* CARFacebookTagHandlerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CARFacebookTagHandlerTests.swift; sourceTree = "<group>"; };
+		8089BDB01F586EF200800742 /* CARATInternetTagHandlerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CARATInternetTagHandlerTests.swift; sourceTree = "<group>"; };
+		8089BDB21F586F1300800742 /* CARATMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CARATMock.swift; sourceTree = "<group>"; };
 		808FAE201D5CD99F0075942C /* libTagManager.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTagManager.a; path = Pods/GoogleTagManager/Libraries/libTagManager.a; sourceTree = "<group>"; };
 		80A152991D75C23E0032FA91 /* CARTuneTagHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CARTuneTagHandler.swift; path = Cargo/Handlers/Tune/CARTuneTagHandler.swift; sourceTree = "<group>"; };
 		80A724361E700D8600648FB7 /* Cargo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Cargo.swift; path = Cargo/Core/Cargo.swift; sourceTree = "<group>"; };
@@ -119,6 +125,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D9414B3FBB1CFD7BD5E69697 /* Pods_CargoTests.framework in Frameworks */,
+				8014681F1F5D48AE005AED63 /* Tune.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -195,6 +202,7 @@
 		2413D38215D82028875B65E6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8014681E1F5D48AE005AED63 /* Tune.framework */,
 				80FE016C1D99615800D5682B /* Tracker.framework */,
 				80E9584D1DA56044005C839B /* UserNotificationsUI.framework */,
 				80E9584B1DA55E96005C839B /* UserNotifications.framework */,
@@ -227,6 +235,7 @@
 		8089BDA41F571DED00800742 /* Mock */ = {
 			isa = PBXGroup;
 			children = (
+				8089BDB21F586F1300800742 /* CARATMock.swift */,
 				8089BDA91F58435800800742 /* CARFacebookMock.swift */,
 				8089BDA51F571E0900800742 /* CARTuneMock.swift */,
 			);
@@ -246,8 +255,9 @@
 		8089BDAD1F5843BD00800742 /* Handlers */ = {
 			isa = PBXGroup;
 			children = (
-				8089BDA21F5709F400800742 /* CARTuneTagHandlerTests.swift */,
+				8089BDB01F586EF200800742 /* CARATInternetTagHandlerTests.swift */,
 				8089BDAE1F5844D900800742 /* CARFacebookTagHandlerTests.swift */,
+				8089BDA21F5709F400800742 /* CARTuneTagHandlerTests.swift */,
 			);
 			name = Handlers;
 			sourceTree = "<group>";
@@ -530,6 +540,7 @@
 				0F12EA1D1D5A165F00D776E6 /* ViewController.swift in Sources */,
 				0F12EA231D5A165F00D776E6 /* SwiftSampleApp.xcdatamodeld in Sources */,
 				80A1529A1D75C23E0032FA91 /* CARTuneTagHandler.swift in Sources */,
+				8089BDB31F586F1300800742 /* CARATMock.swift in Sources */,
 				80A724401E700D8600648FB7 /* CARTagHandler.swift in Sources */,
 				8089BDAA1F58435800800742 /* CARFacebookMock.swift in Sources */,
 				805042931D8063C90045312B /* CARATInternetTagHandler.swift in Sources */,
@@ -550,6 +561,7 @@
 			files = (
 				80BE16E61F337E400003336B /* CARConstantsTests.swift in Sources */,
 				80242BA01F4EFFB8004EE637 /* CargoItemTests.swift in Sources */,
+				8089BDB11F586EF200800742 /* CARATInternetTagHandlerTests.swift in Sources */,
 				8089BDA31F5709F400800742 /* CARTuneTagHandlerTests.swift in Sources */,
 				80BE16DE1F337C930003336B /* CargoTests.swift in Sources */,
 				8089BDAF1F5844D900800742 /* CARFacebookTagHandlerTests.swift in Sources */,
@@ -728,6 +740,10 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				DEVELOPMENT_TEAM = 79FS8B67FE;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Pods/Tune",
+				);
 				INFOPLIST_FILE = CargoTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -747,6 +763,10 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				DEVELOPMENT_TEAM = 79FS8B67FE;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Pods/Tune",
+				);
 				INFOPLIST_FILE = CargoTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
