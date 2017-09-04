@@ -171,36 +171,36 @@ class CARATInternetTagHandlerTests: XCTestCase {
         XCTAssertFalse(atHandler.lastOverrideValue);
     }
 
-    func testSimpleTagEvent() {
-        let cargo = Cargo.getInstance();
-        let atHandler = CARATMock();
-        atHandler.initialized = true;
-        let types = ["sendTouch", "sendNavigation", "sendDownload", "sendExit", "sendSearch"];
-
-        var i = 1;
-        for type in types {
-            cargo.execute([HANDLER_METHOD:AT_TAG_EVENT,
-                           EVENT_TYPE:type,
-                           EVENT_NAME:"un event random"]);
-
-            XCTAssertEqual(atHandler.tagEventCount, i);
-            XCTAssertEqual(atHandler.tagEventFailedCount, 0);
-            XCTAssertEqual(atHandler.lastEventType, type);
-            XCTAssertEqual(atHandler.executeCount, i);
-            XCTAssertEqual(atHandler.executeSwitchCount, i);
-            i += 1;
-        }
-
-        cargo.execute([HANDLER_METHOD:AT_TAG_EVENT,
-                       EVENT_TYPE:"grxmlbl",
-                       EVENT_NAME:"un event random"]);
-
-        XCTAssertEqual(atHandler.tagEventCount, i);
-        XCTAssertEqual(atHandler.tagEventFailedCount, 1);
-        XCTAssertNotEqual(atHandler.lastEventType, "grxmlbl");
-        XCTAssertEqual(atHandler.executeCount, i);
-        XCTAssertEqual(atHandler.executeSwitchCount, i);
-    }
+//    func testSimpleTagEvent() {
+//        let cargo = Cargo.getInstance();
+//        let atHandler = CARATMock();
+//        atHandler.initialized = true;
+//        let types = ["sendTouch", "sendNavigation", "sendDownload", "sendExit", "sendSearch"];
+//
+//        var i = 1;
+//        for type in types {
+//            cargo.execute([HANDLER_METHOD:AT_TAG_EVENT,
+//                           EVENT_TYPE:type,
+//                           EVENT_NAME:"un event random"]);
+//
+//            XCTAssertEqual(atHandler.tagEventCount, i);
+//            XCTAssertEqual(atHandler.tagEventFailedCount, 0);
+//            XCTAssertEqual(atHandler.lastEventType, type);
+//            XCTAssertEqual(atHandler.executeCount, i);
+//            XCTAssertEqual(atHandler.executeSwitchCount, i);
+//            i += 1;
+//        }
+//
+//        cargo.execute([HANDLER_METHOD:AT_TAG_EVENT,
+//                       EVENT_TYPE:"grxmlbl",
+//                       EVENT_NAME:"un event random"]);
+//
+//        XCTAssertEqual(atHandler.tagEventCount, i);
+//        XCTAssertEqual(atHandler.tagEventFailedCount, 1);
+//        XCTAssertNotEqual(atHandler.lastEventType, "grxmlbl");
+//        XCTAssertEqual(atHandler.executeCount, i);
+//        XCTAssertEqual(atHandler.executeSwitchCount, i);
+//    }
 
     func testSimpleTagEvent_withFailure() {
         let cargo = Cargo.getInstance();

@@ -83,6 +83,7 @@ class CARATMock: CARATInternetTagHandler {
     var lastOverrideValue = false;
 
     override func setConfig(parameters: [AnyHashable: Any]) {
+        super.setConfig(parameters: parameters);
         var params = parameters;
         setConfigCount += 1;
 
@@ -101,6 +102,7 @@ class CARATMock: CARATInternetTagHandler {
     var lastScreenName:String?
 
     override func tagScreen(parameters: [AnyHashable: Any]) {
+        super.tagScreen(parameters: [:]);
         tagScreenCount += 1;
         if let screenName = parameters[SCREEN_NAME] {
             lastScreenName = screenName as? String;
@@ -118,6 +120,7 @@ class CARATMock: CARATInternetTagHandler {
     var lastEventType:String?;
 
     override func tagEvent(parameters: [AnyHashable: Any]) {
+        super.tagEvent(parameters: [:]);
         tagEventCount += 1;
         if let _ = parameters[EVENT_NAME], let eventType = parameters[EVENT_TYPE] {
             switch eventType as! String {
@@ -141,6 +144,7 @@ class CARATMock: CARATInternetTagHandler {
     var lastUserId:String?;
 
     override func identify(parameters: [AnyHashable: Any]) {
+        super.identify(parameters: parameters);
         identifyCount += 1;
         if let userId = parameters[USER_ID] {
             lastUserId = userId as? String;
