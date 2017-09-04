@@ -1,0 +1,9 @@
+coverage:
+  range: 50...95
+  round: nearest
+  precision: 0
+
+ignore:
+  - "CargoTests/**/*"  # ignore the tests sets.
+  - "SwiftSampleApp/**/*" # ignore the sample app
+  - "Cargo/Mocks/**/*" # ignore the mocks
