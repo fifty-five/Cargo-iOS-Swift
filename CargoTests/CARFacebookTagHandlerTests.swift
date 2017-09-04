@@ -101,6 +101,20 @@ class CARFacebookTagHandlerTests: XCTestCase {
         XCTAssertEqual(facebookHandler.activateAppCount, 0);
     }
 
+    func testExecute_withUnknownMethod() {
+        let cargo = Cargo.getInstance();
+        let facebookHandler = CARFacebookMock();
+        facebookHandler.initialized = true;
+
+        cargo.execute([HANDLER_METHOD:"FB_unknown"]);
+
+        XCTAssertEqual(facebookHandler.executeCount, 1);
+        XCTAssertEqual(facebookHandler.executeInitCount, 0);
+        XCTAssertEqual(facebookHandler.executeSwitchCount, 1);
+        XCTAssertEqual(facebookHandler.executeUnknownFunctionCount, 1);
+        XCTAssertEqual(facebookHandler.executeUninitializedCount, 0);
+    }
+
     func testTagEvent_withEventName() {
         let cargo = Cargo.getInstance();
         let facebookHandler = CARFacebookMock();
