@@ -89,6 +89,7 @@ class CARFacebookMock: CARFacebookTagHandler {
     var lastCountOfParams = 0;
 
     override func tagEvent(parameters: [AnyHashable: Any]){
+        super.tagEvent(parameters: parameters);
         var params = parameters;
         let VALUE_TO_SUM = "valueToSum";
         tagEventCount += 1;
@@ -124,6 +125,7 @@ class CARFacebookMock: CARFacebookTagHandler {
     var purchaseErrored = false;
 
     override func purchase(parameters: [AnyHashable: Any]){
+        super.purchase(parameters: parameters);
         purchaseCount += 1;
         if let purchaseAmount = parameters[TRANSACTION_TOTAL] as? Double {
             if let currencyCode = parameters[TRANSACTION_CURRENCY_CODE] as? String {
