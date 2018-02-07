@@ -99,7 +99,7 @@ import Foundation
         if let handlerMethod = params[HANDLER_METHOD] as? String {
             params.removeValue(forKey: HANDLER_METHOD);
             let handlerKey = handlerMethod.components(separatedBy: "_")[0];
-            if (handlerKey.characters.count > 1 && handlerKey.characters.count < 4) {
+            if (handlerKey.count > 1 && handlerKey.count < 4) {
                 if let handler = registeredTagHandlers[handlerKey] {
                     handler.execute(handlerMethod, parameters: params);
                 }
