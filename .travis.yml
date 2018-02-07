@@ -4,8 +4,7 @@ xcode_workspace: Cargo.xcworkspace
 xcode_scheme: Cargo
 
 before_install:
-  - brew install gnupg gnupg2
-  - gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
+  - curl -sSL https://rvm.io/mpapis.asc | gpg --import -
   - rvm get stable
   - gem install xcpretty
   - export IOS_SIMULATOR_UDID=`instruments -s devices | grep "iPhone 5 (9.3" | awk -F '[ ]' '{print $4}' | awk -F '[\[]' '{print $2}' | sed 's/.$//'`
